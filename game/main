@@ -1,1 +1,34 @@
+#include<stdio.h>
+
+/* This function prints a short presentation of the game.
+*/
+void gameShortPresentation() {
+  printf("Bem vind@ ao jogo Categorias!\n /
+      Você testará o quanto de palavras você sabe ou consegue se lembrar de algumas categorias.\n /
+      IMPORTANTE: seu tempo é limitado, então seu cérebro deve funcionar rápido!\n /
+      COOOORRE Cérebro!\n\n");
+}
+
+int main() {
+
+  gameShortPresentation();
+
+  //stores a value that corresponds to a user decision: 1 - start a new game, 0 - stops the execution.
+  int newGame;
+
+  while (1) {
+    printf("Você deseja começar um jogo?\n");
+    printf("Informe 1 se sim e 0 caso contrário\n");
+
+    scanf("%d\n", &newGame);
+
+    if (newGame) {
+
+    } else {
+      printf("Que pena! Volte logo.\n");
+      break;
+    }
+  }
+  return 0;
+}
 
