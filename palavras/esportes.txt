@@ -1,0 +1,70 @@
+arco e flecha
+arremesso de peso
+artes marciais
+atletismo
+automobilismo
+badminton
+basquete
+beisebol
+bilhar
+biribol
+bodyboard
+boliche
+boxe
+bumerangue
+canoagem
+capoeira
+ciclismo
+corrida
+criquete
+esgrima
+esportes de inverno
+esportes de inverno
+esqui aquatico
+frescobol
+frisbee
+futebol
+futebol americano
+futevolei
+ginastica artistica
+golfe
+handebol
+hipismo
+hoquei no gelo
+judo
+lancamento de dardo
+lancamento de disco
+lancamento de martelo
+levantamento de peso
+luta livre
+maratona
+marcha atletica
+montanhismo
+motociclismo
+natacao
+navegacao
+paintball
+patinacao
+peteca
+polo aquatico
+punhobol
+remo
+rugby
+salto com vara
+salto em altura
+salto em distancia
+salto triplo
+saltos ornamentais
+skate
+squash
+surf
+tchoukball
+tenis
+tenis de mesa
+tiro
+triathlon
+vela
+voleibol
+wakeboard
+xadrez
+

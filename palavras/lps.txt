@@ -1,0 +1,27 @@
+ada
+algol
+assembly
+c
+c#
+c++
+cobol
+delphi
+fortran
+go
+java
+javascript
+lisp
+objective-c
+pascal
+php
+prolog
+python
+r
+ruby
+simula
+smalltalk
+sql
+swift
+visual basic
+visual basic .net
+
