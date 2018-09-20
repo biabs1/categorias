@@ -14,21 +14,28 @@ int main() {
   gameShortPresentation();
 
   //stores a value that corresponds to a user decision: 1 - start a new game, 0 - stops the execution.
-  int newGame;
+  int newGame, participantes, modoDeJogo;
+    do{
+        printf("Você deseja começar um jogo?\n");
+        printf("Informe 1 se sim e 0 caso contrário\n");
+        scanf("%d", &newGame);
+        if(newGame){
+            printf("Digite o número correspondente ao modo que você quer!\nTreino(1), Modo Alternado(2) ou Modo Clássico(3): ");
+            scanf("%d", &modoDeJogo);
+            printf("Vamos la, digite o número de participantes: ");
+            scanf("%d", &participantes);
+            if(modoDeJogo == 1){
+                printf("Você escolheu a opção Treino\n");
+            }else if(modoDeJogo == 2){
+                printf("Você escolheu a opção Modo Alternado!\n");
+            }else if(modoDeJogo == 3){
+                printf("Você escolheu a opção de Modo Clássico!\n");
+            }else{
+                printf("Opção inválida!!\n");
+            }
+        }
+    }while(newGame);
 
-  while (1) {
-    printf("Você deseja começar um jogo?\n");
-    printf("Informe 1 se sim e 0 caso contrário\n");
-
-    scanf("%d\n", &newGame);
-
-    if (newGame) {
-
-    } else {
-      printf("Que pena! Volte logo.\n");
-      break;
-    }
-  }
+    printf("Que pena! Volte logo.\n");
   return 0;
 }
-
