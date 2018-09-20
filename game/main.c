@@ -16,9 +16,8 @@ void imprimePequenaApresentacaoJogo() {
 int main() {
 
     imprimePequenaApresentacaoJogo();
-    int novoJogo;
-    int numParticipantes;
-    int modoDeJogo;
+
+    int novoJogo, numParticipantes, modoDeJogo;
     char jogadores[numParticipantes][100];
 
    //Laço responsável por iniciar novos jogos ou encerrar as jogadas.
