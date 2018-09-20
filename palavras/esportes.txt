@@ -67,4 +67,3 @@ vela
 voleibol
 wakeboard
 xadrez
-
