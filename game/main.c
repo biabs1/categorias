@@ -7,68 +7,75 @@ Matheus Medeiros e Wener Wagner.
 */
 
 #include<stdio.h>
-#include "validacoes.h"
+#include "validacoes.c"
 
 void imprimePequenaApresentacaoJogo() {
-  printf("Bem vind@ ao jogo Categorias!\n /
-      Você testará o quanto de palavras você sabe ou consegue se lembrar de algumas categorias.\n /
-      IMPORTANTE: seu tempo é limitado, então seu cérebro deve funcionar rápido!\n /
-      COOOORRE Cérebro!\n\n");
+  printf("Bem vind@ ao jogo Categorias!\nVocê testará o quanto de palavras você sabe ou consegue se lembrar de algumas categorias.\nIMPORTANTE: seu tempo é limitado, então seu cérebro deve funcionar rápido!\nCOOOORRE Cérebro!\n");
 }
 
 int main() {
 
-   imprimePequenaApresentacaoJogo();
-
-   int novoJogo;
-   int numParticipantes;
-   int modoDeJogo;
+    imprimePequenaApresentacaoJogo();
+    int novoJogo;
+    int numParticipantes;
+    int modoDeJogo;
+    char jogadores[numParticipantes][100];
 
    //Laço responsável por iniciar novos jogos ou encerrar as jogadas.
-   do{
-       printf("Você deseja começar um jogo?\n");
-       printf("Informe 1 se sim e 0 caso contrário\n");
-       scanf("%d", &novoJogo);
+    do {
+        printf("\nVocê deseja começar um novo jogo?\nInforme 1 se sim e 0 caso contrário:\n");
+        scanf("%d", &novoJogo);
+        setbuf(stdin, NULL);
 
-       if(novoJogoValido(novoJogo)){
+        if (novoJogoValido(novoJogo)) {
+            if (novoJogo == 1) {
+                //Laço responsável por receber e validar o modo de jogo.
+                do {
+                    printf("\nDigite o número correspondente ao modo que você quer.\nTreino(1), Modo Alternado(2) ou Modo Clássico(3):\n");
+                    scanf("%d", &modoDeJogo);
+                    setbuf(stdin, NULL);
 
-           if (novoJogo == 1) {
-               //Laço responsável por receber e validar o modo de jogo.
-               do {
-                   printf("Digite o número correspondente ao modo que você quer!\n /
-                     Treino(1), Modo Alternado(2) ou Modo Clássico(3): ");
-                   scanf("%d", &modoDeJogo);
+                    if (!modoDeJogoValido(modoDeJogo)) {
+                        printf("\nModo inválido.\nReveja os modos de jogo possíveis.\n");
+                    }
+                } while (!modoDeJogoValido(modoDeJogo));
 
-                   if (!modoDeJogoValido(modoDeJogo)) {
-                       printf("Modo inválido. Reveja os modos de jogo possíveis.\n");
-                   }
-               } while(!modoDeJogoValido(modoDeJogo));
+                if (modoDeJogo == 1) {
+                    printf("\nVocê escolheu a opção Treino!\n");
+                } else if (modoDeJogo == 2) {
+                    printf("\nVocê escolheu a opção Modo Alternado!\n");
+                } else if (modoDeJogo == 3) {
+                    printf("\nVocê escolheu a opção de Modo Clássico!\n");
+                }
 
                //Laço responsável por receber e validar a quantidade de jogadores.
-               do {
-                   printf("Digite a quantidade de jogadores.\n /
-                     Este valor deve estar entre 2 e 8 inclusive: ");
-                   scanf("%d", &numParticipantes);
+                do {
+                    printf("\nDigite a quantidade de jogadores.\nEste valor deve estar entre 2 e 8 inclusive:\n");
+                    scanf("%d", &numParticipantes);
+                    setbuf(stdin, NULL);
 
-                   if (!numParticipantesValido(numParticipantes)) {
-                       printf("Número de participantes inválido. Reveja a quantidade de jogadores possível\n");
-                   }
-               } while(!numParticipantesValido(numParticipantes));
-
-               if(modoDeJogo == 1){
-                   printf("Você escolheu a opção Treino\n");
-               } else if(modoDeJogo == 2){
-                   printf("Você escolheu a opção Modo Alternado!\n");
-               } else {
-                   printf("Você escolheu a opção de Modo Clássico!\n");
-               }
+                    if (!numParticipantesValido(numParticipantes)) {
+                        printf("\nNúmero de participantes inválido.\nReveja a quantidade de jogadores possível\n");
+                    }
+                } while (!numParticipantesValido(numParticipantes));
+                
+                printf("\nDigite o nome e sobrenome dos jogadores.\nUm jogador por linha:\n");
+                for (int i = 0; i < numParticipantes; i++) {
+                    fgets(jogadores[i], 100, stdin);
+                }
+                
+                //TA DANDO ERRO AQUI NA HORA DE EXECUTAR. COMPILA, MAS NÃO EXECUTA
+                /*for (int j = 0; j < numParticipantes; j++) {
+                    printf("Jogador %d: %s", j + 1, jogadores[j]);
+                }
+                */ 
 
            } else {
-               printf("Que pena! Volte logo.\n");
+               printf("\nQue pena!\nVolte logo!\n");
            }
 
        } else {
-           printf("Número inválido. Reveja as opções possíveis.\n");
+           printf("\nNúmero inválido.\nReveja as opções possíveis.\n");
        }
 
    } while(novoJogo);
