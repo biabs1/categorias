@@ -1,0 +1,7 @@
+animais
+cores
+esportes
+frutas
+lps
+paises
+verduras_legumes
