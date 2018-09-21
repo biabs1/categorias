@@ -18,7 +18,6 @@ int main() {
     imprimePequenaApresentacaoJogo();
 
     int novoJogo, numParticipantes, modoDeJogo;
-    char jogadores[numParticipantes][100];
 
    //Laço responsável por iniciar novos jogos ou encerrar as jogadas.
     do {
@@ -57,17 +56,20 @@ int main() {
                         printf("\nNúmero de participantes inválido.\nReveja a quantidade de jogadores possível\n");
                     }
                 } while (!numParticipantesValido(numParticipantes));
-                
+
+                char nomeJogadores[numParticipantes + 1][20], sobrenomeJogadores[numParticipantes + 1][20];
+
                 printf("\nDigite o nome e sobrenome dos jogadores.\nUm jogador por linha:\n");
                 for (int i = 0; i < numParticipantes; i++) {
-                    fgets(jogadores[i], 100, stdin);
+                    printf("Jogador %d: ", i + 1);
+                    scanf("%s %s", nomeJogadores[i], sobrenomeJogadores[i]);
                 }
-                
-                //TA DANDO ERRO AQUI NA HORA DE EXECUTAR. COMPILA, MAS NÃO EXECUTA
-                /*for (int j = 0; j < numParticipantes; j++) {
-                    printf("Jogador %d: %s", j + 1, jogadores[j]);
+
+               printf("\n\nJogadores:\n");
+                for (int i = 0; i < numParticipantes; i++) {
+                    printf("Jogador %d: %s %s\n", i + 1, nomeJogadores[i], sobrenomeJogadores[i]);
                 }
-                */ 
+
 
            } else {
                printf("\nQue pena!\nVolte logo!\n");
