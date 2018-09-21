@@ -38,14 +38,6 @@ int main() {
                     }
                 } while (!modoDeJogoValido(modoDeJogo));
 
-                if (modoDeJogo == 1) {
-                    printf("\nVocê escolheu a opção Treino!\n");
-                } else if (modoDeJogo == 2) {
-                    printf("\nVocê escolheu a opção Modo Alternado!\n");
-                } else if (modoDeJogo == 3) {
-                    printf("\nVocê escolheu a opção de Modo Clássico!\n");
-                }
-
                //Laço responsável por receber e validar a quantidade de jogadores.
                 do {
                     printf("\nDigite a quantidade de jogadores.\nEste valor deve estar entre 2 e 8 inclusive:\n");
@@ -65,11 +57,30 @@ int main() {
                     scanf("%s %s", nomeJogadores[i], sobrenomeJogadores[i]);
                 }
 
-               printf("\n\nJogadores:\n");
+                printf("\n\nJogadores:\n");
                 for (int i = 0; i < numParticipantes; i++) {
                     printf("Jogador %d: %s %s\n", i + 1, nomeJogadores[i], sobrenomeJogadores[i]);
                 }
 
+
+
+                if (modoDeJogo == 1) {
+                    printf("\nVocê escolheu a opção Treino!\n");
+                } else if (modoDeJogo == 2) {
+                    printf("\nVocê escolheu a opção Modo Alternado!\n");
+                } else if (modoDeJogo == 3) {
+                    printf("\nVocê escolheu a opção de Modo Clássico!\n");
+
+                    FILE *arquivo;
+                    /*O caminho do arquivo deve ser generalizado*/
+                    arquivo = fopen("/home//beatriz//Downloads//categorias-master//palavras//categorias.txt", "r");
+                    int numCategoriasCadastradas = numLinhasArquivo(arquivo);
+                    // Gera um valor aleatório entre zero e o número de categorias cadastradas.
+                    int linhaCategoriaSorteada = rand() % numCategoriasCadastradas - 1;
+                    printf("\ncategoria sorteada: %d\n", linhaCategoriaSorteada);
+
+                    /* Deve-se sortear novas categorias até que não exista vencedor. */
+                }
 
            } else {
                printf("\nQue pena!\nVolte logo!\n");
@@ -83,3 +94,4 @@ int main() {
 
   return 0;
 }
+
