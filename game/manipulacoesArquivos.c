@@ -1,10 +1,12 @@
 /*
-** As funções implementadas neste módulo servem para manipulacoesArquivar
+** As funções implementadas neste módulo servem para manipular
 ** os arquivos do diretório palavras.
 */
 
+#include <string.h>
+
 /*
-Retorna a quantidade de linhas de um arquivo. 
+Retorna a quantidade de linhas de um arquivo.
 */
 int numLinhasArquivo(FILE *arquivo) {
   int numLinhas = 0;
@@ -18,7 +20,49 @@ int numLinhasArquivo(FILE *arquivo) {
         numLinhas++;
       }
     }
-    fclose(arquivo);
   }
   return numLinhas + 1;
 }
+
+/*
+Retorna a palavra presente em uma dada linha de um arquivo.
+*/
+char* palavraLinha(int linha, FILE *arquivo) {
+    int linhaAtual = 0;
+    char *palavra;
+    palavra = (char*)malloc(50 *sizeof(char));
+
+    if (arquivo == NULL) {
+      printf("O arquivo não foi encontrado\n");
+    } else {
+      while (fgets(palavra, sizeof(palavra), arquivo) != NULL && linhaAtual != linha) {
+        linhaAtual++;
+      }
+    }
+
+    return palavra;
+}
+
+/*
+Verifica se uma dada palavra pertence a um dado arquivo.
+Retorna 1 caso exista e 0 caso contrário.
+*/
+int palavraExisteArquivo(char *palavra, FILE *arquivo) {
+   char *palavraAtual;
+   palavraAtual = (char*)malloc(50 *sizeof(char));
+   int existe = 0;
+
+   if (arquivo == NULL) {
+     printf("O arquivo não foi encontrado\n");
+   } else {
+     while (fgets(palavraAtual, sizeof(palavraAtual), arquivo) != NULL && existe == 0) {
+       printf("%s %s\n", palavra, palavraAtual);
+       if (strcmp(palavra, palavraAtual) == 0) {
+         existe = 1;
+       }
+     }
+   }
+
+   return existe;
+}
+
