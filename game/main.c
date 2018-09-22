@@ -6,8 +6,10 @@ Desenvolvedores: Alessandra Barros, Beatriz Souza, Luana Melo,
 Matheus Medeiros e Wener Wagner.
 */
 
-#include<stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "validacoes.c"
+#include "modos/classico.c"
 
 void imprimePequenaApresentacaoJogo() {
   printf("Bem vind@ ao jogo Categorias!\nVocê testará o quanto de palavras você sabe ou consegue se lembrar de algumas categorias.\nIMPORTANTE: seu tempo é limitado, então seu cérebro deve funcionar rápido!\nCOOOORRE Cérebro!\n");
@@ -71,15 +73,11 @@ int main() {
                 } else if (modoDeJogo == 3) {
                     printf("\nVocê escolheu a opção de Modo Clássico!\n");
 
-                    FILE *arquivo;
-                    /*O caminho do arquivo deve ser generalizado*/
-                    arquivo = fopen("/home//beatriz//Downloads//categorias-master//palavras//categorias.txt", "r");
-                    int numCategoriasCadastradas = numLinhasArquivo(arquivo);
-                    // Gera um valor aleatório entre zero e o número de categorias cadastradas.
-                    int linhaCategoriaSorteada = rand() % numCategoriasCadastradas - 1;
-                    printf("\ncategoria sorteada: %d\n", linhaCategoriaSorteada);
+                    //printf("animais existe: %d\n", palavraExisteArquivo("animais", arquivo));
 
                     /* Deve-se sortear novas categorias até que não exista vencedor. */
+                    printf("\ncategoria sorteada: %s\n", sorteiaCategoria());
+
                 }
 
            } else {
@@ -94,4 +92,3 @@ int main() {
 
   return 0;
 }
-
