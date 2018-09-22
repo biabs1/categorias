@@ -73,10 +73,14 @@ int main() {
                 } else if (modoDeJogo == 3) {
                     printf("\nVocê escolheu a opção de Modo Clássico!\n");
 
-                    //printf("animais existe: %d\n", palavraExisteArquivo("animais", arquivo));
+                    char *categoriaSorteada;
+                    categoriaSorteada = (char*)malloc(50 *sizeof(char));
 
-                    /* Deve-se sortear novas categorias até que não exista vencedor. */
-                    printf("\ncategoria sorteada: %s\n", sorteiaCategoria());
+                    do {
+                      categoriaSorteada = sorteiaCategoria();
+                      printf("\ncategoria sorteada: %s\n", categoriaSorteada);
+                    } while (numParticipantes > 1);
+                  //Cuidado! por enquanto é verdadeiro sempre
 
                 }
 
