@@ -74,4 +74,14 @@ int palavraExisteArquivo(char *palavra, FILE *arquivo) {
    return existe;
 }
 
-
+/*
+Insere um ítem informado em uma linha de uma dado arquivo.
+*/
+void inserirItemArtigo(char *item, FILE *arquivo) {
+  if (arquivo == NULL) {
+    printf("O arquivo não foi encontrado\n");
+  } else {
+    strcat(item, "\n");
+    fprintf(arquivo, item);
+  }
+}
