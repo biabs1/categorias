@@ -19,3 +19,19 @@ char* sorteiaCategoria() {
   fclose(arquivo);
   return palavra;
 }
+
+/*
+Retorna a quantidade de ítens cadastrados em um dada categoria.
+*/
+int numItensCadastradosCategoria(char *categoria) {
+  FILE *arquivo;
+  char caminhoCategoria[400] = "//home//beatriz//Downloads//categorias-master//palavras//";
+  strcat(caminhoCategoria, categoria);
+  strcat(caminhoCategoria, ".txt");
+
+  arquivo = fopen(caminhoCategoria, "r");
+  int numItens = numLinhasArquivo(arquivo);
+  fclose(arquivo);
+  printf("%d\n", numItens);
+  return numItens;
+}
