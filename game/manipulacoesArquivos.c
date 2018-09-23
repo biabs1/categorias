@@ -30,14 +30,22 @@ Retorna a palavra presente em uma dada linha de um arquivo.
 char* palavraLinha(int linha, FILE *arquivo) {
     int linhaAtual = 0;
     char *palavra;
+    char c;
+    int indice = 0;
     palavra = (char*)malloc(50 *sizeof(char));
 
     if (arquivo == NULL) {
       printf("O arquivo não foi encontrado\n");
     } else {
-      while (fgets(palavra, sizeof(palavra), arquivo) != NULL && linhaAtual != linha) {
-        linhaAtual++;
-      }
+      do {
+        indice = 0;
+        while (fread(&c, sizeof(char), 1, arquivo)) {
+          palavra[indice++] = c;
+          if (c == '\n') {
+            break;
+          }
+        }
+      } while (linhaAtual++ != linha);
     }
 
     return palavra;
@@ -65,4 +73,5 @@ int palavraExisteArquivo(char *palavra, FILE *arquivo) {
 
    return existe;
 }
+
 
