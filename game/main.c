@@ -81,43 +81,64 @@ int main() {
                       printf("\ncategoria sorteada: %s\n", categoriaSorteada);
 
                       printf("\nCada jogador deverá informar um ítem pertencente à categoria sorteada.\n");
-                      printf("Caso não se recorde de algum item, digite #\n\n", );
+                      printf("Caso não se recorde de algum item, digite #\n\n");
 
                       int numItensInformados = 0;
+                      char itensInformados[500][100];
                       char itemInformado[100];
 
                       while (numItensInformados <= numItensCadastradosCategoria(categoriaSorteada)
                         && numParticipantes > 1) {
-                          for (int i = 0; i < numParticipantes; i++) {
+                          int i = 0;
+
+                          while (i < numParticipantes && numParticipantes > 1) {
                             printf("Jogador(a): %s %s, informe um ítem desta categoria: ",
                               nomeJogadores[i], sobrenomeJogadores[i]);
 
                               scanf("%s", itemInformado);
 
                               //o jogador não sabe de um ítem ou disse um que já foi dito.
-                              if (strcmp(itemInformado, "#") == 0 || itemInformadoAntes(itemInformado)) {
-                                printf("%s %s, este ítem já foi informado. Infelizmente você está fora da jogada.\n\n",
+                              if (strcmp(itemInformado, "#") == 0 || itemInformadoAntes(
+                                itemInformado, itensInformados, numItensInformados)) {
+                                printf("%s %s, infelizmente você está fora da jogada.\n\n",
                                   nomeJogadores[i], sobrenomeJogadores[i]);
 
                                 //remove o jogador
                                 for (int j = i; j < numParticipantes - 1; j++) {
-                                  nomeJogadores[j] = nomeJogadores[j + 1];
-                                  sobrenomeJogadores[j] = sobrenomeJogadores[j + 1];
+                                  strcpy(nomeJogadores[j], nomeJogadores[j + 1]);
+                                  strcpy(sobrenomeJogadores[j], sobrenomeJogadores[j + 1]);
                                 }
+
+                                numParticipantes--;
                               } //o jogador informou um ítem cadastrado na categoria.
-                              else if (itemCadastrado(itemInformado)) {
-                                cadastrarItemInformadosNaJogada(itemInformado);
+                              else if (itemCadastradoCategoria(itemInformado, categoriaSorteada)) {
+                                cadastrarItemInformadosNaJogada(
+                                  itemInformado, itensInformados, numItensInformados);
                                 numItensInformados++;
+
+                                for (int k = 0; k < numItensInformados; k++) {
+                                  printf("%s\n", itensInformados[k]);
+                                }
                               } //o jogador informou um ítem ainda não cadastrado.
                               else {
+                                /*Esse trecho ainda não está okay*/
+                                printf("\n\nATENÇÂO!\nEste ítem pertence mesmo a esta categoria? s/n\n");
+                                char resposta;
+                                scanf("%c", &resposta);
+                                if (resposta == 's') {
+                                  cadastrarItemInformadosNaJogada(
+                                    itemInformado, itensInformados, ++numItensInformados);
+                                  cadastrarItemCategoria(itemInformado, categoriaSorteada);
+                                }
 
                               }
+
+                              i++;
                           }
                         }
                     } while (numParticipantes > 1);
 
                     printf("\n\nO vencedor da vez é: %s %s. Parabéns!\n\n", nomeJogadores[0], sobrenomeJogadores[0]);
-
                 }
 
            } else {
@@ -132,3 +153,4 @@ int main() {
 
   return 0;
 }
+
