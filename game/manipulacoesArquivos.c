@@ -21,7 +21,7 @@ int numLinhasArquivo(FILE *arquivo) {
       }
     }
   }
-  return numLinhas + 1;
+  return numLinhas;
 }
 
 /*
@@ -40,11 +40,12 @@ char* palavraLinha(int linha, FILE *arquivo) {
       do {
         indice = 0;
         while (fread(&c, sizeof(char), 1, arquivo)) {
-          palavra[indice++] = c;
           if (c == '\n') {
             break;
           }
+          palavra[indice++] = c;
         }
+        palavra[indice] = '\0';
       } while (linhaAtual++ != linha);
     }
 
@@ -55,20 +56,31 @@ char* palavraLinha(int linha, FILE *arquivo) {
 Verifica se uma dada palavra pertence a um dado arquivo.
 Retorna 1 caso exista e 0 caso contrário.
 */
-int palavraExisteArquivo(char *palavra, FILE *arquivo) {
+int palavraExisteArquivo(char *palavra, FILE *arquivo, int numLinhas) {
    char *palavraAtual;
    palavraAtual = (char*)malloc(50 *sizeof(char));
+   char c;
    int existe = 0;
+   int linhaAtual = 0;
 
    if (arquivo == NULL) {
      printf("O arquivo não foi encontrado\n");
    } else {
-     while (fgets(palavraAtual, sizeof(palavraAtual), arquivo) != NULL && existe == 0) {
-       printf("%s %s\n", palavra, palavraAtual);
+     do {
+       int indice = 0;
+       while (fread(&c, sizeof(char), 1, arquivo)) {
+         if (c == '\n') {
+           break;
+         }
+         palavraAtual[indice++] = c;
+       }
+       palavraAtual[indice] = '\0';
+
        if (strcmp(palavra, palavraAtual) == 0) {
          existe = 1;
+         break;
        }
-     }
+     } while (linhaAtual != numLinhas);
    }
 
    return existe;
@@ -77,11 +89,11 @@ int palavraExisteArquivo(char *palavra, FILE *arquivo) {
 /*
 Insere um ítem informado em uma linha de uma dado arquivo.
 */
-void inserirItemArtigo(char *item, FILE *arquivo) {
+void inserirItemArquivo(char *item, FILE *arquivo) {
   if (arquivo == NULL) {
     printf("O arquivo não foi encontrado\n");
   } else {
-    strcat(item, "\n");
-    fprintf(arquivo, item);
+    fprintf(arquivo, "%s\n", item);
   }
 }
+
