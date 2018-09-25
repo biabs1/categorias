@@ -6,14 +6,14 @@ Retorna uma categoria sorteada entre as categorias cadastradas.
 char* sorteiaCategoria() {
   FILE *arquivo;
   /*O caminho do arquivo deve ser generalizado*/
-  arquivo = fopen("//home//beatriz//Downloads//categorias-master//palavras//categorias.txt", "r");
+  arquivo = fopen("../palavras/categorias.txt", "r");
   int numCategoriasCadastradas = numLinhasArquivo(arquivo);
   fclose(arquivo);
 
   // Gera um valor aleatório entre zero e o número de categorias cadastradas -1.
   int linhaCategoriaSorteada = rand() % numCategoriasCadastradas - 1;
 
-  arquivo = fopen("//home//beatriz//Downloads//categorias-master//palavras//categorias.txt", "r");
+  arquivo = fopen("../palavras/categorias.txt", "r");
   char *palavra;
   palavra = (char*)malloc(50 *sizeof(char));
   palavra = palavraLinha(linhaCategoriaSorteada, arquivo);
@@ -26,7 +26,7 @@ Retorna a quantidade de ítens cadastrados em um dada categoria.
 */
 int numItensCadastradosCategoria(char *categoria) {
   FILE *arquivo;
-  char caminhoCategoria[400] = "//home//beatriz//Downloads//categorias-master//palavras//";
+  char caminhoCategoria[400] = "../palavras/";
   strcat(caminhoCategoria, categoria);
   strcat(caminhoCategoria, ".txt");
 
@@ -41,7 +41,7 @@ Cadastra um novo ítem no arquivo que contém os ítens de uma categoria.
 */
 void cadastrarItemCategoria(char *item, char *categoria) {
   FILE *arquivo;
-  char caminhoCategoria[400] = "//home//beatriz//Downloads//categorias-master//palavras//";
+  char caminhoCategoria[400] = "../palavras/";
   strcat(caminhoCategoria, categoria);
   strcat(caminhoCategoria, ".txt");
 
@@ -56,7 +56,7 @@ Retorna 1 se sim e 0 caso contrário.
 */
 int itemCadastradoCategoria(char *item, char *categoria) {
   FILE *arquivo;
-  char caminhoCategoria[400] = "//home//beatriz//Downloads//categorias-master//palavras//";
+  char caminhoCategoria[400] = "../palavras/";
   strcat(caminhoCategoria, categoria);
   strcat(caminhoCategoria, ".txt");
 
