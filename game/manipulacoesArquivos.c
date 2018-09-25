@@ -70,6 +70,7 @@ int palavraExisteArquivo(char *palavra, FILE *arquivo, int numLinhas) {
        int indice = 0;
        while (fread(&c, sizeof(char), 1, arquivo)) {
          if (c == '\n') {
+           linhaAtual++;
            break;
          }
          palavraAtual[indice++] = c;
@@ -93,7 +94,9 @@ void inserirItemArquivo(char *item, FILE *arquivo) {
   if (arquivo == NULL) {
     printf("O arquivo não foi encontrado\n");
   } else {
+    //strcat(item, "\n");
     fprintf(arquivo, "%s\n", item);
   }
 }
+
 
