@@ -8,6 +8,7 @@ Matheus Medeiros e Wener Wagner.
 
 #include <stdio.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 #ifdef _WIN32
 #include <conio.h>
@@ -18,10 +19,6 @@ Matheus Medeiros e Wener Wagner.
 
 
 // ---- game_messages.h ---- START
-
-void prompt() {
-    printf(">> ");
-}
 
 void startBlock() {
     printf("==== JOGO CATEGORIAS ====\n");
@@ -48,20 +45,85 @@ void messageNewGame() {
     printf("Você deseja começar um novo jogo?\n");
     printf("1 - Novo Jogo\n");
     printf("2 - Sair\n");
+}
+// ---- game_messages.h ---- END
 
-    // colocar no canto correto
-    prompt();
-    char resposta[5];
-    scanf("%s", resposta);
-    // ------------------------
+
+// ---- game_options.h ---- START
+#define int INVALID_OPTION -1
+
+#define int NEW_GAME 1
+#define int EXIT 2
+
+// ---- game_options.h ---- END
+
+
+
+// ---- game_input.h ---- START
+void prompt() {
+    printf(">> ");
 }
 
-// ---- game_messages.h ---- END
+int input_getOption() {
+    
+    prompt();
+
+    int option;
+    scanf("%d", &option);
+    setbuf(stdin, NULL);
+
+    if (option != NEW_GAME && option != EXIT) {
+        option = INVALID_OPTION;
+    }
+    return option;
+}
+// ---- game_input.h ---- END
 
 int main() {
 
     messagePresentation();
-    messageNewGame();
+
+    bool gameRunning = true;
+
+    while (gameRunning) {
+        messageNewGame();
+        int option = input_getOption();
+        switch (option) {
+            case NEW_GAME:
+                // faz algo
+            break;
+            case EXIT:
+                gameRunning = false;
+            break;
+            case INVALID_OPTION:
+                // faz algo
+            break;
+    }
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
