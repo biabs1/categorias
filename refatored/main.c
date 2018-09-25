@@ -46,14 +46,19 @@ void messageNewGame() {
     printf("1 - Novo Jogo\n");
     printf("2 - Sair\n");
 }
+
+void messageInvalidOption() {
+    printf("** Opção inválida. **\n** Reveja as opções possíveis. **\n");
+    sleep(2);
+}
 // ---- game_messages.h ---- END
 
 
 // ---- game_options.h ---- START
-#define int INVALID_OPTION -1
+#define INVALID_OPTION -1
 
-#define int NEW_GAME 1
-#define int EXIT 2
+#define NEW_GAME 1
+#define EXIT 2
 
 // ---- game_options.h ---- END
 
@@ -96,8 +101,10 @@ int main() {
                 gameRunning = false;
             break;
             case INVALID_OPTION:
-                // faz algo
+                messageInvalidOption();
+                // BUG: Quando digita texto, a msg de erro permanece.
             break;
+        }
     }
 
     return 0;
