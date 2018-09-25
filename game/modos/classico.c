@@ -78,9 +78,7 @@ int itemInformadoAntes(char *item, char itensInformados[][100], int numItensInfo
       break;
     }
   }
-
   return resultado;
-
 }
 
 /*
@@ -89,4 +87,19 @@ Cadastra um novo ítem na matriz dos ítens informados na jogada.
 void cadastrarItemInformadosNaJogada(char *item, char itensInformados[][100], int numItensInformados) {
   strcpy(itensInformados[numItensInformados], item);
 }
+
+/*
+Remove um dado jogador de uma jogada.
+*/
+void removerJogador(char nomeJogadores[][20], char sobrenomeJogadores[][20],
+   int numJogador, int numParticipantes) {
+     printf("%s %s, infelizmente você está fora da jogada.\n\n",
+     nomeJogadores[numJogador], sobrenomeJogadores[numJogador]);
+
+     for (int j = numJogador; j < numParticipantes - 1; j++) {
+         strcpy(nomeJogadores[j], nomeJogadores[j + 1]);
+         strcpy(sobrenomeJogadores[j], sobrenomeJogadores[j + 1]);
+     }
+}
+
 
