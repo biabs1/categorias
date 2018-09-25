@@ -100,16 +100,8 @@ int main() {
                               //o jogador não sabe de um ítem ou disse um que já foi dito.
                               if (strcmp(itemInformado, "#") == 0 || itemInformadoAntes(
                                 itemInformado, itensInformados, numItensInformados)) {
-                                printf("%s %s, infelizmente você está fora da jogada.\n\n",
-                                  nomeJogadores[i], sobrenomeJogadores[i]);
-
-                                //remove o jogador
-                                for (int j = i; j < numParticipantes - 1; j++) {
-                                  strcpy(nomeJogadores[j], nomeJogadores[j + 1]);
-                                  strcpy(sobrenomeJogadores[j], sobrenomeJogadores[j + 1]);
-                                }
-
-                                numParticipantes--;
+                                  removerJogador(nomeJogadores, sobrenomeJogadores, i, numParticipantes);
+                                  numParticipantes--;
                               } //o jogador informou um ítem cadastrado na categoria.
                               else if (itemCadastradoCategoria(itemInformado, categoriaSorteada)) {
                                 cadastrarItemInformadosNaJogada(
@@ -121,16 +113,17 @@ int main() {
                                 }
                               } //o jogador informou um ítem ainda não cadastrado.
                               else {
-                                /*Esse trecho ainda não está okay*/
                                 printf("\n\nATENÇÂO!\nEste ítem pertence mesmo a esta categoria? s/n\n");
-                                char resposta;
-                                scanf("%c", &resposta);
-                                if (resposta == 's') {
+                                char resposta[5];
+                                scanf("%s", resposta);
+                                if (strcmp(resposta, "s") == 0) {
                                   cadastrarItemInformadosNaJogada(
                                     itemInformado, itensInformados, ++numItensInformados);
                                   cadastrarItemCategoria(itemInformado, categoriaSorteada);
+                                } else {
+                                  removerJogador(nomeJogadores, sobrenomeJogadores, i, numParticipantes);
+                                  numParticipantes--;
                                 }
-
                               }
 
                               i++;
@@ -153,4 +146,3 @@ int main() {
 
   return 0;
 }
-
