@@ -11,26 +11,23 @@ Matheus Medeiros e Wener Wagner.
 #include <stdbool.h>
 
 #ifdef _WIN32
-#include <conio.h>
+#include <stdlib.h>
+#define limpaTela() system("cls")
 #else
 #include <stdio.h>
-#define clrscr() printf("\e[1;1H\e[2J")
+#define limpaTela() printf("\e[1;1H\e[2J")
 #endif
 
 
-// ---- game_messages.h ---- START
+// ---- jogo_mensagens.h ---- START
 
-void startBlock() {
+void cabecalho() {
     printf("==== JOGO CATEGORIAS ====\n");
 }
 
-void endBlock() {
-    printf("\n");
-}
-
-void messagePresentation() {
-    clrscr();
-    startBlock();
+void mensagemApresentacao() {
+    limpaTela();
+    cabecalho();
     printf("Bem vind@ ao jogo Categorias!\n");
     printf("Você testará o quanto de palavras você sabe ou consegue se lembrar de algumas categorias.\n");
     sleep(3);
@@ -39,69 +36,70 @@ void messagePresentation() {
     sleep(4);
 }
 
-void messageNewGame() {
-    clrscr();
-    startBlock();
+void mensagemNovoJogo() {
+    limpaTela();
+    cabecalho();
     printf("Você deseja começar um novo jogo?\n");
     printf("1 - Novo Jogo\n");
     printf("2 - Sair\n");
 }
 
-void messageInvalidOption() {
+void mensagemOpcaoInvalida() {
     printf("** Opção inválida. **\n** Reveja as opções possíveis. **\n");
     sleep(2);
 }
-// ---- game_messages.h ---- END
+// ---- jogo_mensagens.h ---- END
 
 
-// ---- game_options.h ---- START
-#define INVALID_OPTION -1
+// ---- jogo_opcoes.h ---- START
+#define OPCAO_INVALIDA -1
 
-#define NEW_GAME 1
-#define EXIT 2
+#define NOVO_JOGO 1
+#define SAIDA 2
 
-// ---- game_options.h ---- END
+// ---- jogo_opcoes.h ---- END
 
 
 
-// ---- game_input.h ---- START
+// ---- jogo_entrada.h ---- START
 void prompt() {
     printf(">> ");
 }
 
-int input_getOption() {
+int entrada_pegarOpcao() {
     
     prompt();
 
-    int option;
-    scanf("%d", &option);
+    int opcao;
+    scanf("%d", &opcao);
     setbuf(stdin, NULL);
 
-    if (option != NEW_GAME && option != EXIT) {
-        option = INVALID_OPTION;
+	printf("opcao eh %d", opcao);
+	
+    if (opcao != NOVO_JOGO && opcao != SAIDA) {
+        opcao = OPCAO_INVALIDA;
     }
-    return option;
+    return opcao;
 }
-// ---- game_input.h ---- END
+// ---- jogo_entrada.h ---- END
 
 int main() {
 
-    messagePresentation();
+    mensagemApresentacao();
 
-    bool gameRunning = true;
-
-    while (gameRunning) {
-        messageNewGame();
-        int option = input_getOption();
-        switch (option) {
-            case NEW_GAME:
+    bool jogoRodando = true;
+    while (jogoRodando) {
+        mensagemNovoJogo();
+        int opcao = entrada_pegarOpcao();
+        switch (opcao) {
+            case NOVO_JOGO:
                 // faz algo
             break;
-            case EXIT:
-                gameRunning = false;
+            case SAIDA:
+                jogoRodando = false;
             break;
-            case INVALID_OPTION:
-                messageInvalidOption();
+            case OPCAO_INVALIDA:
+                mensagemOpcaoInvalida();
                 // BUG: Quando digita texto, a msg de erro permanece.
             break;
         }
