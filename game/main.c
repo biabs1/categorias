@@ -10,6 +10,7 @@ Matheus Medeiros e Wener Wagner.
 #include <stdlib.h>
 #include "validacoes.c"
 #include "modos/classico.c"
+#include "cronometro.c"
 
 void imprimePequenaApresentacaoJogo() {
   printf("Bem vind@ ao jogo Categorias!\nVocê testará o quanto de palavras você sabe ou consegue se lembrar de algumas categorias.\nIMPORTANTE: seu tempo é limitado, então seu cérebro deve funcionar rápido!\nCOOOORRE Cérebro!\n");
@@ -89,8 +90,12 @@ int main() {
                           int i = 0;
 
                           while (i < numParticipantes && numParticipantes > 1) {
-                            printf("Jogador(a): %s %s, informe um ítem desta categoria: ",
+                              printf("Jogador(a): %s %s, pense por 10segundos e informe o item dessa categoria!\n",
                               nomeJogadores[i], sobrenomeJogadores[i]);
+                              
+			      if(cronometro(10) == 0){
+                                  printf("\n%s\n", "Tempo esgotado, informe um ítem desta categoria: ");
+                              }
 
                               scanf("%s", itemInformado);
 
@@ -163,8 +168,12 @@ int main() {
                           int i = 0;
 
                           while (i < numParticipantes && numParticipantes > 1) {
-                            printf("Jogador(a): %s %s, informe um ítem desta categoria: ",
+                              printf("Jogador(a): %s %s, pense por 10segundos e informe o item dessa categoria!\n",
                               nomeJogadores[i], sobrenomeJogadores[i]);
+                              
+			      if(cronometro(10) == 0){
+                                printf("\n%s\n", "Tempo esgotado, informe um ítem desta categoria: ");
+                              }
 
                               scanf("%s", itemInformado);
 
