@@ -158,6 +158,9 @@ int main() {
                             printf("Jogador(a): %s %s, informe um ítem desta categoria: ",
                               nomeJogadores[i], sobrenomeJogadores[i]);
 
+              if(cronometro(10) == 0){
+                                printf("\n%s\n", "Tempo esgotado, informe um í­tem desta categoria: ");
+                              }
                               scanf("%s", itemInformado);
 
                               //o jogador não sabe de um ítem ou disse um que já foi dito.
@@ -232,7 +235,10 @@ int main() {
                           while (i < numParticipantes && numParticipantes > 1) {
                             printf("Jogador(a): %s %s, informe um ítem desta categoria: ",
                               nomeJogadores[i], sobrenomeJogadores[i]);
-
+                  
+                    if(cronometro(10) == 0){
+                                printf("\n%s\n", "Tempo esgotado, informe um Ã­tem desta categoria: ");
+                              }
                               scanf("%s", itemInformado);
 
                               //o jogador não sabe de um ítem ou disse um que já foi dito.

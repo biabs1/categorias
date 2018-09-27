@@ -1,19 +1,17 @@
 #include <string.h>
 
+
+#define char comAcentos[50] = 'ÄÅÁÂÀÃäáâàãÉÊËÈéêëèÍÎÏÌíîïìÖÓÔÒÕöóôòõÜÚÛüúûùÇç';
+#define char semAcentos[50] = 'AAAAAAaaaaaEEEEeeeeIIIIiiiiOOOOOoooooUUUuuuuCc';
+
+
 void tiraAcentoDoCaractere(char * c) {
-    if (c == 'Ã¡' || c == 'Ã£' || c == 'Ã¢') 
-        c = 'a';
-    else if (c == 'Ã©' || c == 'áº½' || c == 'Ãª')
-        c = 'e';
-    else if (c == 'Ã­' || c == 'Ä©' || c == 'Ã®')
-        c = 'i';
-    else if (c == 'Ã³' || c == 'Ãµ' || c == 'Ã´')
-        c = 'o';
-    else if (c == 'Ãº' || c == 'Å©' || c == 'Ã»' || c == 'Ã¼')
-        c = 'u';
-    else if (c == 'Ã§')
-        c = 'c';
-}
+	for (int i = 0; i < strlen(comAcentos); i++) {
+		if ( c == comAcentos[i]) {
+			c = semAcentos[i];
+		}
+	}
+} 
 
 void tiraAcentoDaString(char c[]) {
     for (int i = 0; i < strlen(c); i++) {
