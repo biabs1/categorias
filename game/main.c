@@ -87,7 +87,8 @@ int main() {
 
                             if (jogadorEBot(nomeJogadores[i], sobrenomeJogadores[i])) {
                               if (botSabeResposta()) {
-
+                                itemInformado = sorteiaItemCategoria(categoriaSorteada);
+                                printf("%s\n", itemInformado);
                               } else {
                                 printf("#\n");
                                 strcpy(itemInformado, "#");
@@ -96,7 +97,7 @@ int main() {
                             } else {
                               scanf("%s", itemInformado);
                             }
-
+                          
                             //o jogador não sabe de um ítem ou disse um que já foi dito.
                             if (strcmp(itemInformado, "#") == 0 || itemInformadoAntes(
                               itemInformado, itensInformados, numItensInformados)) {
