@@ -10,7 +10,7 @@ Matheus Medeiros e Wener Wagner.
 #include <stdlib.h>
 #include "validacoes.c"
 #include "modos/classico.c"
-#include "cronometro.c"
+#include "modos/treino.c"
 
 void imprimePequenaApresentacaoJogo() {
   printf("Bem vind@ ao jogo Categorias!\nVocê testará o quanto de palavras você sabe ou consegue se lembrar de algumas categorias.\nIMPORTANTE: seu tempo é limitado, então seu cérebro deve funcionar rápido!\nCOOOORRE Cérebro!\n");
@@ -54,22 +54,87 @@ int main() {
 
                 char nomeJogadores[numParticipantes + 1][20], sobrenomeJogadores[numParticipantes + 1][20];
 
-                printf("\nDigite o nome e sobrenome dos jogadores.\nUm jogador por linha:\n");
-                for (int i = 0; i < numParticipantes; i++) {
-                    printf("Jogador %d: ", i + 1);
-                    scanf("%s %s", nomeJogadores[i], sobrenomeJogadores[i]);
-                }
-
-                printf("\n\nJogadores:\n");
-                for (int i = 0; i < numParticipantes; i++) {
-                    printf("Jogador %d: %s %s\n", i + 1, nomeJogadores[i], sobrenomeJogadores[i]);
-                }
-
-
-
                 if (modoDeJogo == 1) {
-                    printf("\nVocê escolheu a opção Treino!\n");
+                  printf("Cuidado para não ser derrotado(a) pelo(s) bot(s)!\n");
+
+                  receberNomeSobrenomeJogadores(1, nomeJogadores, sobrenomeJogadores);
+                  definirNomeSobrenomeBots(numParticipantes, nomeJogadores, sobrenomeJogadores);
+
+                  printf("\nVocê escolheu a opção de Modo Treino!\n");
+
+
+                  char *categoriaSorteada;
+                  categoriaSorteada = (char*)malloc(50 *sizeof(char));
+
+                  do {
+                    categoriaSorteada = sorteiaCategoria();
+                    printf("\ncategoria sorteada: %s\n", categoriaSorteada);
+
+                    printf("\nCada jogador deverá informar um ítem pertencente à categoria sorteada.\n");
+                    printf("Caso não se recorde de algum item, digite #\n\n");
+
+                    int numItensInformados = 0;
+                    char itensInformados[500][100];
+                    char itemInformado[100];
+
+                    while (numItensInformados <= numItensCadastradosCategoria(categoriaSorteada)
+                      && numParticipantes > 1) {
+                        int i = 0;
+
+                        while (i < numParticipantes && numParticipantes > 1) {
+                          printf("Jogador(a): %s %s, informe um ítem desta categoria: ",
+                            nomeJogadores[i], sobrenomeJogadores[i]);
+
+                            if (jogadorEBot(nomeJogadores[i], sobrenomeJogadores[i])) {
+                              if (botSabeResposta()) {
+
+                              } else {
+                                printf("#\n");
+                                strcpy(itemInformado, "#");
+                              }
+
+                            } else {
+                              scanf("%s", itemInformado);
+                            }
+
+                            //o jogador não sabe de um ítem ou disse um que já foi dito.
+                            if (strcmp(itemInformado, "#") == 0 || itemInformadoAntes(
+                              itemInformado, itensInformados, numItensInformados)) {
+                                removerJogador(nomeJogadores, sobrenomeJogadores, i, numParticipantes);
+                                numParticipantes--;
+                            } //o jogador informou um ítem cadastrado na categoria.
+                            else if (itemCadastradoCategoria(itemInformado, categoriaSorteada)) {
+                              cadastrarItemInformadosNaJogada(
+                                itemInformado, itensInformados, numItensInformados);
+                              numItensInformados++;
+
+                              for (int k = 0; k < numItensInformados; k++) {
+                                printf("%s\n", itensInformados[k]);
+                              }
+                            } //o jogador informou um ítem ainda não cadastrado.
+                            else {
+                              printf("\n\nATENÇÂO!\nEste ítem pertence mesmo a esta categoria? s/n\n");
+                              char resposta[5];
+                              scanf("%s", resposta);
+                              if (strcmp(resposta, "s") == 0) {
+                                cadastrarItemInformadosNaJogada(
+                                  itemInformado, itensInformados, ++numItensInformados);
+                                cadastrarItemCategoria(itemInformado, categoriaSorteada);
+                              } else {
+                                removerJogador(nomeJogadores, sobrenomeJogadores, i, numParticipantes);
+                                numParticipantes--;
+                              }
+                            }
+
+                            i++;
+                        }
+                      }
+                  } while (numParticipantes > 1);
+
+                  printf("\n\nO vencedor da vez é: %s %s. Parabéns!\n\n", nomeJogadores[0], sobrenomeJogadores[0]);
+
                 } else if (modoDeJogo == 2) {
+                    receberNomeSobrenomeJogadores(numParticipantes, nomeJogadores, sobrenomeJogadores);
                     printf("\nVocê escolheu a opção Modo Alternado!\n");
 
                     char *categoriaSorteada;
@@ -90,12 +155,8 @@ int main() {
                           int i = 0;
 
                           while (i < numParticipantes && numParticipantes > 1) {
-                              printf("Jogador(a): %s %s, pense por 10segundos e informe o item dessa categoria!\n",
+                            printf("Jogador(a): %s %s, informe um ítem desta categoria: ",
                               nomeJogadores[i], sobrenomeJogadores[i]);
-                              
-			      if(cronometro(10) == 0){
-                                  printf("\n%s\n", "Tempo esgotado, informe um ítem desta categoria: ");
-                              }
 
                               scanf("%s", itemInformado);
 
@@ -147,6 +208,7 @@ int main() {
                     printf("\n\nO vencedor da vez é: %s %s. Parabéns!\n\n", nomeJogadores[0], sobrenomeJogadores[0]);
 
                 } else if (modoDeJogo == 3) {
+                    receberNomeSobrenomeJogadores(numParticipantes, nomeJogadores, sobrenomeJogadores);
                     printf("\nVocê escolheu a opção de Modo Clássico!\n");
 
                     char *categoriaSorteada;
@@ -168,12 +230,8 @@ int main() {
                           int i = 0;
 
                           while (i < numParticipantes && numParticipantes > 1) {
-                              printf("Jogador(a): %s %s, pense por 10segundos e informe o item dessa categoria!\n",
+                            printf("Jogador(a): %s %s, informe um ítem desta categoria: ",
                               nomeJogadores[i], sobrenomeJogadores[i]);
-                              
-			      if(cronometro(10) == 0){
-                                printf("\n%s\n", "Tempo esgotado, informe um ítem desta categoria: ");
-                              }
 
                               scanf("%s", itemInformado);
 
@@ -226,4 +284,3 @@ int main() {
 
   return 0;
 }
-
