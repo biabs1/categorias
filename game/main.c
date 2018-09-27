@@ -70,6 +70,77 @@ int main() {
                     printf("\nVocê escolheu a opção Treino!\n");
                 } else if (modoDeJogo == 2) {
                     printf("\nVocê escolheu a opção Modo Alternado!\n");
+
+                    char *categoriaSorteada;
+                    categoriaSorteada = (char*)malloc(50 *sizeof(char));
+                    categoriaSorteada = sorteiaCategoria();
+                    printf("\ncategoria sorteada: %s\n", categoriaSorteada);
+
+                    do {
+                      printf("\nCada jogador deverá informar um ítem pertencente à categoria sorteada.\n");
+                      printf("Caso não se recorde de algum item, digite #\n\n");
+
+                      int numItensInformados = 0;
+                      char itensInformados[500][100];
+                      char itemInformado[100];
+
+                      while (numItensInformados <= numItensCadastradosCategoria(categoriaSorteada)
+                        && numParticipantes > 1) {
+                          int i = 0;
+
+                          while (i < numParticipantes && numParticipantes > 1) {
+                            printf("Jogador(a): %s %s, informe um ítem desta categoria: ",
+                              nomeJogadores[i], sobrenomeJogadores[i]);
+
+                              scanf("%s", itemInformado);
+
+                              //o jogador não sabe de um ítem ou disse um que já foi dito.
+                              if (strcmp(itemInformado, "#") == 0 || itemInformadoAntes(
+                                itemInformado, itensInformados, numItensInformados)) {
+                                  removerJogador(nomeJogadores, sobrenomeJogadores, i, numParticipantes);
+                                  numParticipantes--;
+
+                                if (numParticipantes > 1) {
+                                  categoriaSorteada = sorteiaCategoria();
+                                  printf("\n\ncategoria sorteada: %s\n", categoriaSorteada);
+                                }
+
+                              } //o jogador informou um ítem cadastrado na categoria.
+                              else if (itemCadastradoCategoria(itemInformado, categoriaSorteada)) {
+                                cadastrarItemInformadosNaJogada(
+                                  itemInformado, itensInformados, numItensInformados);
+                                numItensInformados++;
+
+                                for (int k = 0; k < numItensInformados; k++) {
+                                  printf("%s\n", itensInformados[k]);
+                                }
+                              } //o jogador informou um ítem ainda não cadastrado.
+                              else {
+                                printf("\n\nATENÇÂO!\nEste ítem pertence mesmo a esta categoria? s/n\n");
+                                char resposta[5];
+                                scanf("%s", resposta);
+                                if (strcmp(resposta, "s") == 0) {
+                                  cadastrarItemInformadosNaJogada(
+                                    itemInformado, itensInformados, ++numItensInformados);
+                                  cadastrarItemCategoria(itemInformado, categoriaSorteada);
+                                } else {
+                                  removerJogador(nomeJogadores, sobrenomeJogadores, i, numParticipantes);
+                                  numParticipantes--;
+
+                                  if (numParticipantes > 1) {
+                                    categoriaSorteada = sorteiaCategoria();
+                                    printf("\n\ncategoria sorteada: %s\n", categoriaSorteada);
+                                  }
+                                }
+                              }
+
+                              i++;
+                          }
+                        }
+                    } while (numParticipantes > 1);
+
+                    printf("\n\nO vencedor da vez é: %s %s. Parabéns!\n\n", nomeJogadores[0], sobrenomeJogadores[0]);
+
                 } else if (modoDeJogo == 3) {
                     printf("\nVocê escolheu a opção de Modo Clássico!\n");
 
@@ -146,3 +217,4 @@ int main() {
 
   return 0;
 }
+
