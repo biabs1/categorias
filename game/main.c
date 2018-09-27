@@ -11,6 +11,7 @@ Matheus Medeiros e Wener Wagner.
 #include "validacoes.c"
 #include "modos/classico.c"
 #include "modos/treino.c"
+#include "cronometro.c"
 
 void imprimePequenaApresentacaoJogo() {
   printf("Bem vind@ ao jogo Categorias!\nVocê testará o quanto de palavras você sabe ou consegue se lembrar de algumas categorias.\nIMPORTANTE: seu tempo é limitado, então seu cérebro deve funcionar rápido!\nCOOOORRE Cérebro!\n");
@@ -87,7 +88,7 @@ int main() {
 
                             if (jogadorEBot(nomeJogadores[i], sobrenomeJogadores[i])) {
                               if (botSabeResposta()) {
-                                itemInformado = sorteiaItemCategoria(categoriaSorteada);
+                                strcpy(itemInformado, sorteiaItemCategoria(categoriaSorteada));
                                 printf("%s\n", itemInformado);
                               } else {
                                 printf("#\n");
@@ -97,7 +98,7 @@ int main() {
                             } else {
                               scanf("%s", itemInformado);
                             }
-                          
+
                             //o jogador não sabe de um ítem ou disse um que já foi dito.
                             if (strcmp(itemInformado, "#") == 0 || itemInformadoAntes(
                               itemInformado, itensInformados, numItensInformados)) {
@@ -236,7 +237,7 @@ int main() {
                           while (i < numParticipantes && numParticipantes > 1) {
                             printf("Jogador(a): %s %s, informe um ítem desta categoria: ",
                               nomeJogadores[i], sobrenomeJogadores[i]);
-                  
+
                     if(cronometro(10) == 0){
                                 printf("\n%s\n", "Tempo esgotado, informe um Ã­tem desta categoria: ");
                               }
