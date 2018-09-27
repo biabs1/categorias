@@ -45,7 +45,7 @@ void cadastrarItemCategoria(char *item, char *categoria) {
   strcat(caminhoCategoria, categoria);
   strcat(caminhoCategoria, ".txt");
 
-  arquivo = fopen(caminhoCategoria, "w");
+  arquivo = fopen(caminhoCategoria, "a");
   inserirItemArquivo(item, arquivo);
   fclose(arquivo);
 }
