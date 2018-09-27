@@ -4,6 +4,7 @@
 */
 
 #include <string.h>
+#include "refatoraString.c"
 
 /*
 Retorna a quantidade de linhas de um arquivo.
@@ -77,6 +78,7 @@ int palavraExisteArquivo(char *palavra, FILE *arquivo, int numLinhas) {
        }
        palavraAtual[indice] = '\0';
 
+       transformaMaiusculaEmMinuscula(palavra);
        if (strcmp(palavra, palavraAtual) == 0) {
          existe = 1;
          break;

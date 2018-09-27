@@ -17,6 +17,11 @@ void imprimePequenaApresentacaoJogo() {
   printf("Bem vind@ ao jogo Categorias!\nVocê testará o quanto de palavras você sabe ou consegue se lembrar de algumas categorias.\nIMPORTANTE: seu tempo é limitado, então seu cérebro deve funcionar rápido!\nCOOOORRE Cérebro!\n");
 }
 
+void retiraQuebraDeLinha(char c[]) {
+	size_t len = strlen(c);
+	if (c[len - 1] == '\n') c[--len] = 0;
+}
+	
 int main() {
 
     imprimePequenaApresentacaoJogo();
@@ -96,7 +101,10 @@ int main() {
                               }
 
                             } else {
-                              scanf("%s", itemInformado);
+				setbuf(stdin, NULL);
+                              fgets(itemInformado, 100, stdin);
+				retiraQuebraDeLinha(itemInformado);
+				setbuf(stdin, NULL);
                             }
 
                             //o jogador não sabe de um ítem ou disse um que já foi dito.
@@ -109,10 +117,8 @@ int main() {
                               cadastrarItemInformadosNaJogada(
                                 itemInformado, itensInformados, numItensInformados);
                               numItensInformados++;
+				printf("Aceito!\n");
 
-                              for (int k = 0; k < numItensInformados; k++) {
-                                printf("%s\n", itensInformados[k]);
-                              }
                             } //o jogador informou um ítem ainda não cadastrado.
                             else {
                               printf("\n\nATENÇÂO!\nEste ítem pertence mesmo a esta categoria? s/n\n");
@@ -157,13 +163,16 @@ int main() {
                           int i = 0;
 
                           while (i < numParticipantes && numParticipantes > 1) {
-                            printf("Jogador(a): %s %s, informe um ítem desta categoria: ",
+                              printf("Jogador(a): %s %s, informe um ítem desta categoria: ",
                               nomeJogadores[i], sobrenomeJogadores[i]);
 
-              if(cronometro(10) == 0){
+                              if(cronometro(10) == 0){
                                 printf("\n%s\n", "Tempo esgotado, informe um í­tem desta categoria: ");
                               }
-                              scanf("%s", itemInformado);
+                              setbuf(stdin, NULL);
+                              fgets(itemInformado, 100, stdin);
+				retiraQuebraDeLinha(itemInformado);
+				setbuf(stdin, NULL);
 
                               //o jogador não sabe de um ítem ou disse um que já foi dito.
                               if (strcmp(itemInformado, "#") == 0 || itemInformadoAntes(
@@ -182,12 +191,10 @@ int main() {
                                   itemInformado, itensInformados, numItensInformados);
                                 numItensInformados++;
 
-                                for (int k = 0; k < numItensInformados; k++) {
-                                  printf("%s\n", itensInformados[k]);
-                                }
+                                printf("Aceito!\n");
                               } //o jogador informou um ítem ainda não cadastrado.
                               else {
-                                printf("\n\nATENÇÂO!\nEste ítem pertence mesmo a esta categoria? s/n\n");
+                                printf("\n\nATENÇÃO!\nEste ítem pertence mesmo a esta categoria? s/n\n");
                                 char resposta[5];
                                 scanf("%s", resposta);
                                 if (strcmp(resposta, "s") == 0) {
@@ -241,7 +248,10 @@ int main() {
                     if(cronometro(10) == 0){
                                 printf("\n%s\n", "Tempo esgotado, informe um Ã­tem desta categoria: ");
                               }
-                              scanf("%s", itemInformado);
+                              setbuf(stdin, NULL);
+                              fgets(itemInformado, 100, stdin);
+				retiraQuebraDeLinha(itemInformado);
+				setbuf(stdin, NULL);
 
                               //o jogador não sabe de um ítem ou disse um que já foi dito.
                               if (strcmp(itemInformado, "#") == 0 || itemInformadoAntes(
@@ -254,9 +264,7 @@ int main() {
                                   itemInformado, itensInformados, numItensInformados);
                                 numItensInformados++;
 
-                                for (int k = 0; k < numItensInformados; k++) {
-                                  printf("%s\n", itensInformados[k]);
-                                }
+                                printf("Aceito!\n");
                               } //o jogador informou um ítem ainda não cadastrado.
                               else {
                                 printf("\n\nATENÇÂO!\nEste ítem pertence mesmo a esta categoria? s/n\n");
