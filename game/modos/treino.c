@@ -35,4 +35,35 @@ int jogadorEBot(char *nomeJogador, char *sobrenomeJogador) {
 Verifica se um bot sabe de ítem para a categoria.
 */
 int botSabeResposta() {
+  int result = 0;
+  if (rand() > 0.5) {
+    result = 1;
+  }
+  return result;
 }
+
+/*
+Sorteia um ítem de uma dada categoria.
+*/
+char* sorteiaItemCategoria(char *categoria) {
+  FILE *arquivo;
+  char caminhoCategoria[400] = "../palavras/";
+  strcat(caminhoCategoria, categoria);
+  strcat(caminhoCategoria, ".txt");
+
+  arquivo = fopen(caminhoCategoria, "r");
+  int numItens = numLinhasArquivo(arquivo);
+  fclose(arquivo);
+
+  // Gera um valor aleatório entre zero e o número de itens cadastrados -1.
+  int linhaItemSorteado = rand() % numItens - 1;
+
+  arquivo = fopen(caminhoCategoria, "r");
+  char *item;
+  item = (char*)malloc(50 *sizeof(char));
+  item = palavraLinha(linhaItemSorteado, arquivo);
+  fclose(arquivo);
+
+  return item;
+}
+
