@@ -102,4 +102,19 @@ void removerJogador(char nomeJogadores[][20], char sobrenomeJogadores[][20],
      }
 }
 
+/*
+Recebe o nome e o sobrenome dos jogadores humanos.
+*/
+void receberNomeSobrenomeJogadores(int numParticipantes,
+  char nomeJogadores[][20], char sobrenomeJogadores[][20]) {
+  printf("\nDigite o nome e sobrenome do(s) jogador(es) humano(s).\nUm jogador por linha:\n");
+  for (int i = 0; i < numParticipantes; i++) {
+      printf("Jogador %d: ", i + 1);
+      scanf("%s %s", nomeJogadores[i], sobrenomeJogadores[i]);
+  }
 
+  printf("\n\nJogador(es) cadastrado(s):\n");
+  for (int i = 0; i < numParticipantes; i++) {
+      printf("Jogador %d: %s %s\n", i + 1, nomeJogadores[i], sobrenomeJogadores[i]);
+  }
+}
