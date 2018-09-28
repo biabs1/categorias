@@ -1,11 +1,10 @@
-# categorias
-Tema: Jogo “Categorias”
+## Jogo Categorias
 
-Descrição:
+# Descrição:
 
 O jogo “Categorias” é jogado de 2 a 8 jogadores localmente através de uma interface de texto (terminal), e funciona da seguinte forma: existem categorias cadastradas no sistema, e para cada categoria existem palavras relacionadas (Ex.: categoria “Cor” possui as cores cadastradas como palavras relacionadas). Inicialmente é sorteada uma categoria, feito isso cada jogador (de forma sequencial) tem a sua vez, onde ele tem que informar uma palavra que exista nessa categoria e que ainda não tenha sido informada por nenhum outro jogador. Caso o jogador informe uma palavra repetida, uma que não conste na categoria ou não informe a palavra a tempo, o jogador é eliminado. Ganha quem permanecer no jogo por último após todos os outros serem eliminados.
 
-Especificações:
+# Especificações:
 
 Interface com usuário - Qualquer usuário humano irá interagir com o jogo via terminal, digitando opções informadas ou digitando as palavras durante o jogo.
 
@@ -16,7 +15,7 @@ Treino: O jogador joga contra bots com as mesmas regras do Modo Clássico. Os bo
 Modo Clássico: Uma categoria é sorteada inicialmente, uma nova categoria só é sorteado caso as palavras dessa categoria tenham acabado e ainda restem jogadores no jogo.
 Modo Alternado: Uma categoria é sorteada inicialmente, uma nova categoria é sorteada toda vez que um jogador for eliminado.
 
-Simplificações:
+# Simplificações:
 
 Acentuação - A acentuação será desconsiderada na validação de palavras. Exemplo: para a palavra cadastrada “México”, a entrada “Mexico” será considerada válida.
 
@@ -31,6 +30,6 @@ Frutas,
 Verduras e Legumes,
 Linguagens de Programação.
 
-Extras:
+# Extras:
 - Permitir o cadastro de novas categorias e palavras.
 - Utilizar arquivos ou DB para armazenar as categorias e suas palavras.
