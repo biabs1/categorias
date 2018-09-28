@@ -12,7 +12,6 @@ Matheus Medeiros e Wener Wagner.
 #include <stdbool.h>
 #include <string.h>
 #include "manipulacoesArquivos.c"
-#include "cronometro.c"
 
 #ifdef _WIN32
 #include <stdlib.h>
@@ -222,6 +221,13 @@ void mensagem_vencedor(char nomeJogador[], char sobrenomeJogador[]) {
 	printf("O vencedor da vez é: %s %s. Parabéns!\n\n", nomeJogador, sobrenomeJogador);
 	sleep(4);
 }
+
+void mensagem_modoAlternadoSorteio(char categoriaSorteada[]) {
+	limpaTela();
+	cabecalho();
+	printf("Modo Alternado: Uma nova categoria foi sorteada: %s\n", categoriaSorteada);
+	sleep(3);
+}
 // ---- jogo_mensagem.h ---- END
 
 
@@ -338,19 +344,7 @@ void modoTreino() {
 	mensagem_modoTreinoSelecionado();
 }
 
-void modoAlternado() {
-	
-	mensagem_modoAlternadoSelecionado();
-	
-	int numParticipantes = loopEscolhaNumJogadores();
-	char nomeJogadores[numParticipantes + 1][20], sobrenomeJogadores[numParticipantes + 1][20];
-	
-	entrada_receberNomeSobrenomeJogadores(numParticipantes, nomeJogadores, sobrenomeJogadores);
-}
-
-void modoClassico() {
-	
-	mensagem_modoClassicoSelecionado();
+void modoGenerico(int modo) {
 	
 	int numParticipantes = loopEscolhaNumJogadores();
 	char nomeJogadores[numParticipantes + 1][20], sobrenomeJogadores[numParticipantes + 1][20];
@@ -381,6 +375,11 @@ void modoClassico() {
 				if (strcmp(itemInformado, "#") == 0 || itemInformadoAntes(itemInformado, itensInformados, numItensInformados)) {
 					removerJogador(nomeJogadores, sobrenomeJogadores, i, numParticipantes);
 					numParticipantes--;
+
+					if (numParticipantes > 1 && modo == MODO_ALTERNADO) {
+						categoriaSorteada = sorteiaCategoria();
+						mensagem_modoAlternadoSorteio(categoriaSorteada);
+					}
 				} //o jogador informou um ítem cadastrado na categoria.
 				else if (itemCadastradoCategoria(itemInformado, categoriaSorteada)) {
 					cadastrarItemInformadosNaJogada(itemInformado, itensInformados, numItensInformados);
@@ -402,6 +401,11 @@ void modoClassico() {
 					} else {
 						removerJogador(nomeJogadores, sobrenomeJogadores, i, numParticipantes);
 						numParticipantes--;
+						
+						if (numParticipantes > 1 && modo == MODO_ALTERNADO) {
+							categoriaSorteada = sorteiaCategoria();
+							mensagem_modoAlternadoSorteio(categoriaSorteada);
+						}
 					}
 				}
 				i++;
@@ -410,7 +414,20 @@ void modoClassico() {
 	} while (numParticipantes > 1);
 	
 	mensagem_vencedor(nomeJogadores[0], sobrenomeJogadores[0]);
+}
+
+void modoAlternado() {
 	
+	mensagem_modoAlternadoSelecionado();
+	
+	modoGenerico(MODO_ALTERNADO);
+}
+
+void modoClassico() {
+	
+	mensagem_modoClassicoSelecionado();
+	
+	modoGenerico(MODO_CLASSICO);	
 }
 
 void loopEscolhaModoJogo() {
@@ -429,8 +446,6 @@ void loopEscolhaModoJogo() {
 			break;
 			case MODO_ALTERNADO:
 				modoAlternado();
-				printf("A ser implementado, voce sera redirecionado para o menu inicial\n");
-				system("pause");
 			break;
 			case MODO_CLASSICO:
 				modoClassico();
