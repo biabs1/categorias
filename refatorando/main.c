@@ -16,7 +16,7 @@ Matheus Medeiros e Wener Wagner.
 #else
 #include <stdio.h>
 #define limpaTela() printf("\e[1;1H\e[2J")
-#endif
+#endif 
 
 
 // ---- jogo_mensagem.h ---- START
@@ -26,6 +26,7 @@ void cabecalho() {
 }
 
 void mensagem_apresentacao() {
+	/**
     limpaTela();
     cabecalho();
     printf("Bem vind@ ao jogo Categorias!\n");
@@ -34,6 +35,7 @@ void mensagem_apresentacao() {
     printf("IMPORTANTE: seu tempo é limitado, então seu cérebro deve funcionar rápido!\n");
     printf("COOOORRE Cérebro!\n");
     sleep(4);
+	**/
 }
 
 void mensagem_menuPrincipal() {
@@ -58,21 +60,73 @@ void mensagem_modosJogo() {
 	printf("3 - Modo Clássico\n");
 	printf("4 - Voltar\n");
 }
+
+void mensagem_modoClassicoSelecionado() {
+	limpaTela();
+	cabecalho();
+	printf("Modo Clássico selecionado\n");
+	sleep(2);
+}
+
+void mensagem_modoAlternadoSelecionado() {
+	limpaTela();
+	cabecalho();
+	printf("Modo Alternado selecionado\n");
+	sleep(2);
+}
+
+void mensagem_modoTreinoSelecionado() {
+	limpaTela();
+	cabecalho();
+	printf("Modo Treino selecionado\n");
+	sleep(2);
+}
+
+void mensagem_numJogadores() {
+	limpaTela();
+	cabecalho();
+	printf("Digite a quantidade de jogadores.\n");
+	printf("Este valor deve estar entre 2 e 8 inclusive:\n");
+}
+
+void mensagem_nomeJogadores() {
+	limpaTela();
+	cabecalho();
+	
+	printf("Digite o nome e sobrenome do(s) jogador(es) humano(s).\n");
+	printf("Um jogador por linha:\n");
+}
+
+void mensagem_jogadoresCadastrados(int numParticipantes, char nomeJogadores[][20], char sobrenomeJogadores[][20]) {
+	
+	printf("\nJogador(es) cadastrado(s):\n");
+	for (int i = 0; i < numParticipantes; i++) {
+		printf("Jogador %d: %s %s\n", i + 1, nomeJogadores[i], sobrenomeJogadores[i]);
+	}
+	sleep(2);
+}
 // ---- jogo_mensagem.h ---- END
 
 
-// ---- jogo_opcoes.h ---- START
+// ---- jogo_constantes.h ---- START
+// Opcoes menu inicial
 #define OPCAO_INVALIDA -1
 #define NOVO_JOGO 1
 #define SAIDA 2
 
+// Opcoes menu modos
 #define MODO_NAO_SELECIONADO -1
 #define MODO_TREINO 1
 #define MODO_ALTERNADO 2
 #define MODO_CLASSICO 3
 #define VOLTAR 4
 
-// ---- jogo_opcoes.h ---- END
+// Numero de jogadores
+#define NUM_MINIMO_JOGADORES 2
+#define NUM_MAXIMO_JOGADORES 8
+#define NUM_JOGADORES_INVALIDO -1
+
+// ---- jogo_constantes.h ---- END
 
 
 // ---- jogo_entrada.h ---- START
@@ -107,7 +161,75 @@ int entrada_pegarModoJogo() {
     }
     return modo;
 }
+
+int entrada_pegarNumJogadores() {
+	
+	prompt();
+	
+	int numJogadores;
+	scanf("%d", &numJogadores);
+	setbuf(stdin, NULL);	// TODO: checar funcionamento do setbuf direito
+	
+	if (numJogadores < NUM_MINIMO_JOGADORES || numJogadores > NUM_MAXIMO_JOGADORES) {
+		numJogadores = NUM_JOGADORES_INVALIDO;
+	}
+	
+	return numJogadores;
+}
 // ---- jogo_entrada.h ---- END
+
+void receberNomeSobrenomeJogadores(int numParticipantes, char nomeJogadores[][20], char sobrenomeJogadores[][20]) {
+	
+	mensagem_nomeJogadores();
+	
+	for (int i = 0; i < numParticipantes; i++) {
+		printf("Jogador %d: ", i + 1);
+		scanf("%s %s", nomeJogadores[i], sobrenomeJogadores[i]);
+	}
+	
+	mensagem_jogadoresCadastrados(numParticipantes, nomeJogadores, sobrenomeJogadores);
+}
+
+int loopEscolhaNumJogadores() {
+	
+	int numParticipantes = NUM_JOGADORES_INVALIDO;
+	
+	while (numParticipantes == NUM_JOGADORES_INVALIDO) {
+		
+		mensagem_numJogadores();
+		
+		numParticipantes = entrada_pegarNumJogadores();
+	
+		if (numParticipantes == NUM_JOGADORES_INVALIDO) {
+			mensagem_opcaoInvalida();
+		}
+	}
+	return numParticipantes;
+}
+
+void modoTreino() {
+	mensagem_modoTreinoSelecionado();
+}
+
+void modoAlternado() {
+	
+	mensagem_modoAlternadoSelecionado();
+	
+	int numParticipantes = loopEscolhaNumJogadores();
+	char nomeJogadores[numParticipantes + 1][20], sobrenomeJogadores[numParticipantes + 1][20];
+	
+	receberNomeSobrenomeJogadores(numParticipantes, nomeJogadores, sobrenomeJogadores);
+}
+
+void modoClassico() {
+	
+	mensagem_modoClassicoSelecionado();
+	
+	int numParticipantes = loopEscolhaNumJogadores();
+	char nomeJogadores[numParticipantes + 1][20], sobrenomeJogadores[numParticipantes + 1][20];
+	
+	receberNomeSobrenomeJogadores(numParticipantes, nomeJogadores, sobrenomeJogadores);
+}
 
 void loopEscolhaModoJogo() {
 	
@@ -119,17 +241,17 @@ void loopEscolhaModoJogo() {
 		modoDeJogo = entrada_pegarModoJogo();
 		switch (modoDeJogo) {
 			case MODO_TREINO:
-				printf("Modo Treino Selecionado\n");
+				modoTreino();
 				printf("A ser implementado, voce sera redirecionado para o menu inicial\n");
 				system("pause");
 			break;
 			case MODO_ALTERNADO:
-				printf("Modo Alternado Selecionado\n");
+				modoAlternado();
 				printf("A ser implementado, voce sera redirecionado para o menu inicial\n");
 				system("pause");
 			break;
 			case MODO_CLASSICO:
-				printf("Modo Clássico Selecionado\n");
+				modoClassico();
 				printf("A ser implementado, voce sera redirecionado para o menu inicial\n");
 				system("pause");
 			break;
