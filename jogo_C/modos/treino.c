@@ -18,6 +18,7 @@ void definirNomeSobrenomeBots(int numParticipantes,
   for (int i = 1; i < numParticipantes; i++) {
       printf("Bot %d: %s %s\n", i + 1, nomeJogadores[i], sobrenomeJogadores[i]);
   }
+  sleep(2);
 }
 
 /*

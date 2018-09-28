@@ -2,7 +2,8 @@
 ** As funções implementadas neste módulo servem para manipular
 ** os arquivos do diretório palavras.
 */
-
+#ifndef MANIPULACOESARQUIVOS
+#define MANIPULACOESARQUIVOS
 #include <string.h>
 #include "refatoraString.c"
 
@@ -96,9 +97,9 @@ void inserirItemArquivo(char *item, FILE *arquivo) {
   if (arquivo == NULL) {
     printf("O arquivo não foi encontrado\n");
   } else {
-    //strcat(item, "\n");
+	transformaMaiusculaEmMinuscula(item);
     fprintf(arquivo, "%s\n", item);
   }
 }
 
-
+#endif
