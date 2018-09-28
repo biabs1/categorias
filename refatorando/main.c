@@ -12,6 +12,7 @@ Matheus Medeiros e Wener Wagner.
 #include <stdbool.h>
 #include <string.h>
 #include "manipulacoesArquivos.c"
+#include "modos/treino.c"
 
 #ifdef _WIN32
 #include <stdlib.h>
@@ -161,6 +162,8 @@ void mensagem_modoTreinoSelecionado() {
 	cabecalho();
 	printf("Modo Treino selecionado\n");
 	sleep(1);
+	printf("Cuidado para não ser derrotado(a) pelo(s) bot(s)!\n");
+	sleep(2);
 }
 
 void mensagem_numJogadores() {
@@ -340,16 +343,17 @@ int loopEscolhaNumJogadores() {
 	return numParticipantes;
 }
 
-void modoTreino() {
-	mensagem_modoTreinoSelecionado();
-}
-
 void modoGenerico(int modo) {
 	
 	int numParticipantes = loopEscolhaNumJogadores();
 	char nomeJogadores[numParticipantes + 1][20], sobrenomeJogadores[numParticipantes + 1][20];
 	
-	entrada_receberNomeSobrenomeJogadores(numParticipantes, nomeJogadores, sobrenomeJogadores);
+	if(modo == MODO_TREINO) {
+		entrada_receberNomeSobrenomeJogadores(1, nomeJogadores, sobrenomeJogadores);
+		definirNomeSobrenomeBots(numParticipantes, nomeJogadores, sobrenomeJogadores);
+	} else {
+		entrada_receberNomeSobrenomeJogadores(numParticipantes, nomeJogadores, sobrenomeJogadores);
+	}
 	
 	char *categoriaSorteada;
     categoriaSorteada = (char*)malloc(50 *sizeof(char));
@@ -369,7 +373,17 @@ void modoGenerico(int modo) {
 				
 				mensagem_informarPalavraCategoria(categoriaSorteada, nomeJogadores[i], sobrenomeJogadores[i]);
 				
-				entrada_pegarPalavraInformada(itemInformado);
+				if (modo == MODO_TREINO && jogadorEBot(nomeJogadores[i], sobrenomeJogadores[i])) {
+					if (botSabeResposta()) {
+						strcpy(itemInformado, sorteiaItemCategoria(categoriaSorteada));
+						printf("%s\n", itemInformado);
+					} else {
+						printf("#\n");
+						strcpy(itemInformado, "#");
+					}
+				} else {
+					entrada_pegarPalavraInformada(itemInformado);
+				}
 
 				//o jogador não sabe de um ítem ou disse um que já foi dito.
 				if (strcmp(itemInformado, "#") == 0 || itemInformadoAntes(itemInformado, itensInformados, numItensInformados)) {
@@ -386,6 +400,9 @@ void modoGenerico(int modo) {
 					numItensInformados++;
 
 					mensagem_itemAceito();
+					if (modo == MODO_TREINO) {
+						sleep(1);
+					}
 				} //o jogador informou um ítem ainda não cadastrado.
 				else {
 					mensagem_palavraNaoCadastrada();
@@ -416,15 +433,19 @@ void modoGenerico(int modo) {
 	mensagem_vencedor(nomeJogadores[0], sobrenomeJogadores[0]);
 }
 
-void modoAlternado() {
+void modoTreino() {
+	mensagem_modoTreinoSelecionado();	
 	
+	modoGenerico(MODO_TREINO);
+}
+
+void modoAlternado() {
 	mensagem_modoAlternadoSelecionado();
 	
 	modoGenerico(MODO_ALTERNADO);
 }
 
 void modoClassico() {
-	
 	mensagem_modoClassicoSelecionado();
 	
 	modoGenerico(MODO_CLASSICO);	
@@ -441,8 +462,6 @@ void loopEscolhaModoJogo() {
 		switch (modoDeJogo) {
 			case MODO_TREINO:
 				modoTreino();
-				printf("A ser implementado, voce sera redirecionado para o menu inicial\n");
-				system("pause");
 			break;
 			case MODO_ALTERNADO:
 				modoAlternado();
