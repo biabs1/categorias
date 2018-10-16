@@ -4,6 +4,7 @@ import Data.List
 import System.IO
 
 import Mensagens
+import Execucao
 
 -- Opcoes menu inicial
 opcao_invalida = -1
@@ -33,10 +34,11 @@ entrada_pegarOpcaoMenu =
     mensagem_menuPrincipal
     opcao <- readLn
     if (opcao == novo_jogo)
-      then putStrLn("Novo Jogo")
+      then loopEscolhaModoJogo
       else do
         if (opcao == saida)
           then putStrLn("Saída")
           else do
             mensagem_opcaoInvalida
             entrada_pegarOpcaoMenu
+
