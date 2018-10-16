@@ -19,9 +19,9 @@ modo_classico = 3
 voltar = 4
 
 -- Numero de jogadores
-num_minimo_jogadores = 2 :: Int
-num_maximo_jogadores = 8 :: Int
-num_jogadores_invalido = -1 :: Int
+num_minimo_jogadores = 2
+num_maximo_jogadores = 8
+num_jogadores_invalido = -1
 
 prompt :: IO()
 prompt = do putStr(">> ")
