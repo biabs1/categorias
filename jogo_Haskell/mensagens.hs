@@ -1,6 +1,7 @@
 module Mensagens where
 
 import Tela
+import Data.List
 
 cabecalho = do putStrLn "========== JOGO CATEGORIAS ==========\n\n"
 
@@ -65,15 +66,10 @@ mensagem_palavraNaoCadastrada = do
     putStrLn "\nATENÇÃO! Esta palavra não está cadastrada!\n"
     putStrLn "\nEste item pertence mesmo a esta categoria? s/n\n"
 
-mensagem_jogadoresCadastrados :: Int -> [String] -> IO()
-mensagem_jogadoresCadastrados numParticipantes nomeJogadores = do
-    putStrLn "\nJogador(es) cadastrado(s):\n"
-    putStrLn (concatNomeJogadores numParticipantes nomeJogadores)
+mensagem_jogadoresCadastrados :: [String] -> IO()
+mensagem_jogadoresCadastrados nomeJogadores = do
+    putStrLn (unlines $ "\nJogador(es) cadastrado(s):\n" : nomeJogadores)
     sleep 2
-
-concatNomeJogadores :: Int -> [String] -> String
-concatNomeJogadores 0 _ = ""
-concatNomeJogadores numParticipantes (x:xs) = x ++ "\n" ++ concatNomeJogadores (numParticipantes - 1) xs
 
 mensagem_categoriaSorteada :: String -> IO()
 mensagem_categoriaSorteada categoria = do
