@@ -9,6 +9,29 @@ modo_alternado = 2
 modo_classico = 3
 voltar = 4
 
+-- Numero de jogadores
+num_minimo_jogadores = 2
+num_maximo_jogadores = 8
+num_jogadores_invalido = -1
+
+loopEscolhaNumJogadores :: IO Int
+loopEscolhaNumJogadores =
+  do
+    mensagem_numJogadores
+    numParticipantes <- readLn
+    if (numParticipantes == num_jogadores_invalido)
+      then
+        do
+          mensagem_opcaoInvalida
+          loopEscolhaNumJogadores
+      else return(numParticipantes)
+
+modo_generico :: Int -> IO()
+modo_generico modo =
+  do
+    numParticipantes <- loopEscolhaNumJogadores
+    putStrLn(show numParticipantes)
+
 modo_treino_selecionado :: IO()
 modo_treino_selecionado =
   do
@@ -23,6 +46,7 @@ modo_classico_selecionado :: IO()
 modo_classico_selecionado =
   do
     mensagem_modoClassicoSelecionado
+    modo_generico modo_classico
 
 loopEscolhaModoJogo :: IO()
 loopEscolhaModoJogo =
