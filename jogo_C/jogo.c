@@ -6,7 +6,7 @@ Desenvolvedores: Alessandra Barros, Beatriz Souza, Luana Melo,
 Matheus Medeiros e Wener Wagner.
 */
 
-#include "aux/execucao.c"
+#include "util/execucao.c"
 
 int main() {
 
