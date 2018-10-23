@@ -1,6 +1,6 @@
 #ifndef CLASSICO
 #define CLASSICO
-#include "../aux/manipulacoesArquivos.c"
+#include "../util/manipulacoesArquivos.c"
  
 /*
 Retorna uma categoria sorteada entre as categorias cadastradas.
