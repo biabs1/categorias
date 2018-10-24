@@ -7,3 +7,10 @@ numLinhasArquivo enderecoArquivo = do
   arquivo <- openFile enderecoArquivo ReadMode
   conteudo <- hGetContents arquivo
   return (length (lines conteudo))
+
+palavraLinha :: Int -> [Char] -> IO [Char]
+palavraLinha linha enderecoArquivo = do
+  arquivo <- openFile enderecoArquivo ReadMode
+  conteudo <- hGetContents arquivo
+  --linhas <- lines conteudo
+  return ((lines conteudo) !! linha)
