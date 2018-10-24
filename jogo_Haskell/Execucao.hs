@@ -3,6 +3,7 @@ module Execucao where
 import Mensagens
 import Entradas
 import Treino
+import ModoClassico
 
 -- Opcoes menu inicial
 opcao_invalida = -1
@@ -34,6 +35,7 @@ modo_generico modo =
       else do
         nomeSobrenomeJogadores <- entrada_receberNomeSobrenomeJogadores numParticipantes []
         mensagem_jogadoresCadastrados nomeSobrenomeJogadores
+        --putStrLn(sorteiaCategoria)
 
 modo_treino_selecionado :: IO()
 modo_treino_selecionado =
