@@ -5,7 +5,7 @@ import Data.List
 
 cabecalho = do putStrLn "========== JOGO CATEGORIAS ==========\n\n"
 
-mensagem_apresentacao = do 
+mensagem_apresentacao = do
     limparTela
     cabecalho
     putStrLn "Bem vind@ ao Jogo Categorias!\n"
@@ -85,7 +85,7 @@ mensagem_informarPalavraCategoria categoriaSorteada nomeJogador = do
     limparTela
     cabecalho
     putStrLn ("Categoria: " ++ categoriaSorteada ++ "\n")
-    putStrLn ("Vez do jogador(a): " ++ nomeJogador ++ "\n\n") 
+    putStrLn ("Vez do jogador(a): " ++ nomeJogador ++ "\n\n")
     putStrLn "Informe um ítem desta categoria (sem acentos): \n"
 
 mensagem_vencedor :: String -> IO()

@@ -25,18 +25,20 @@ modo_generico modo =
   do
     numParticipantes <- loopEscolhaNumJogadores
     mensagem_nomeJogadores
-  --  nomeSobrenomeJogadores <- entrada_receberNomeSobrenomeJogadores numParticipantes []
-  --  mensagem_jogadoresCadastrados numParticipantes nomeSobrenomeJogadores
+    nomeSobrenomeJogadores <- entrada_receberNomeSobrenomeJogadores numParticipantes []
+    mensagem_jogadoresCadastrados nomeSobrenomeJogadores
 
 modo_treino_selecionado :: IO()
 modo_treino_selecionado =
   do
     mensagem_modoTreinoSelecionado
+    modo_generico modo_treino
 
 modo_alternado_selecionado :: IO()
 modo_alternado_selecionado =
   do
     mensagem_modoAlternadoSelecionado
+    modo_generico modo_alternado
 
 modo_classico_selecionado :: IO()
 modo_classico_selecionado =
