@@ -2,11 +2,9 @@ module ModoClassico where
 
 import System.IO
 import ManipulacoesArquivos
-{-
-sorteiaCategoria :: [[Char]]
+
+sorteiaCategoria :: IO [Char]
 sorteiaCategoria = do
-  arquivo = openFile "../palavras/categorias.txt" ReadMode
-  numCategoriasCadastradas <- numLinhasArquivo arquivo 0
-  hClose arquivo
+  numCategoriasCadastradas <- numLinhasArquivo "../palavras/categorias.txt"
   putStrLn(show numCategoriasCadastradas)
-  return("Hey")-}
+  return("Hey")

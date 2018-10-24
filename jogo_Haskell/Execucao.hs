@@ -4,6 +4,7 @@ import Mensagens
 import Entradas
 import Treino
 import ModoClassico
+import ManipulacoesArquivos
 
 -- Opcoes menu inicial
 opcao_invalida = -1
@@ -36,6 +37,8 @@ modo_generico modo =
         nomeSobrenomeJogadores <- entrada_receberNomeSobrenomeJogadores numParticipantes []
         mensagem_jogadoresCadastrados nomeSobrenomeJogadores
         --putStrLn(sorteiaCategoria)
+        sorteiaCategoria
+        return()
 
 modo_treino_selecionado :: IO()
 modo_treino_selecionado =
