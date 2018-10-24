@@ -2,6 +2,7 @@ module Execucao where
 
 import Mensagens
 import Entradas
+import Treino
 
 -- Opcoes menu inicial
 opcao_invalida = -1
@@ -25,8 +26,14 @@ modo_generico modo =
   do
     numParticipantes <- loopEscolhaNumJogadores
     mensagem_nomeJogadores
-    nomeSobrenomeJogadores <- entrada_receberNomeSobrenomeJogadores numParticipantes []
-    mensagem_jogadoresCadastrados nomeSobrenomeJogadores
+    if (modo == modo_treino)
+      then do
+        nomeSobrenomeJogadores <- entrada_receberNomeSobrenomeJogadores 1 []
+        nomeSobrenomeJogadores <- definirNomeSobrenomeBots 1 numParticipantes nomeSobrenomeJogadores
+        mensagem_jogadoresCadastrados nomeSobrenomeJogadores
+      else do
+        nomeSobrenomeJogadores <- entrada_receberNomeSobrenomeJogadores numParticipantes []
+        mensagem_jogadoresCadastrados nomeSobrenomeJogadores
 
 modo_treino_selecionado :: IO()
 modo_treino_selecionado =
