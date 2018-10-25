@@ -37,6 +37,16 @@ modo_generico modo =
         mensagem_jogadoresCadastrados nomeSobrenomeJogadores
         categoriaSorteada <- sorteiaCategoria
         mensagem_categoriaSorteada categoriaSorteada
+        item <- getLine
+        putStrLn(item)
+
+
+
+
+
+
+
+
 
 modo_treino_selecionado :: IO()
 modo_treino_selecionado =
