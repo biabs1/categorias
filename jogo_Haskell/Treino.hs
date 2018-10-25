@@ -20,3 +20,9 @@ sorteiaItemCategoria categoria = do
   numItensCadastrados <- numLinhasArquivo ("../palavras/" ++ categoria ++ ".txt")
   palavraSorteada <- palavraLinha (numAleatorio (0, (numItensCadastrados - 1))) ("../palavras/" ++ categoria ++ ".txt")
   return(palavraSorteada)
+
+botSabeResposta :: Bool
+botSabeResposta = do
+  if((numAleatorio (1,100)) > 50)
+    then True
+    else False
