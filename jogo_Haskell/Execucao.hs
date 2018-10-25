@@ -32,21 +32,13 @@ modo_generico modo =
         nomeSobrenomeJogadores <- entrada_receberNomeSobrenomeJogadores 1 []
         nomeSobrenomeJogadores <- definirNomeSobrenomeBots 1 numParticipantes nomeSobrenomeJogadores
         mensagem_jogadoresCadastrados nomeSobrenomeJogadores
+        loopRestaMaisDeUmJogador numParticipantes nomeSobrenomeJogadores
+        entrada_pegarOpcaoMenu
       else do
         nomeSobrenomeJogadores <- entrada_receberNomeSobrenomeJogadores numParticipantes []
         mensagem_jogadoresCadastrados nomeSobrenomeJogadores
-        categoriaSorteada <- sorteiaCategoria
-        mensagem_categoriaSorteada categoriaSorteada
-        item <- getLine
-        putStrLn(item)
-
-
-
-
-
-
-
-
+        loopRestaMaisDeUmJogador numParticipantes nomeSobrenomeJogadores
+        entrada_pegarOpcaoMenu
 
 modo_treino_selecionado :: IO()
 modo_treino_selecionado =
@@ -95,6 +87,35 @@ loopEscolhaNumJogadores =
           mensagem_opcaoInvalida
           loopEscolhaNumJogadores
 
+loopRestaMaisDeUmJogador :: Int -> [[Char]] -> IO()
+loopRestaMaisDeUmJogador numParticipantes nomeJogadores = do
+  if numParticipantes == 1
+    then do mensagem_vencedor (head nomeJogadores)
+    else do
+      categoriaSorteada <- sorteiaCategoria
+      mensagem_categoriaSorteada categoriaSorteada
+      --partipantesRestantes <- loopRestaItemASerDitoCategoriaSorteada 0 [] numParticipantes categoriaSorteada nomeJogadores
+      --loopRestaMaisDeUmJogador (numParticipantes - 1) partipantesRestantes
+
+{-
+loopRestaItemASerDitoCategoriaSorteada :: Int -> [[Char]] -> Int -> [Char] -> [[Char]] -> IO [[Char]]
+loopRestaItemASerDitoCategoriaSorteada numItensInformados itensInformados numParticipantes categoriaSorteada nomeJogadores = do
+  numItensCadastrados <- numItensCadastradosCategoria categoriaSorteada
+  if (numItensInformados > numItensCadastrados || numParticipantes == 1)
+    then return(nomeJogadores)
+    else do
+      loopReceberPalavraCategoria 0 numParticipantes categoriaSorteada nomeJogadores
+
+loopReceberPalavraCategoria :: Int -> Int -> [Char] -> [[Char]] -> IO [[Char]]
+loopReceberPalavraCategoria jogadorAtual numParticipantes categoria nomeJogadores =
+  if (jogadorAtual == numParticipantes || numParticipantes == 1)
+    then do
+      mensagem_apresentacao
+      return(nomeJogadores)
+    else do
+      mensagem_informarPalavraCategoria categoria (nomeJogadorIndice nomeJogadores 0 jogadorAtual)
+      loopReceberPalavraCategoria (jogadorAtual + 1) numParticipantes categoria nomeJogadores
+-}
 
 entrada_pegarOpcaoMenu :: IO()
 entrada_pegarOpcaoMenu =

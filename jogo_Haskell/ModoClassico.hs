@@ -19,7 +19,6 @@ numItensCadastradosCategoria :: [Char] -> IO Int
 numItensCadastradosCategoria categoria =
   numLinhasArquivo ("../palavras/" ++ categoria ++ ".txt")
 
-
 itemCadastradoCategoria ::  [Char] -> [Char] -> IO Bool
 itemCadastradoCategoria palavra categoria = do
   arquivo <- openFile ("../palavras/" ++ categoria ++ ".txt") ReadMode
@@ -44,6 +43,12 @@ comparaString (a:as) (b:bs) =
 
 cadastrarItemCategoria :: [Char] -> [Char] -> IO()
 cadastrarItemCategoria categoria palavra = appendFile ("../palavras/" ++ categoria ++ ".txt") palavra
+
+nomeJogadorIndice :: [[Char]] -> Int -> Int -> [Char]
+nomeJogadorIndice (a:as) b c =
+  if b == c
+    then a
+    else nomeJogadorIndice as (b+1) c
 
 removeJogador :: [[Char]] -> Int -> Int -> [[Char]]
 removeJogador [] b c = []

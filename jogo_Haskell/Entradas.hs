@@ -15,3 +15,7 @@ entrada_receberNomeSobrenomeJogadores numParticipantes nomeSobrenomeJogadores =
     else do
       nomeSobrenome <- getLine
       entrada_receberNomeSobrenomeJogadores (numParticipantes - 1) (nomeSobrenomeJogadores ++ [nomeSobrenome])
+
+{-entrada_pegarPalavraInformada :: IO [[Char]]
+entrada_pegarPalavraInformada = do
+  return getLine-}
