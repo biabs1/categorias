@@ -35,8 +35,8 @@ modo_generico modo =
       else do
         nomeSobrenomeJogadores <- entrada_receberNomeSobrenomeJogadores numParticipantes []
         mensagem_jogadoresCadastrados nomeSobrenomeJogadores
-        --print(removeJogador nomeSobrenomeJogadores 0 1)
-        --putStrLn(sorteiaCategoria)
+        categoriaSorteada <- sorteiaCategoria
+        mensagem_categoriaSorteada categoriaSorteada
 
 modo_treino_selecionado :: IO()
 modo_treino_selecionado =
