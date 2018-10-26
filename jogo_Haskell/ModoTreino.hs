@@ -3,7 +3,6 @@ module ModoTreino where
 import ManipulacoesArquivos
 import System.IO.Unsafe
 import System.Random
-import Data.Char.isSpace
 
 numAleatorio :: (Int, Int) -> Int
 numAleatorio (a, b) = unsafePerformIO (randomRIO (a, b))

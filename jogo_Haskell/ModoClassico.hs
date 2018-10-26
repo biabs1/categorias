@@ -45,12 +45,14 @@ cadastrarItemCategoria :: [Char] -> [Char] -> IO()
 cadastrarItemCategoria categoria palavra = appendFile ("../palavras/" ++ categoria ++ ".txt") palavra
 
 itemInformadoAntes :: [Char] -> [[Char]] -> Bool
-itemInformadoAntes item []  = False
-itemInformadoAntes [] [] = False
-itensInformados item (i:is) = do
-  if((comparaString item i))
-    then True
-    else itemInformadoAntes item is
+itemInformadoAntes item itensInformados = do
+  if(length itensInformados > 0)
+    then do
+      if(comparaString item (head itensInformados))
+        then True
+        else itemInformadoAntes item (tail itensInformados)
+    else False
+
 
 cadastrarItemInformadosNaJogada :: [Char] -> [[Char]] -> [[Char]]
 cadastrarItemInformadosNaJogada [] [] = []
