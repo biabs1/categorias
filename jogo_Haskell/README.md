@@ -1,6 +1,6 @@
 # Jogo Categorias - Implementação Haskell
 
-## Pre-Instalação
+## Pre-Instalar
 #### É necessario a instalação do Random antes da execução do jogo, para isso use os seguintes comandos:
 
 cabal update
