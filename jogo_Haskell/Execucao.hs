@@ -119,8 +119,31 @@ loopReceberPalavraCategoria jogadorAtual categoria nomeJogadoresItensInformados 
     then return(nomeJogadoresItensInformados)
     else do
       mensagem_informarPalavraCategoria categoria (nomeJogadorIndice (fst nomeJogadoresItensInformados) 0 jogadorAtual)
-      palavra <- getLine
-      loopReceberPalavraCategoria (jogadorAtual + 1) categoria nomeJogadoresItensInformados
+      itemInformado <- getLine
+      if (itemInformadoAntes itemInformado (snd nomeJogadoresItensInformados) || ((head itemInformado) == '#'))
+        -- o jogador não sabe de um ítem ou disse um que já foi dito.
+        then do
+        --  jogadoresRestantes <- removeJogador (fst nomeJogadoresItensInformados) 0 jogadorAtual
+          loopReceberPalavraCategoria (jogadorAtual + 1) categoria (removeJogador (fst nomeJogadoresItensInformados) 0 jogadorAtual, snd nomeJogadoresItensInformados)
+        -- o jogador informou um ítem cadastrado na categoria.
+        else do
+          booleano <- itemCadastradoCategoria itemInformado categoria
+          if (booleano)
+            then do
+              mensagem_itemAceito
+              loopReceberPalavraCategoria (jogadorAtual + 1) categoria (fst nomeJogadoresItensInformados, cadastrarItemInformadosNaJogada itemInformado (snd nomeJogadoresItensInformados))
+            -- o jogador informou um ítem ainda não cadastrado.
+            else do
+              mensagem_palavraNaoCadastrada
+              resposta <- getLine
+              if ((head resposta) == 'S')
+                then do
+                  cadastrarItemCategoria categoria itemInformado
+                  mensagem_itemAceito
+                  loopReceberPalavraCategoria (jogadorAtual + 1) categoria (fst nomeJogadoresItensInformados, cadastrarItemInformadosNaJogada itemInformado (snd nomeJogadoresItensInformados))
+                else do
+                  mensagem_perdedor (nomeJogadorIndice (fst nomeJogadoresItensInformados) 0 jogadorAtual)
+                  loopReceberPalavraCategoria (jogadorAtual + 1) categoria (removeJogador (fst nomeJogadoresItensInformados) 0 jogadorAtual, snd nomeJogadoresItensInformados)
 
 entrada_pegarOpcaoMenu :: IO()
 entrada_pegarOpcaoMenu =
