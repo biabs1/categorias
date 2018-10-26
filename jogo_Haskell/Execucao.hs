@@ -94,28 +94,29 @@ loopRestaMaisDeUmJogador numParticipantes nomeJogadores = do
     else do
       categoriaSorteada <- sorteiaCategoria
       mensagem_categoriaSorteada categoriaSorteada
-      --partipantesRestantes <- loopRestaItemASerDitoCategoriaSorteada 0 [] numParticipantes categoriaSorteada nomeJogadores
-      --loopRestaMaisDeUmJogador (numParticipantes - 1) partipantesRestantes
+      partipantesRestantes <- loopRestaItemASerDitoCategoriaSorteada 0 [] numParticipantes categoriaSorteada nomeJogadores
+      loopRestaMaisDeUmJogador (numParticipantes - 1) partipantesRestantes
 
-{-
+
 loopRestaItemASerDitoCategoriaSorteada :: Int -> [[Char]] -> Int -> [Char] -> [[Char]] -> IO [[Char]]
 loopRestaItemASerDitoCategoriaSorteada numItensInformados itensInformados numParticipantes categoriaSorteada nomeJogadores = do
   numItensCadastrados <- numItensCadastradosCategoria categoriaSorteada
-  if (numItensInformados > numItensCadastrados || numParticipantes == 1)
-    then return(nomeJogadores)
+  if (numItensInformados >= numItensCadastrados)
+    then do
+      categoriaSorteada <- sorteiaCategoria
+      mensagem_umaNovaCategoriaSorteada
+      mensagem_categoriaSorteada categoriaSorteada
+      loopReceberPalavraCategoria jogadorAtual numParticipantes categoriaSorteada nomeJogadores
+      (numItensInformados++)
     else do
-      loopReceberPalavraCategoria 0 numParticipantes categoriaSorteada nomeJogadores
+      loopReceberPalavraCategoria jogadorAtual numParticipantes categoriaSorteada nomeJogadores
+      (numItensInformados++)
 
 loopReceberPalavraCategoria :: Int -> Int -> [Char] -> [[Char]] -> IO [[Char]]
-loopReceberPalavraCategoria jogadorAtual numParticipantes categoria nomeJogadores =
-  if (jogadorAtual == numParticipantes || numParticipantes == 1)
-    then do
-      mensagem_apresentacao
-      return(nomeJogadores)
-    else do
-      mensagem_informarPalavraCategoria categoria (nomeJogadorIndice nomeJogadores 0 jogadorAtual)
-      loopReceberPalavraCategoria (jogadorAtual + 1) numParticipantes categoria nomeJogadores
--}
+loopReceberPalavraCategoria jogadorAtual numParticipantes categoria nomeJogadores = do
+    mensagem_informarPalavraCategoria categoria (nomeJogadorIndice nomeJogadores 0 jogadorAtual)
+    loopReceberPalavraCategoria (jogadorAtual + 1) numParticipantes categoria nomeJogadores
+
 
 entrada_pegarOpcaoMenu :: IO()
 entrada_pegarOpcaoMenu =

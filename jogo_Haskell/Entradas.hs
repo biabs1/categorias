@@ -16,6 +16,6 @@ entrada_receberNomeSobrenomeJogadores numParticipantes nomeSobrenomeJogadores =
       nomeSobrenome <- getLine
       entrada_receberNomeSobrenomeJogadores (numParticipantes - 1) (nomeSobrenomeJogadores ++ [nomeSobrenome])
 
-{-entrada_pegarPalavraInformada :: IO [[Char]]
+entrada_pegarPalavraInformada :: IO [[Char]]
 entrada_pegarPalavraInformada = do
-  return getLine-}
+  palavra <- getLine
