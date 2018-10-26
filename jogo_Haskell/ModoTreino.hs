@@ -18,6 +18,12 @@ sorteiaItemCategoria categoria = do
   numItensCadastrados <- numLinhasArquivo ("../palavras/" ++ categoria ++ ".txt")
   palavraSorteada <- palavraLinha (numAleatorio (0, (numItensCadastrados - 1))) ("../palavras/" ++ categoria ++ ".txt")
   return(palavraSorteada)
+  
+jogadorEBot :: [[Char]] -> Bool
+jogadorEBot nomeJogador = do
+  if(elem "Smith" nomeJogador || elem "Bot" nomeJogador)
+    then True
+    else False
 
 botSabeResposta :: Bool
 botSabeResposta = do

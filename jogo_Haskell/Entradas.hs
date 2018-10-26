@@ -18,4 +18,5 @@ entrada_receberNomeSobrenomeJogadores numParticipantes nomeSobrenomeJogadores =
 
 entrada_pegarPalavraInformada :: IO [[Char]]
 entrada_pegarPalavraInformada = do
-  palavra <- getLine
+    palavra <- getLine
+    return([palavra])

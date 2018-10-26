@@ -44,6 +44,17 @@ comparaString (a:as) (b:bs) =
 cadastrarItemCategoria :: [Char] -> [Char] -> IO()
 cadastrarItemCategoria categoria palavra = appendFile ("../palavras/" ++ categoria ++ ".txt") palavra
 
+itemInformadoAntes :: [Char] -> [[Char]] -> Bool
+itemInformadoAntes item []  = False
+itensInformados item (i:is)s = do
+  if(comparaString item i)
+    then True
+    else itemInformadoAntes item is
+
+cadastrarItemInformadosNaJogada :: [Char] -> [[Char]] -> [[Char]]
+cadastrarItemInformadosNaJogada item (i:is) = do
+  a <- is ++ [item]
+  return(a)
 nomeJogadorIndice :: [[Char]] -> Int -> Int -> [Char]
 nomeJogadorIndice (a:as) b c =
   if b == c
