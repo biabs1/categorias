@@ -46,12 +46,14 @@ cadastrarItemCategoria categoria palavra = appendFile ("../palavras/" ++ categor
 
 itemInformadoAntes :: [Char] -> [[Char]] -> Bool
 itemInformadoAntes item []  = False
-itensInformados item (i:is)s = do
-  if(comparaString item i)
+itensInformados item (i:is) = do
+  if((comparaString item i))
     then True
     else itemInformadoAntes item is
+      
 
 cadastrarItemInformadosNaJogada :: [Char] -> [[Char]] -> [[Char]]
+cadastrarItemInformadosNaJogada item [] = []
 cadastrarItemInformadosNaJogada item (i:is) = do
   a <- is ++ [item]
   return(a)

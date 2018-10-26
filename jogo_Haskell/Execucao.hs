@@ -120,7 +120,7 @@ loopReceberPalavraCategoria jogadorAtual categoria nomeJogadoresItensInformados 
     else do
       mensagem_informarPalavraCategoria categoria (nomeJogadorIndice (fst nomeJogadoresItensInformados) 0 jogadorAtual)
       itemInformado <- getLine
-      if (itemInformadoAntes itemInformado (snd nomeJogadoresItensInformados) || ((head itemInformado) == '#'))
+      if (itemInformadoAntes itemInformado (snd nomeJogadoresItensInformados))
         -- o jogador não sabe de um ítem ou disse um que já foi dito.
         then do
         --  jogadoresRestantes <- removeJogador (fst nomeJogadoresItensInformados) 0 jogadorAtual
