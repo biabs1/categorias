@@ -13,7 +13,7 @@ cabal install random
 ghc Jogo.hs -o Jogo
 
 ## Executar
-#### Para a execução use os seguintes comandos:
+#### Para a execução final do jogo use os seguintes comandos:
 
 ./jogo
 
