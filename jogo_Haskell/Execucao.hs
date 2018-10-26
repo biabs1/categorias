@@ -121,8 +121,7 @@ loopReceberPalavraCategoria jogadorAtual numParticipantes categoria nomeJogadore
 entrada_pegarOpcaoMenu :: IO()
 entrada_pegarOpcaoMenu =
   do
-    --prompt
-    --o prompt não está sendo impresso na linha de leitura
+    prompt
     mensagem_menuPrincipal
     opcao <- readLn
     if (opcao == novo_jogo)

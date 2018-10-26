@@ -1,11 +1,8 @@
-module Treino where
-
+module ModoTreino where
 
 import ManipulacoesArquivos
 import System.IO.Unsafe
 import System.Random
-
-
 
 numAleatorio :: (Int, Int) -> Int
 numAleatorio (a, b) = unsafePerformIO (randomRIO (a, b))
@@ -15,6 +12,7 @@ definirNomeSobrenomeBots botAtual numParticipantes nomeSobrenomeJogadores =
   if (botAtual == numParticipantes)
     then return(nomeSobrenomeJogadores)
     else definirNomeSobrenomeBots (botAtual + 1) numParticipantes (nomeSobrenomeJogadores ++ ["Bot" ++ (show botAtual) ++ " Smith"])
+
 sorteiaItemCategoria :: [Char] -> IO [Char]
 sorteiaItemCategoria categoria = do
   numItensCadastrados <- numLinhasArquivo ("../palavras/" ++ categoria ++ ".txt")
