@@ -119,6 +119,7 @@ loopReceberPalavraCategoria jogadorAtual categoria nomeJogadoresItensInformados 
     then return(nomeJogadoresItensInformados)
     else do
       mensagem_informarPalavraCategoria categoria (nomeJogadorIndice (fst nomeJogadoresItensInformados) 0 jogadorAtual)
+      palavra <- getLine
       loopReceberPalavraCategoria (jogadorAtual + 1) categoria nomeJogadoresItensInformados
 
 entrada_pegarOpcaoMenu :: IO()
