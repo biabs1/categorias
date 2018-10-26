@@ -55,11 +55,13 @@ cadastrarItemInformadosNaJogada :: [Char] -> [[Char]] -> [[Char]]
 cadastrarItemInformadosNaJogada item (i:is) = do
   a <- is ++ [item]
   return(a)
+
 nomeJogadorIndice :: [[Char]] -> Int -> Int -> [Char]
-nomeJogadorIndice (a:as) b c =
-  if b == c
-    then a
-    else nomeJogadorIndice as (b+1) c
+nomeJogadorIndice [] indiceAtual indiceJogador = "Jogador inexistente"
+nomeJogadorIndice nomeJogadores indiceAtual indiceJogador =
+  if indiceAtual == indiceJogador
+    then (head nomeJogadores)
+    else nomeJogadorIndice (tail nomeJogadores) (indiceAtual + 1) indiceJogador
 
 removeJogador :: [[Char]] -> Int -> Int -> [[Char]]
 removeJogador [] b c = []

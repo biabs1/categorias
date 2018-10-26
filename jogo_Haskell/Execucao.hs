@@ -94,29 +94,32 @@ loopRestaMaisDeUmJogador numParticipantes nomeJogadores = do
     else do
       categoriaSorteada <- sorteiaCategoria
       mensagem_categoriaSorteada categoriaSorteada
-      partipantesRestantes <- loopRestaItemASerDitoCategoriaSorteada 0 [] numParticipantes categoriaSorteada nomeJogadores
-      loopRestaMaisDeUmJogador (numParticipantes - 1) partipantesRestantes
+      partipantesRestantesItensInformados <- loopRestaItemASerDitoCategoriaSorteada categoriaSorteada (nomeJogadores, [])
+      loopRestaMaisDeUmJogador (length (fst partipantesRestantesItensInformados)) (fst partipantesRestantesItensInformados)
 
-
-loopRestaItemASerDitoCategoriaSorteada :: Int -> [[Char]] -> Int -> [Char] -> [[Char]] -> IO [[Char]]
-loopRestaItemASerDitoCategoriaSorteada numItensInformados itensInformados numParticipantes categoriaSorteada nomeJogadores = do
+loopRestaItemASerDitoCategoriaSorteada :: [Char] -> ([[Char]], [[Char]]) -> IO ([[Char]], [[Char]])
+loopRestaItemASerDitoCategoriaSorteada categoriaSorteada nomeJogadoresItensInformados = do
   numItensCadastrados <- numItensCadastradosCategoria categoriaSorteada
-  if (numItensInformados >= numItensCadastrados)
-    then do
-      categoriaSorteada <- sorteiaCategoria
-      mensagem_umaNovaCategoriaSorteada
-      mensagem_categoriaSorteada categoriaSorteada
-      loopReceberPalavraCategoria jogadorAtual numParticipantes categoriaSorteada nomeJogadores
-      (numItensInformados++)
+  if ((length (fst nomeJogadoresItensInformados)) == 1)
+    --Ha vencedor
+    then return(nomeJogadoresItensInformados)
     else do
-      loopReceberPalavraCategoria jogadorAtual numParticipantes categoriaSorteada nomeJogadores
-      (numItensInformados++)
+      --Os itens cadastrados na categoria ja foram ditos
+      if ((length (snd nomeJogadoresItensInformados)) > numItensCadastrados)
+        then do
+          categoriaSorteada <- sorteiaCategoria
+          mensagem_categoriaSorteada categoriaSorteada
+          loopReceberPalavraCategoria 0 categoriaSorteada nomeJogadoresItensInformados
+        else do
+          loopReceberPalavraCategoria 0 categoriaSorteada nomeJogadoresItensInformados
 
-loopReceberPalavraCategoria :: Int -> Int -> [Char] -> [[Char]] -> IO [[Char]]
-loopReceberPalavraCategoria jogadorAtual numParticipantes categoria nomeJogadores = do
-    mensagem_informarPalavraCategoria categoria (nomeJogadorIndice nomeJogadores 0 jogadorAtual)
-    loopReceberPalavraCategoria (jogadorAtual + 1) numParticipantes categoria nomeJogadores
-
+loopReceberPalavraCategoria :: Int -> [Char] -> ([[Char]], [[Char]]) -> IO ([[Char]], [[Char]])
+loopReceberPalavraCategoria jogadorAtual categoria nomeJogadoresItensInformados = do
+  if jogadorAtual == (length (fst nomeJogadoresItensInformados))
+    then return(nomeJogadoresItensInformados)
+    else do
+      mensagem_informarPalavraCategoria categoria (nomeJogadorIndice (fst nomeJogadoresItensInformados) 0 jogadorAtual)
+      loopReceberPalavraCategoria (jogadorAtual + 1) categoria nomeJogadoresItensInformados
 
 entrada_pegarOpcaoMenu :: IO()
 entrada_pegarOpcaoMenu =
