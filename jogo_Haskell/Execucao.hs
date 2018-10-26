@@ -32,12 +32,16 @@ modo_generico modo =
         nomeSobrenomeJogadores <- entrada_receberNomeSobrenomeJogadores 1 []
         nomeSobrenomeJogadores <- definirNomeSobrenomeBots 1 numParticipantes nomeSobrenomeJogadores
         mensagem_jogadoresCadastrados nomeSobrenomeJogadores
-        loopRestaMaisDeUmJogador numParticipantes nomeSobrenomeJogadores
+        categoriaSorteada <- sorteiaCategoria
+        mensagem_categoriaSorteada categoriaSorteada
+        loopRestaMaisDeUmJogador modo 0 categoriaSorteada numParticipantes nomeSobrenomeJogadores
         entrada_pegarOpcaoMenu
       else do
         nomeSobrenomeJogadores <- entrada_receberNomeSobrenomeJogadores numParticipantes []
         mensagem_jogadoresCadastrados nomeSobrenomeJogadores
-        loopRestaMaisDeUmJogador numParticipantes nomeSobrenomeJogadores
+        categoriaSorteada <- sorteiaCategoria
+        mensagem_categoriaSorteada categoriaSorteada
+        loopRestaMaisDeUmJogador modo 0 categoriaSorteada numParticipantes nomeSobrenomeJogadores
         entrada_pegarOpcaoMenu
 
 modo_treino_selecionado :: IO()
@@ -87,15 +91,30 @@ loopEscolhaNumJogadores =
           mensagem_opcaoInvalida
           loopEscolhaNumJogadores
 
-loopRestaMaisDeUmJogador :: Int -> [[Char]] -> IO()
-loopRestaMaisDeUmJogador numParticipantes nomeJogadores = do
+loopRestaMaisDeUmJogador :: Int -> Int -> [Char] -> Int -> [[Char]] -> IO()
+loopRestaMaisDeUmJogador modo numChamada categoriaSorteada numParticipantes nomeJogadores = do
   if numParticipantes == 1
     then do mensagem_vencedor (head nomeJogadores)
     else do
-      categoriaSorteada <- sorteiaCategoria
-      mensagem_categoriaSorteada categoriaSorteada
-      partipantesRestantesItensInformados <- loopRestaItemASerDitoCategoriaSorteada categoriaSorteada (nomeJogadores, [])
-      loopRestaMaisDeUmJogador (length (fst partipantesRestantesItensInformados)) (fst partipantesRestantesItensInformados)
+      if (numChamada == 0)
+        then do
+          partipantesRestantesItensInformados <- loopRestaItemASerDitoCategoriaSorteada categoriaSorteada (nomeJogadores, [])
+          loopRestaMaisDeUmJogador modo (numChamada + 1) categoriaSorteada (length (fst partipantesRestantesItensInformados)) (fst partipantesRestantesItensInformados)
+        else do
+          if (modo == modo_classico)
+            then do
+              partipantesRestantesItensInformados <- loopRestaItemASerDitoCategoriaSorteada categoriaSorteada (nomeJogadores, [])
+              loopRestaMaisDeUmJogador modo (numChamada + 1) categoriaSorteada (length (fst partipantesRestantesItensInformados)) (fst partipantesRestantesItensInformados)
+            else do
+              if (modo == modo_alternado)
+                then do
+                  categoriaSorteada <- sorteiaCategoria
+                  mensagem_categoriaSorteada categoriaSorteada
+                  partipantesRestantesItensInformados <- loopRestaItemASerDitoCategoriaSorteada categoriaSorteada (nomeJogadores, [])
+                  loopRestaMaisDeUmJogador modo (numChamada + 1) categoriaSorteada (length (fst partipantesRestantesItensInformados)) (fst partipantesRestantesItensInformados)
+                else mensagem_modoTreinoSelecionado
+
+
 
 loopRestaItemASerDitoCategoriaSorteada :: [Char] -> ([[Char]], [[Char]]) -> IO ([[Char]], [[Char]])
 loopRestaItemASerDitoCategoriaSorteada categoriaSorteada nomeJogadoresItensInformados = do
