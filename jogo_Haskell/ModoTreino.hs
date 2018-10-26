@@ -20,11 +20,9 @@ sorteiaItemCategoria categoria = do
   palavraSorteada <- palavraLinha (numAleatorio (0, (numItensCadastrados - 1))) ("../palavras/" ++ categoria ++ ".txt")
   return(palavraSorteada)
 
-jogadorEBot :: [Char] -> IO Bool
-jogadorEBot nomeJogador = do
-  words nomeJogador
-  print(nomeJogador)
-  if(elem "Smith" nomeJogador || elem "Bot" nomeJogador)
+jogadorEBot :: [Char] -> Int -> Bool
+jogadorEBot nomeJogador pos = do
+  if(elem (("Bot" ++ (show pos)) ++ " Smith") [nomeJogador])
     then True
     else False
 

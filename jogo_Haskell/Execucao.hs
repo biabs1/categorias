@@ -2,7 +2,7 @@ module Execucao where
 
 import Mensagens
 import Entradas
-import Treino
+import ModoTreino
 import ModoClassico
 
 -- Opcoes menu inicial
