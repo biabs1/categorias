@@ -8,7 +8,7 @@ cabal update
 cabal install random
 
 ## Compilar
-#### Depois de instalar as dependencias, voce precisa compilar o projeto, para isso uso os seguintes comandos:
+#### Depois de instalar as dependencias, voce precisa compilar o projeto, para isso use os seguintes comandos:
 
 ghc Jogo.hs -o Jogo
 
