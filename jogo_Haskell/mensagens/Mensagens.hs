@@ -92,7 +92,7 @@ mensagem_informarPalavraCategoria categoriaSorteada nomeJogador = do
 mensagem-mensagem_umaNovaCategoriaSorteada categoria = do
     limparTela
     putStrLn ("Uma nova categoria foi sorteada, por ter esgotado as palavras da categoria anterior." ++ "\n")
--}
+-}------
 mensagem_vencedor :: String -> IO()
 mensagem_vencedor nomeJogador = do
     limparTela
