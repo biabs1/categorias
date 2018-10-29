@@ -15,6 +15,6 @@ ghc Jogo.hs -o Jogo
 ## Executar
 #### Para a execução final do jogo use os seguintes comandos:
 
-./jogo
+./Jogo
 
 
