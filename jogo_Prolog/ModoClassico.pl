@@ -1,5 +1,3 @@
-:- initialization main.
-
 numAleatorio(X, Y, Z):- random(X,Y,Z).
 
 itemInformadoAntes(X, [X|_]).
@@ -18,17 +16,6 @@ nomeJogadorIndice([Jogador|Jogadores], IndiceAtual, IndiceJogador, Retorno):-
     Z is IndiceAtual + 1,
     nomeJogadorIndice(Jogadores, Z, IndiceJogador, Retorno)).
 
-input(Number):-
-    read_line_to_codes(user_input, Codes),
-    string_to_atom(Codes, Atom),
-    atom_number(Atom, Number).
-
-main:- removerJogador("A", ["L", "A", "B"], W), writeln(W).
-
 removerJogador(NomeJogador, [NomeJogador|Jogadores], Jogadores).
 removerJogador(NomeJogador, [Jogador|Jogadores], [Jogador|Retorno]):-
     removerJogador(NomeJogador,Jogadores,Retorno).
-
-
-concat([],L,L).
-concat([X|L1],L2,[X|L3]):- concatenar(L1,L2,L3).
