@@ -43,9 +43,9 @@ mensagem_menuPrincipal:-
     write("2 - Sair"),nl.
 
 mensagem_opcaoInvalida:-
-	write("** Opção inválida! **"),nl,
-	write("** Reveja as opções possíveis. **"),nl,
-  sleep(3).
+	  write("** Opção inválida! **"),nl,
+	  write("** Reveja as opções possíveis. **"),nl,
+    sleep(3).
 
 % FIM MENSAGENS
 
@@ -57,10 +57,13 @@ input(Number):-
     string_to_atom(Codes, Atom),
     atom_number(Atom, Number).
 
-entrada_pegarOpcaoMenu:- mensagem_menuPrincipal, input(X), novo_jogo(X), write("Novo jogo").
-entrada_pegarOpcaoMenu:- mensagem_menuPrincipal, input(X), saida(X), halt(0).
-entrada_pegarOpcaoMenu:- mensagem_menuPrincipal, input(X), opcao_invalida(X), mensagem_opcaoInvalida, entrada_pegarOpcaoMenu.
+entrada_pegarOpcaoMenu:- mensagem_menuPrincipal, input(X), opcaoMenu(X).
+
+opcaoMenu(X):- novo_jogo(X), write("Novo jogo").
+opcaoMenu(X):- saida(X), halt(0).
+opcaoMenu(X):- mensagem_opcaoInvalida, entrada_pegarOpcaoMenu.
 
 % FIM ENTRADAS
 
 main:- mensagem_apresentacao, entrada_pegarOpcaoMenu.
+
