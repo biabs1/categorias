@@ -4,20 +4,23 @@ botSabeResposta():-
 	numAleatorio(1,100, Num),
 	(Num > 50 -> true; false).
 	
-definirNomeSobrenomeBots(BotAtual, NumParticipantes, NomeSobrenomeJogadores, Retorno):- 
-	(BotAtual =:= NumParticipantes -> Retorno = NomeSobrenomeJogadores; 
-	atom_concat("Bot",BotAtual,Y),
-	atom_concat(Y, " Smith", A),
-	X is BotAtual + 1,
-	definirNomeSobrenomeBots(X,NumParticipantes,(NomeSobrenomeJogadores + [A]),Retorno).
+definirNomeSobrenomeBots(BotAtual, NumParticipantes, NomeSobrenomeJogadores, Retorno):-
+	(BotAtual == NumParticipantes -> Retorno = NomeSobrenomeJogadores;
+	Pos is BotAtual + 1,
+	concatenaNomeBot(Pos, NomeBot),
+	concatenaListas(NomeSobrenomeJogadores, [NomeBot], NovoNomeSobrenomeJogadores), 
+	definirNomeSobrenomeBots(Pos, NumParticipantes, NovoNomeSobrenomeJogadores, Retorno)).
+	
 
 jogadorEBot(NomeJogador, Pos, R):- 
+	concatenaNomeBot(Pos, NomeBot),
+	((NomeJogador \= NomeBot) -> R=false;
+	R = true).
+
+concatenaListas([],L,L).
+concatenaListas([X|L1],L2,[X|L3]):- concatenaListas(L1,L2,L3).
+
+concatenaNomeBot(Pos, NomeBot):-
 	atom_concat("Bot",Pos,Y),
 	atom_concat(Y, " Smith", A),
-	(NomeJogador =:= A -> R=true;
-	R= false).
-
-concat([],L,L).
-concat([X|L1],L2,[X|L3]):- concat(L1,L2,L3).
-
-
+	atom_string(A,NomeBot).
