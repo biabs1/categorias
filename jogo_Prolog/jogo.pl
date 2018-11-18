@@ -43,12 +43,12 @@ mensagem_menuPrincipal:-
     write("2 - Sair"),nl.
 
 mensagem_opcaoInvalida:-
-	  write("** Opção inválida! **"),nl,
-	  write("** Reveja as opções possíveis. **"),nl,
+    write("** Opção inválida! **"),nl,
+    write("** Reveja as opções possíveis. **"),nl,
     sleep(3).
 
 mensagem_modosJogo:-
-  	tty_clear,
+    tty_clear,
     cabecalho,
     write("Digite o número correspondente ao modo que você quer"),nl,
     write("1 - Modo Treino"),nl,
@@ -57,33 +57,41 @@ mensagem_modosJogo:-
     write("4 - Voltar"),nl, nl.
 
 mensagem_modoTreinoSelecionado:-
-  	tty_clear,
-  	cabecalho,
-  	write("Modo Treino selecionado!"),nl,
-  	sleep(2),
-  	write("Cuidado para não ser derrotado(a) pelo(s) bot(s)!"),nl,
-  	sleep(3).
+    tty_clear,
+    cabecalho,
+    write("Modo Treino selecionado!"),nl,
+    sleep(2),
+    write("Cuidado para não ser derrotado(a) pelo(s) bot(s)!"),nl,
+    sleep(3).
 
 mensagem_modoAlternadoSelecionado:-
-  	tty_clear,
+    tty_clear,
     cabecalho,
     write("Modo Alternado selecionado!"),nl,
     sleep(2).
 
 mensagem_modoClassicoSelecionado:-
-  	tty_clear,
+    tty_clear,
     cabecalho,
     write("Modo Clássico selecionado!"),nl,
     sleep(2).
+
+mensagem_numJogadores:-
+    tty_clear,
+    cabecalho,
+    write("Digite a quantidade de jogadores"),nl,
+    write("Este valor deve estar entre 2 e 8 inclusive:"),nl.
 
 % FIM MENSAGENS
 
 
 % INICIO EXECUCAO
 
-modo_treino_selecionado:- mensagem_modoTreinoSelecionado.
-modo_alternado_selecionado:- mensagem_modoAlternadoSelecionado.
-modo_classico_selecionado:- mensagem_modoClassicoSelecionado.
+modo_generico(Modo):- loopEscolhaNumJogadores(NumJogadores).
+
+modo_treino_selecionado:- mensagem_modoTreinoSelecionado, modo_generico(1).
+modo_alternado_selecionado:- mensagem_modoAlternadoSelecionado, modo_generico(2).
+modo_classico_selecionado:- mensagem_modoClassicoSelecionado, modo_generico(3).
 
 loopEscolhaModoJogo:- mensagem_modosJogo, input(X), modoJogo(X).
 
@@ -92,6 +100,17 @@ modoJogo(X):- modo_alternado(X), modo_alternado_selecionado.
 modoJogo(X):- modo_classico(X), modo_classico_selecionado.
 modoJogo(X):- voltar(X), entrada_pegarOpcaoMenu.
 modoJogo(X):- mensagem_opcaoInvalida, loopEscolhaModoJogo.
+
+loopEscolhaNumJogadores(NumJogadores):-
+    mensagem_numJogadores,
+    input(X),
+    valida_num_jogadores(X, NumJogadores),
+    write(NumJogadores).
+
+valida_num_jogadores(X, NumJogadores):- X >= 2, X =< 8, NumJogadores is X.
+valida_num_jogadores(X, NumJogadores):-
+    mensagem_opcaoInvalida,
+    loopEscolhaNumJogadores(NumJogadores).
 
 % FIM EXECUCAO
 
