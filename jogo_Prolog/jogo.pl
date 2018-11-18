@@ -47,7 +47,29 @@ mensagem_opcaoInvalida:-
 	  write("** Reveja as opções possíveis. **"),nl,
     sleep(3).
 
+mensagem_modosJogo:-
+  	tty_clear,
+    cabecalho,
+    write("Digite o número correspondente ao modo que você quer"),nl,
+    write("1 - Modo Treino"),nl,
+    write("2 - Modo Alternado"),nl,
+    write("3 - Modo Clássico"),nl,
+    write("4 - Voltar"),nl, nl.
+
 % FIM MENSAGENS
+
+
+% INICIO EXECUCAO
+
+loopEscolhaModoJogo:- mensagem_modosJogo, input(X), modoJogo(X).
+
+modoJogo(X):- modo_treino(X), write("modo treino selecionado").
+modoJogo(X):- modo_alternado(X), write("modo alternado selecionado").
+modoJogo(X):- modo_classico(X), write("modo classico selecionado").
+modoJogo(X):- voltar(X), entrada_pegarOpcaoMenu.
+modoJogo(X):- write("opcao_invalida").
+
+% FIM EXECUCAO
 
 
 % INICIO ENTRADAS
@@ -59,11 +81,10 @@ input(Number):-
 
 entrada_pegarOpcaoMenu:- mensagem_menuPrincipal, input(X), opcaoMenu(X).
 
-opcaoMenu(X):- novo_jogo(X), write("Novo jogo").
+opcaoMenu(X):- novo_jogo(X), loopEscolhaModoJogo.
 opcaoMenu(X):- saida(X), halt(0).
 opcaoMenu(X):- mensagem_opcaoInvalida, entrada_pegarOpcaoMenu.
 
 % FIM ENTRADAS
 
 main:- mensagem_apresentacao, entrada_pegarOpcaoMenu.
-
