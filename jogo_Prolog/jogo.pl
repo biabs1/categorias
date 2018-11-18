@@ -56,18 +56,42 @@ mensagem_modosJogo:-
     write("3 - Modo Clássico"),nl,
     write("4 - Voltar"),nl, nl.
 
+mensagem_modoTreinoSelecionado:-
+  	tty_clear,
+  	cabecalho,
+  	write("Modo Treino selecionado!"),nl,
+  	sleep(2),
+  	write("Cuidado para não ser derrotado(a) pelo(s) bot(s)!"),nl,
+  	sleep(3).
+
+mensagem_modoAlternadoSelecionado:-
+  	tty_clear,
+    cabecalho,
+    write("Modo Alternado selecionado!"),nl,
+    sleep(2).
+
+mensagem_modoClassicoSelecionado:-
+  	tty_clear,
+    cabecalho,
+    write("Modo Clássico selecionado!"),nl,
+    sleep(2).
+
 % FIM MENSAGENS
 
 
 % INICIO EXECUCAO
 
+modo_treino_selecionado:- mensagem_modoTreinoSelecionado.
+modo_alternado_selecionado:- mensagem_modoAlternadoSelecionado.
+modo_classico_selecionado:- mensagem_modoClassicoSelecionado.
+
 loopEscolhaModoJogo:- mensagem_modosJogo, input(X), modoJogo(X).
 
-modoJogo(X):- modo_treino(X), write("modo treino selecionado").
-modoJogo(X):- modo_alternado(X), write("modo alternado selecionado").
-modoJogo(X):- modo_classico(X), write("modo classico selecionado").
+modoJogo(X):- modo_treino(X), modo_treino_selecionado.
+modoJogo(X):- modo_alternado(X), modo_alternado_selecionado.
+modoJogo(X):- modo_classico(X), modo_classico_selecionado.
 modoJogo(X):- voltar(X), entrada_pegarOpcaoMenu.
-modoJogo(X):- write("opcao_invalida").
+modoJogo(X):- mensagem_opcaoInvalida, loopEscolhaModoJogo.
 
 % FIM EXECUCAO
 
