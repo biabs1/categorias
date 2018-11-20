@@ -25,13 +25,19 @@ concatenaNomeBot(Pos, NomeBot):-
 	atom_concat(Y, " Smith", A),
 	atom_string(A,NomeBot).
 
-contarLinhasArquivo(CategoriaArquivo,Tamanho):-see(CategoriaArquivo),Numero is 0,ler(Numero),seen.
+
+contarLinhasArquivo(CategoriaArquivo):-see(CategoriaArquivo),Numero is 0,ler(Numero),seen.
 ler(Valor):-read(X),conta(X,Valor).
 
 conta(end_of_file,Final,Tamanho):-!,Tamanho = Final.
 conta(_,Numero):- N1 is Numero + 1,ler(N1).
 
-soteiaNumAleatorio(0 ,X, Y):- random(0, Tamanho, LinhaSorteada).
+soteiaNumAleatorio(0 ,Tamanho, LinhaSorteada):- random(0, Tamanho, LinhaSorteada).
 
+palavraSorteada(CategoriaArquivo,LinhaSorteada,Palavra):-see(CategoriaArquivo),Numero is 0,ler(LinhaSorteada, Numero,Palavra),seen.
 
+ler(LinhaSorteada, Valor,Palavra):- LinhaSorteada == Valor -> read(Palavra).
+ler(_, Valor,Palavra):-read(Palavra),conta(Palavra,Valor).
+
+conta(Palavra,Numero):- N1 is Numero + 1,ler(_, N1, Palavra).
 
