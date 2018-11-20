@@ -11,5 +11,12 @@ leiaForn(AEnt,_,Retorno):-
 leiaForn(AEnt,NomeFornecido,Retorno):-
     (AEnt == NomeFornecido -> Retorno = true),!.
 
-    
 
+%% Colocar no arquivo
+
+colocar(CategoriaArquivo,NomeFornecido):-
+    open(CategoriaArquivo,write ,ASaida),
+    write(ASaida,NomeFornecido),write(ASaida,'\n'),!,
+    close(ASaida).
+
+    
