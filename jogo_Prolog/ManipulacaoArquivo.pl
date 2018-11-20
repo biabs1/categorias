@@ -1,6 +1,4 @@
-:- set_prolog_flag(verbose,silent).
-:- prompt(_, '').
-:- use_module(library(readutil)).
+
  
 principal(CategoriaArquivo,NomeFornecido,Retorno):-
     open(CategoriaArquivo,read,AEnt),
