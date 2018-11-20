@@ -8,7 +8,7 @@ mensagem_apresentacao:-
     writeln("Bem vind@ ao jogo Categorias!"),
     sleep(2),
     writeln("Você testará o quanto de palavras você sabe ou consegue se lembrar de algumas categorias."),
-    sleep(3).
+    sleep(5).
 
 mensagem_menuPrincipal:-
     tty_clear, cabecalho,
