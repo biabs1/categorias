@@ -72,24 +72,6 @@ mensagem_nomeJogadores:-
 	write("Um jogador por linha:"),nl.
 
 
-% Tentei implementar porem tem um laço e recebe como parametro duas listas:
-% % mensagem_jogadoresCadastrados(numParticipantes, Nomes, Sobrenomes):-
-% %     nl,
-% %     write("Jogador(es) cadastrado(s):"), 
-% %     loop(1):-
-% %         write("Jogador "),write(1),write(": "),write(nomeJogadores[i]),write(" "),write(sobrenomeJogadores[i])
-% %     loop(X, numParticipantes):-
-% %         numParticipantes > 
-
-
-% % 	sleep(2).
-
-% laco(X, numParticipantes, Nomes, Sobrenomes):-
-%     X < numParticipantes; X == numParticipantes,
-%     write("Jogador "),write(X),write(": "),write(Y,[Y|Resto1],Nomes),write(" "),write(Y,[Y|Resto],Sobrenomes),
-%     laco(X+1, numParticipantes, Resto1, Resto).
-
-
 mensagem_categoriaSorteada(categoriaSorteada):-
 	clear(),
 	cabecalho,

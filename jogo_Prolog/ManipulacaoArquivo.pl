@@ -1,5 +1,3 @@
-
- 
 principal(CategoriaArquivo,NomeFornecido,Retorno):-
     open(CategoriaArquivo,read,AEnt),
     leiaForn(AEnt,NomeFornecido,Retorno),
@@ -19,4 +17,6 @@ colocar(CategoriaArquivo,NomeFornecido):-
     write(ASaida,NomeFornecido),write(ASaida,'\n'),!,
     close(ASaida).
 
-    
+
+
+

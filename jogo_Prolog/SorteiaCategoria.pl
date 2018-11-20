@@ -1,6 +1,8 @@
 :- set_prolog_flag(verbose,silent).
 :- prompt(_, '').
 :- use_module(library(readutil)).
+:- use_module(Mensagens).
+
 
 :- dynamic categoriaSorteada/1.
 
@@ -10,40 +12,31 @@ main:-
 	process,
 	halt.
 
-sorteiaCategoria:- 
+sorteiaCategoria(Categoria):- 
 	CategoriaSorteada is random(8),
-	categoria(CategoriaSorteada).
+    categoria(CategoriaSorteada, Categoria).
 	
-categoria(0):-
-	assert(categoriaSorteada(animais)),
-	mensagem_categoriaSorteada(categoriaSorteada).
-categoria(1):-
-	assert(categoriaSorteada(categorias)),
-	mensagem_categoriaSorteada(categoriaSorteada).
-categoria(2):-
-	assert(categoriaSorteada(cores)),
-	mensagem_categoriaSorteada(categoriaSorteada).
-categoria(3):-
-	assert(categoriaSorteada(esportes)),
-	mensagem_categoriaSorteada(categoriaSorteada).
-categoria(4):-
-	assert(categoriaSorteada(frutas)),
-	mensagem_categoriaSorteada(categoriaSorteada).
-categoria(5):-
-	assert(categoriaSorteada(lps)),
-	mensagem_categoriaSorteada(categoriaSorteada).
-categoria(6):-
-	assert(categoriaSorteada(paises)),
-	mensagem_categoriaSorteada(categoriaSorteada).
-categoria(7):-
-	assert(categoriaSorteada(verduras_legumes)),
-	mensagem_categoriaSorteada(categoriaSorteada).
-	
-mensagem_categoriaSorteada(categoriaSorteada):-
-	write(categoriaSorteada).
+categoria(0,Categoria):-
+	Categoria = 'animais'.
+categoria(1,Categoria):-
+	Categoria = 'categorias'.
+categoria(2,Categoria):-
+	Categoria = 'cores'.
+categoria(3,Categoria):-
+	Categoria = 'esportes'.
+categoria(4,Categoria):-
+	Categoria = 'frutas'.
+categoria(5,Categoria):-
+	Categoria = 'lps'.
+categoria(6,Categoria):-
+	Categoria = 'paises'.
+categoria(7,Categoria):-
+	Categoria = 'verduras_legumes'.
+
 	
 process:-
-	sorteiaCategoria,
+    sorteiaCategoria(Categoria),
+    mensagem_categoriaSorteada(Categoria),
 	true.
 
 :- main.

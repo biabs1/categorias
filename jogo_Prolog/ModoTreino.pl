@@ -24,3 +24,7 @@ concatenaNomeBot(Pos, NomeBot):-
 	atom_concat("Bot",Pos,Y),
 	atom_concat(Y, " Smith", A),
 	atom_string(A,NomeBot).
+
+
+sortearPalavra(X, Y):- random(Tamanho, LinhaSorteada).
+
