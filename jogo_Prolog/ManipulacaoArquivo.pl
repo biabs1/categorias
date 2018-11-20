@@ -11,7 +11,7 @@ leiaForn(AEnt,_,Retorno):-
     at_end_of_stream(AEnt),Retorno = false,!.
 
 leiaForn(AEnt,NomeFornecido,Retorno):-
-    (AEnt == NomeFornecido -> Retorno = true).
+    (AEnt == NomeFornecido -> Retorno = true),!.
 
     
 
