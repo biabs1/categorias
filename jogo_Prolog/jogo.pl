@@ -111,4 +111,43 @@ main:- mensagem_apresentacao, entrada_pegarOpcaoMenu.
 
 % num_jogadores_invalido(-1).
 
+% % INICIO EXECUCAO
+
+% modo_generico(Modo):-
+
+%     modoJogo(Modo).
+
+% e_modo_treino:-
+
+%     entrada_receberNomeSobrenomeJogadores(1, [], _).
+
+% e_modo_classico:-
+
+%     entrada_receberNomeSobrenomeJogadores(_, [], _).
+
+% e_modo_alternado:-
+
+%     entrada_receberNomeSobrenomeJogadores(_, [], _).
+
+% modo_treino_selecionado:- mensagem_modoTreinoSelecionado, e_modo_treino.
+
+% modo_alternado_selecionado:- mensagem_modoAlternadoSelecionado, e_modo_alternado.
+
+% modo_classico_selecionado:- mensagem_modoClassicoSelecionado, e_modo_classico.
+
+% loopEscolhaModoJogo:- mensagem_modosJogo, input(X), modoJogo(X).
+
+% modoJogo(1):- modo_treino_selecionado.
+
+% modoJogo(2):- modo_alternado_selecionado.
+
+% modoJogo(3):- modo_classico_selecionado.
+
+% modoJogo(4):- entrada_pegarOpcaoMenu.
+
+% modoJogo(_):- mensagem_opcaoInvalida, loopEscolhaModoJogo.
+
+% adicionarElemento([], X, [X]).
+
+% adicionarElemento([L|R], X, [L|R1]):- adicionarElemento(R, X, R1).
 
