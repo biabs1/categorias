@@ -150,4 +150,3 @@ main:- mensagem_apresentacao, entrada_pegarOpcaoMenu.
 % adicionarElemento([], X, [X]).
 
 % adicionarElemento([L|R], X, [L|R1]):- adicionarElemento(R, X, R1).
-
