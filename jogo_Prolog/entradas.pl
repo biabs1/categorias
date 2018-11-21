@@ -14,9 +14,10 @@ entrada_pegarOpcaoMenu(Opcao):- mensagem_menuPrincipal, imprimePrompt, receberNu
 
 entrada_receberNomeSobrenomeJogadores(NumParticipantes,_, NomeSobrenomeJogadoresFinal):-
     NumParticipantes =:= 0,
-    NomeSobrenomeJogadoresFinal is NomeSobrenomeJogadoresFinal.
+    NomeSobrenomeJogadoresFinal = NomeSobrenomeJogadoresFinal.
 
-entrada_receberNomeSobrenomeJogadores(NumParticipantes, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal):-
+entrada_receberNomeSobrenomeJogadores(NumParticipantes, NomeSobrenomeJogadores,NomeSobrenomeJogadoresFinal):-
+    write("Digite seu nome e sobrenome: "),
     receberString(NomeSobrenome),
-    adicionarElemento(NomeSobrenome, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal),
-    entrada_receberNomeSobrenomeJogadores(NumParticipantes - 1, NomeSobrenomeJogadoresFinal, NomeSobrenomeJogadoresFinal).
+    adicionarElemento(NomeSobrenomeJogadores, NomeSobrenome, NomeSobrenomeJogadoresFinal),
+    entrada_receberNomeSobrenomeJogadores(NumParticipantes - 1,  NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal).

@@ -1,3 +1,5 @@
+:- use_module(library(clpfd)).
+
 numAleatorio(X, Y, Z):- random(X,Y,Z).
 
 botSabeResposta():- 
@@ -5,7 +7,7 @@ botSabeResposta():-
 	(Num > 50 -> true; false).
 	
 definirNomeSobrenomeBots(BotAtual, NumParticipantes, NomeSobrenomeJogadores, Retorno):-
-	(BotAtual == NumParticipantes -> Retorno = NomeSobrenomeJogadores;
+	(BotAtual =:= NumParticipantes -> Retorno = NomeSobrenomeJogadores;
 	Pos is BotAtual + 1,
 	concatenaNomeBot(Pos, NomeBot),
 	concatenaListas(NomeSobrenomeJogadores, [NomeBot], NovoNomeSobrenomeJogadores), 
