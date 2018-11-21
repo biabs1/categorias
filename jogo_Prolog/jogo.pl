@@ -150,3 +150,57 @@ main:- mensagem_apresentacao, entrada_pegarOpcaoMenu.
 % adicionarElemento([], X, [X]).
 
 % adicionarElemento([L|R], X, [L|R1]):- adicionarElemento(R, X, R1).
+
+% % FIM EXECUCAO
+
+% % INICIO ENTRADAS
+
+% input(Number):-
+
+%     read_line_to_codes(user_input, Codes),
+
+%     string_to_atom(Codes, Atom),
+
+%     atom_number(Atom, Number).
+
+% receberString(String):-
+
+%     read_line_to_string(user_input, String).
+
+% entrada_pegarOpcaoMenu:- mensagem_menuPrincipal, input(X), opcaoMenu(X).
+
+% opcaoMenu(1):- loopEscolhaModoJogo.
+
+% opcaoMenu(2):- halt(0).
+
+% opcaoMenu(_):- mensagem_opcaoInvalida, entrada_pegarOpcaoMenu.
+
+% entrada_receberNumJogadores(NumParticipantes):-
+%     mensagem_numJogadores,
+%     input(NumParticipantes),
+%     valida_num_jogadores(NumParticipantes,NumParticipantes).
+
+% valida_num_jogadores(X,NumParticipantes):- X >= 2, X =< 8, NumParticipantes is X.
+
+% valida_num_jogadores(_, NumParticipantes):-
+%     mensagem_opcaoInvalida,
+%     entrada_receberNumJogadores(NumParticipantes).
+
+
+% entrada_receberNomeSobrenomeJogadores(NumParticipantes,_, NomeSobrenomeJogadoresFinal):-
+
+%     NumParticipantes =:= 0,
+
+%     NomeSobrenomeJogadoresFinal is NomeSobrenomeJogadoresFinal.
+
+% entrada_receberNomeSobrenomeJogadores(NumParticipantes, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal):-
+
+%     receberString(NomeSobrenome),
+
+%     adicionarElemento(NomeSobrenome, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal),
+
+%     entrada_receberNomeSobrenomeJogadores(NumParticipantes - 1, NomeSobrenomeJogadoresFinal, NomeSobrenomeJogadoresFinal).
+
+% % FIM ENTRADAS
+
+% main:- mensagem_apresentacao, entrada_pegarOpcaoMenu, halt(0).
