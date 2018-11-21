@@ -46,4 +46,3 @@ ler(_,Valor,Palavra):-read(Palavra),conta(Palavra,Valor).
 
 conta(end_of_file):-!.
 conta(Numero):- N1 is Numero + 1,ler(_,N1,_).
-

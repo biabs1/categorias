@@ -31,4 +31,3 @@ cadastrarItemCategoria(Categoria, Item):-
 
 verificarPalavra(Categoria,Item,Retorno):-
     verificaPalavra(Categoria,Item,Retorno).
-

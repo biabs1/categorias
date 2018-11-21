@@ -25,7 +25,3 @@ categoria(6,Categoria):-
 	Categoria = 'paises'.
 categoria(7,Categoria):-
 	Categoria = 'verduras_legumes'.
-
-
-
-	

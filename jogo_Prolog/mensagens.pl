@@ -1,7 +1,6 @@
-% Mensagens do Jogo
+imprimePrompt:- write(">> ").
 
-cabecalho:-
-    writeln("========== JOGO CATEGORIAS =========="),nl.
+cabecalho:- writeln("========== JOGO CATEGORIAS =========="),nl.
 
 mensagem_apresentacao:-
     tty_clear, cabecalho,

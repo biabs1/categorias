@@ -18,7 +18,3 @@ colocarPalavra(CategoriaArquivo,NomeFornecido):-
     open(CategoriaArquivo,write ,ASaida),
     write(ASaida,NomeFornecido),write(ASaida,'\n'),!,
     close(ASaida).
-
-
-
-
