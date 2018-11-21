@@ -34,7 +34,7 @@ loopEscolhaNumJogadores(NumJogadores):-
     write(NumJogadores).
 
 valida_num_jogadores(X, NumJogadores):- X >= 2, X =< 8, NumJogadores is X.
-valida_num_jogadores(X, NumJogadores):-
+valida_num_jogadores(_, NumJogadores):-
     mensagem_opcaoInvalida,
     loopEscolhaNumJogadores(NumJogadores).
 
@@ -48,7 +48,7 @@ modoJogo(X):- modo_treino(X), modo_treino_selecionado.
 modoJogo(X):- modo_alternado(X), modo_alternado_selecionado.
 modoJogo(X):- modo_classico(X), modo_classico_selecionado.
 modoJogo(X):- voltar(X), entrada_pegarOpcaoMenu.
-modoJogo(X):- mensagem_opcaoInvalida, loopEscolhaModoJogo.
+modoJogo(_):- mensagem_opcaoInvalida, loopEscolhaModoJogo.
 
 % FIM EXECUCAO
 
@@ -64,7 +64,7 @@ entrada_pegarOpcaoMenu:- mensagem_menuPrincipal, input(X), opcaoMenu(X).
 
 opcaoMenu(X):- novo_jogo(X), loopEscolhaModoJogo.
 opcaoMenu(X):- saida(X), halt(0).
-opcaoMenu(X):- mensagem_opcaoInvalida, entrada_pegarOpcaoMenu.
+opcaoMenu(_):- mensagem_opcaoInvalida, entrada_pegarOpcaoMenu.
 
 % FIM ENTRADAS
 

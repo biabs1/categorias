@@ -1,13 +1,9 @@
 :- set_prolog_flag(verbose,silent).
 :- prompt(_, '').
 :- use_module(library(readutil)).
-:- use_module(Mensagens).
 
+:- [mensagens].
 
-:- dynamic categoriaSorteada/1.
-
-
-debug :- listing(categoriaSorteada).
 main:-
 	process,
 	halt.
@@ -38,5 +34,3 @@ process:-
     sorteiaCategoria(Categoria),
     mensagem_categoriaSorteada(Categoria),
 	true.
-
-:- main.

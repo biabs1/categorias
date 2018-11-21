@@ -58,7 +58,7 @@ mensagem_categoriaSorteada(categoriaSorteada):-
 mensagem_informarPalavraCategoria(categoriaSorteada, nomeJogador):-
     tty_clear, cabecalho,
     write("Categoria: "), writeln(categoriaSorteada), write("Vez do jogador: "), writeln(nomeJogador),
-    writeln("Informe um ítem desta categoria (sem acentos): "),
+    writeln("Informe um ítem desta categoria (sem acentos): ").
 
 mensagem_itemAceito:-
     nl, writeln("Item aceito!"),
