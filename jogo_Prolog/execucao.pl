@@ -20,15 +20,20 @@ opcaoMenu(Opcao):- novo_jogo(Opcao), loopEscolhaModoJogo.
 opcaoMenu(Opcao):- saida(Opcao), halt(0).
 opcaoMenu(_):- mensagem_opcaoInvalida, entrada_pegarOpcaoMenu(NovaOpcao), opcaoMenu(NovaOpcao).
 
-%% Precisa fazer o loop principal do jogo para continuar a execucao
-modo_generico(Modo):- 
-	loopEscolhaNumJogadores(NumJogadores),
-	(modo_treino(Modo) -> entrada_receberNomeSobrenomeJogadores(1, [], NomeSobrenomeJogadores),
+modo_generico(Modo):-
+    loopEscolhaNumJogadores(NumJogadores),
+    mensagem_nomeJogadores,
+    e_modo_treino(Modo, NumJogadores).
+
+e_modo_treino(Modo, NumJogadores):-
+    modo_treino(Modo),
+    entrada_receberNomeSobrenomeJogadores(1, [], NomeSobrenomeJogadores),
 		definirNomeSobrenomeBots(0, NumJogadores, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal),
-		writeln(NomeSobrenomeJogadoresFinal);
-	entrada_receberNomeSobrenomeJogadores(NumJogadores, [], NomeSobrenomeJogadores),
-	writeln(NomeSobrenomeJogadores)).
-	
+		write(NomeSobrenomeJogadoresFinal), ln.
+e_modo_treino(Modo, NumJogadores):-
+    entrada_receberNomeSobrenomeJogadores(NumJogadores, [], NomeSobrenomeJogadores).
+		write(NomeSobrenomeJogadores), ln.
+
 loopEscolhaNumJogadores(NumJogadores):-
     mensagem_numJogadores,
     imprimePrompt,
@@ -51,4 +56,3 @@ modoJogo(ModoEscolhido):- voltar(ModoEscolhido), entrada_pegarOpcaoMenu(NewOptio
 modoJogo(_):- mensagem_opcaoInvalida, loopEscolhaModoJogo.
 
 loopEscolhaModoJogo:- mensagem_modosJogo, receberNumero(X), modoJogo(X).
-
