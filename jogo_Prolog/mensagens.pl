@@ -48,6 +48,14 @@ mensagem_nomeJogadores:-
     tty_clear, cabecalho,
     writeln("Digite o nome e sobrenome do(s) jogador(es) humano(s)"), writeln("Um jogador por linha:").
 
+mensagem_jogadoresCadastrados(NomeJogadores):-
+    nl, writeln("Jogador(es) cadastrado(s):"),nl,
+    listaJogadores(NomeJogadores).
+
+listaJogadores([]).
+listaJogadores([X|L]):-
+    writeln(X), listaJogadores(L).
+
 mensagem_categoriaSorteada(categoriaSorteada):-
     tty_clear, cabecalho,
     write("Categoria sorteada: "), writeln(categoriaSorteada), nl,
