@@ -4,13 +4,10 @@
 
 :- [mensagens].
 
-main:-
-	process,
-	halt.
-
 sorteiaCategoria(Categoria):- 
 	CategoriaSorteada is random(8),
-    categoria(CategoriaSorteada, Categoria).
+	categoria(CategoriaSorteada, Categoria),
+	mensagem_categoriaSorteada(Categoria).
 	
 categoria(0,Categoria):-
 	Categoria = 'animais'.
@@ -29,8 +26,6 @@ categoria(6,Categoria):-
 categoria(7,Categoria):-
 	Categoria = 'verduras_legumes'.
 
+
+
 	
-process:-
-    sorteiaCategoria(Categoria),
-    mensagem_categoriaSorteada(Categoria),
-	true.

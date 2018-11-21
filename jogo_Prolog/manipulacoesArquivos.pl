@@ -1,5 +1,5 @@
 %% Leio cada linha do arquivo, e chamo a função leiaForn
-principal(CategoriaArquivo,NomeFornecido,Retorno):-
+verificaPalavra(CategoriaArquivo,NomeFornecido,Retorno):-
     open(CategoriaArquivo,read,AEnt),
     leiaForn(AEnt,NomeFornecido,Retorno),
     close(AEnt).
@@ -14,7 +14,7 @@ leiaForn(AEnt,NomeFornecido,Retorno):-
 
 
 %% Coloca um nome fornecido no final do arquivo
-colocar(CategoriaArquivo,NomeFornecido):-
+colocarPalavra(CategoriaArquivo,NomeFornecido):-
     open(CategoriaArquivo,write ,ASaida),
     write(ASaida,NomeFornecido),write(ASaida,'\n'),!,
     close(ASaida).

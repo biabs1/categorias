@@ -1,3 +1,6 @@
+:- [manipulacoesArquivos].
+:- [sorteiaCategoria].
+
 numAleatorio(X, Y, Z):- random(X,Y,Z).
 
 itemInformadoAntes(X, [X|_]).
@@ -18,3 +21,14 @@ nomeJogadorIndice([Jogador|Jogadores], IndiceAtual, IndiceJogador, Retorno):-
 removerJogador(NomeJogador, [NomeJogador|Jogadores], Jogadores).
 removerJogador(NomeJogador, [Jogador|Jogadores], [Jogador|Retorno]):-
     removerJogador(NomeJogador,Jogadores,Retorno).
+
+sorteiarCategoria(Categoria):-
+    sorteiaCategoria(Categoria),
+    Categoria = Categoria + ".txt".
+
+cadastrarItemCategoria(Categoria, Item):-
+    colocarPalavra(Categoria,Item).
+
+verificarPalavra(Categoria,Item,Retorno):-
+    verificaPalavra(Categoria,Item,Retorno).
+
