@@ -69,3 +69,46 @@ opcaoMenu(_):- mensagem_opcaoInvalida, entrada_pegarOpcaoMenu.
 % FIM ENTRADAS
 
 main:- mensagem_apresentacao, entrada_pegarOpcaoMenu.
+
+
+%%Abaixo ta o jeito que eu fiz esse codigo ai de cima.
+
+% % PLP - 2018.2
+
+% % Jogo Categorias.
+
+% % Desenvolvedores: Alessandra Barros, Beatriz Souza, Luana Melo e Matheus Medeiros.
+
+% :- [mensagens].
+
+% :- initialization(main).
+
+% % Opcoes menu inicial
+
+% opcao_invalida(-1).
+
+% novo_jogo(1).
+
+% saida(2).
+
+% % Opcoes menu modos
+
+% modo_nao_selecionado(-1).
+
+% modo_treino(1).
+
+% modo_alternado(2).
+
+% modo_classico(3).
+
+% voltar(4).
+
+% % Numero de jogadores
+
+% num_minimo_jogadores(2).
+
+% num_maximo_jogadores(8).
+
+% num_jogadores_invalido(-1).
+
+
