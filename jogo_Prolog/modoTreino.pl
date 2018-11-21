@@ -14,9 +14,10 @@ definirNomeSobrenomeBots(BotAtual, NumParticipantes, NomeSobrenomeJogadores, Ret
 	definirNomeSobrenomeBots(Pos, NumParticipantes, NovoNomeSobrenomeJogadores, Retorno)).
 	
 
-jogadorEBot(NomeJogador, Pos, R):- 
+jogadorEBot([], _, R):- R = false.
+jogadorEBot([NomeJogador|NomeJogadores], Pos, R):-
 	concatenaNomeBot(Pos, NomeBot),
-	((NomeJogador \= NomeBot) -> R=false;
+	((NomeJogador \= NomeBot) -> jogadorEBot(NomeJogadores, Pos, R);
 	R = true).
 
 concatenaListas([],L,L).

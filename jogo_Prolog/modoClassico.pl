@@ -1,8 +1,6 @@
 :- [manipulacoesArquivos].
 :- [sorteiaCategoria].
 
-numAleatorio(X, Y, Z):- random(X,Y,Z).
-
 itemInformadoAntes(X, [X|_]).
 itemInformadoAntes(X,[_|Y]):- itemInformadoAntes(X,Y).
 

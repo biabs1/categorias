@@ -48,7 +48,7 @@ mensagem_nomeJogadores:-
     writeln("Digite o nome e sobrenome do(s) jogador(es) humano(s)"), writeln("Um jogador por linha:").
 
 mensagem_jogadoresCadastrados(NomeJogadores):-
-    nl, writeln("Jogador(es) cadastrado(s):"),nl,
+    nl, write("Jogador(es) cadastrado(s):"),nl,
     listaJogadores(NomeJogadores).
 
 listaJogadores([]).
@@ -57,9 +57,9 @@ listaJogadores([X|L]):-
 
 mensagem_categoriaSorteada(categoriaSorteada):-
     tty_clear, cabecalho,
-    write("Categoria sorteada: "), writeln(categoriaSorteada), nl,
-    writeln("Cada jogador deverá informar um ítem pertencente à categoria sorteada."), 
-    writeln("Caso não se recorde de algum item, digite #"),
+    write("Categoria sorteada: "), write(categoriaSorteada),
+    write("Cada jogador deverá informar um ítem pertencente à categoria sorteada."), 
+    write("Caso não se recorde de algum item, digite #"),
     sleep(5).
 
 mensagem_informarPalavraCategoria(categoriaSorteada, nomeJogador):-

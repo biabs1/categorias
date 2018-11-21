@@ -1,13 +1,6 @@
-:- set_prolog_flag(verbose,silent).
-:- prompt(_, '').
-:- use_module(library(readutil)).
-
-:- [mensagens].
-
 sorteiaCategoria(Categoria):- 
 	CategoriaSorteada is random(8),
-	categoria(CategoriaSorteada, Categoria),
-	mensagem_categoriaSorteada(Categoria).
+	categoria(CategoriaSorteada, Categoria).
 	
 categoria(0,Categoria):-
 	Categoria = 'animais'.

@@ -1,5 +1,9 @@
 :- [entradas].
 :- [modoTreino].
+:- [modoClassico].
+:- [mensagens].
+:- [sorteiaCategoria].
+
 % Opcoes menu inicial
 novo_jogo(1).
 saida(2).
@@ -28,11 +32,16 @@ modo_generico(Modo):-
 e_modo_treino(Modo, NumJogadores):-
     modo_treino(Modo),
     entrada_receberNomeSobrenomeJogadores(1, [], NomeSobrenomeJogadores),
-		definirNomeSobrenomeBots(0, NumJogadores, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal),
-		write(NomeSobrenomeJogadoresFinal), ln.
+	definirNomeSobrenomeBots(0, NumJogadores, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal),
+	mensagem_jogadoresCadastrados(NomeSobrenomeJogadoresFinal),
+	sorteiaCategoria(Categoria),
+	write("Categoria escoolhida: "), writeln(Categoria),
+	
 e_modo_treino(Modo, NumJogadores):-
-    entrada_receberNomeSobrenomeJogadores(NumJogadores, [], NomeSobrenomeJogadores).
-		write(NomeSobrenomeJogadores), ln.
+    entrada_receberNomeSobrenomeJogadores(NumJogadores, [], NomeSobrenomeJogadores),
+	mensagem_jogadoresCadastrados(NomeSobrenomeJogadores),
+	sorteiaCategoria(CategoriaSorteada),
+	writeln(CategoriaSorteada),
 
 loopEscolhaNumJogadores(NumJogadores):-
     mensagem_numJogadores,
