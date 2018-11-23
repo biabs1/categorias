@@ -32,16 +32,17 @@ modo_generico(Modo):-
 e_modo_treino(Modo, NumJogadores):-
     modo_treino(Modo),
     entrada_receberNomeSobrenomeJogadores(1, [], NomeSobrenomeJogadores),
-	definirNomeSobrenomeBots(0, NumJogadores, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal),
-	mensagem_jogadoresCadastrados(NomeSobrenomeJogadoresFinal),
-	sorteiaCategoria(Categoria),
-	write("Categoria escoolhida: "), writeln(Categoria),
-	
+	  definirNomeSobrenomeBots(0, NumJogadores, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal),
+    fluxo_comum_modo_treino(NomeSobrenomeJogadoresFinal).
+
 e_modo_treino(Modo, NumJogadores):-
     entrada_receberNomeSobrenomeJogadores(NumJogadores, [], NomeSobrenomeJogadores),
-	mensagem_jogadoresCadastrados(NomeSobrenomeJogadores),
-	sorteiaCategoria(CategoriaSorteada),
-	writeln(CategoriaSorteada),
+    fluxo_comum_modo_treino(NomeSobrenomeJogadores).
+
+fluxo_comum_modo_treino(NomeSobrenomeJogadores):-
+    mensagem_jogadoresCadastrados(NomeSobrenomeJogadores),
+    sorteiaCategoria(Categoria),
+    mensagem_categoriaSorteada(Categoria).
 
 loopEscolhaNumJogadores(NumJogadores):-
     mensagem_numJogadores,
