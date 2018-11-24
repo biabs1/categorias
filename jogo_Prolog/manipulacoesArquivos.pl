@@ -12,7 +12,6 @@ leiaForn(AEnt,_,Retorno):-
 leiaForn(AEnt,NomeFornecido,Retorno):-
     (AEnt == NomeFornecido -> Retorno = true),!.
 
-
 %% Coloca um nome fornecido no final do arquivo
 colocarPalavra(CategoriaArquivo,NomeFornecido):-
     open(CategoriaArquivo,write ,ASaida),

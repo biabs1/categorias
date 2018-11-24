@@ -2,17 +2,16 @@
 
 numAleatorio(X, Y, Z):- random(X,Y,Z).
 
-botSabeResposta():- 
+botSabeResposta():-
 	numAleatorio(1,100, Num),
 	(Num > 50 -> true; false).
-	
+
 definirNomeSobrenomeBots(BotAtual, NumParticipantes, NomeSobrenomeJogadores, Retorno):-
-	(BotAtual =:= NumParticipantes -> Retorno = NomeSobrenomeJogadores;
+	(BotAtual =:= NumParticipantes - 1 -> Retorno = NomeSobrenomeJogadores;
 	Pos is BotAtual + 1,
 	concatenaNomeBot(Pos, NomeBot),
-	concatenaListas(NomeSobrenomeJogadores, [NomeBot], NovoNomeSobrenomeJogadores), 
+	concatenaListas(NomeSobrenomeJogadores, [NomeBot], NovoNomeSobrenomeJogadores),
 	definirNomeSobrenomeBots(Pos, NumParticipantes, NovoNomeSobrenomeJogadores, Retorno)).
-	
 
 jogadorEBot([], _, R):- R = false.
 jogadorEBot([NomeJogador|NomeJogadores], Pos, R):-
