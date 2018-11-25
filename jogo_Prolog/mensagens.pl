@@ -4,7 +4,7 @@ cabecalho:- writeln("========== JOGO CATEGORIAS =========="),nl.
 
 mensagem_apresentacao:-
     tty_clear, cabecalho,
-    writeln("Bem vind@ ao jogo Categorias!"),
+    writeln("Bem vind@ ao jogo Categorias!"),nl,nl,
     sleep(2),
     writeln("Você testará o quanto de palavras você sabe ou consegue se lembrar de algumas categorias."),
     sleep(5).
@@ -57,15 +57,18 @@ listaJogadores([X|L]):-
 
 mensagem_categoriaSorteada(CategoriaSorteada):-
     tty_clear, cabecalho,
-    write("Categoria sorteada: "), writeln(CategoriaSorteada),
-    writeln("Cada jogador deverá informar um ítem pertencente à categoria sorteada."),
+    write("Categoria sorteada: "), writeln(CategoriaSorteada),nl,
+    writeln("Cada jogador deverá informar um ítem pertencente à categoria sorteada."),nl,
     writeln("Caso não se recorde de algum item, digite #"),
     sleep(5).
 
 mensagem_informarPalavraCategoria(CategoriaSorteada, NomeJogador):-
     tty_clear, cabecalho,
-    write("Categoria: "), writeln(CategoriaSorteada), write("Vez do jogador: "), writeln(NomeJogador),
+    write("Categoria: "), writeln(CategoriaSorteada),nl, write("Vez do jogador: "), writeln(NomeJogador),nl,
     writeln("Informe um ítem desta categoria (sem acentos): ").
+
+mensagem_palavraCategoriaJaDita:-
+    write("Ops! Esse ítem já foi dito"),nl.
 
 mensagem_itemAceito:-
     nl, writeln("Item aceito!"),

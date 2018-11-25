@@ -32,14 +32,14 @@ modo_generico(Modo):-
 e_modo_treino(Modo, NumJogadores):-
     modo_treino(Modo),
     entrada_receberNomeSobrenomeJogadores(1, [], NomeSobrenomeJogadores),
-	  definirNomeSobrenomeBots(0, NumJogadores, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal),
-    fluxo_comum_modo_treino(NomeSobrenomeJogadoresFinal).
+	definirNomeSobrenomeBots(0, NumJogadores, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal),
+    fluxo_comum_modo_treino(NomeSobrenomeJogadoresFinal,_).
 
-e_modo_treino(Modo, NumJogadores):-
+e_modo_treino(_, NumJogadores):-
     entrada_receberNomeSobrenomeJogadores(NumJogadores, [], NomeSobrenomeJogadores),
-    fluxo_comum_modo_treino(NomeSobrenomeJogadores).
+    fluxo_comum_modo_treino(NomeSobrenomeJogadores,_).
 
-fluxo_comum_modo_treino(NomeSobrenomeJogadores):-
+fluxo_comum_modo_treino(NomeSobrenomeJogadores,Retorno):-
     mensagem_jogadoresCadastrados(NomeSobrenomeJogadores),
     sorteiaCategoria(Categoria),
     mensagem_categoriaSorteada(Categoria).
@@ -50,6 +50,16 @@ loopEscolhaNumJogadores(NumJogadores):-
     receberNumero(X),
     valida_num_jogadores(X, NumJogadores).
 
+restaMaisDeUmJogador(NomeSobrenomeJogadores,Retorno):-
+    length(NomeSobrenomeJogadores,Tamanho),
+    Tamanho =:= 1, Retorno = false,
+    mensagem_vencedor(NomeSobrenomeJogadores),!.
+restaMaisDeUmJogador(NomeSobrenomeJogadores, Retorno):-
+    length(NomeSobrenomeJogadores,Tamanho),
+    Tamanho > 1,
+    Retorno = true.
+
+   
 valida_num_jogadores(X, NumJogadores):- X >= 2, X =< 8, NumJogadores is X.
 valida_num_jogadores(_, NumJogadores):-
     mensagem_opcaoInvalida,
