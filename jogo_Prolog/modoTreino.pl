@@ -1,10 +1,9 @@
 :- use_module(library(clpfd)).
-
 numAleatorio(X, Y, Z):- random(X,Y,Z).
 
-botSabeResposta(Resultado):-
+botSabeResposta():-
 	numAleatorio(1,100, Num),
-	(Num > 50, Resultado = true; Resultado = false).
+	(Num > 50 -> true; false).
 
 definirNomeSobrenomeBots(BotAtual, NumParticipantes, NomeSobrenomeJogadores, Retorno):-
 	(BotAtual =:= NumParticipantes - 1 -> Retorno = NomeSobrenomeJogadores;
@@ -13,10 +12,9 @@ definirNomeSobrenomeBots(BotAtual, NumParticipantes, NomeSobrenomeJogadores, Ret
 	concatenaListas(NomeSobrenomeJogadores, [NomeBot], NovoNomeSobrenomeJogadores),
 	definirNomeSobrenomeBots(Pos, NumParticipantes, NovoNomeSobrenomeJogadores, Retorno)).
 
-jogadorEBot([], _, R):- R = false.
-jogadorEBot([NomeJogador|NomeJogadores], Pos, R):-
+jogadorEBot(NomeJogador, Pos, R):-
 	concatenaNomeBot(Pos, NomeBot),
-	((NomeJogador \= NomeBot) -> jogadorEBot(NomeJogadores, Pos, R);
+	((NomeJogador \= NomeBot) -> R = false;
 	R = true).
 
 concatenaListas([],L,L).
@@ -34,3 +32,4 @@ soteiaNumAleatorio(0 ,Tamanho, LinhaSorteada):- random(0, Tamanho, LinhaSorteada
 palavraSorteada(CategoriaArquivo,LinhaSorteada,Palavra):-see(CategoriaArquivo),Numero is 0,ler(LinhaSorteada, Numero,Palavra),seen.
 ler(LinhaSorteada,Valor,Palavra):- LinhaSorteada == Valor -> read(Palavra).
 ler(_,Valor,Palavra):-read(Palavra),conta(Palavra,Valor).
+
