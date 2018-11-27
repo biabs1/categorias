@@ -17,3 +17,19 @@ colocarPalavra(CategoriaArquivo,NomeFornecido):-
     open(CategoriaArquivo,write ,ASaida),
     write(ASaida,NomeFornecido),write(ASaida,'\n'),!,
     close(ASaida).
+
+numLinhasArquivoAux(Conteudo, NumLinhas) :-
+    \+ at_end_of_stream(Conteudo),
+    !,
+    get_code(Conteudo, X),
+    numLinhasArquivoAux(Conteudo, NumLinhasAtual),
+    ((X = 10, NumLinhas is NumLinhasAtual + 1); NumLinhas is NumLinhasAtual).
+
+numLinhasArquivoAux(_Conteudo, 0).
+
+% Conta a quantidade de linhas de um dado arquivo.
+numLinhasArquivo(EnderecoArquivo, NumLinhas) :-
+    open(EnderecoArquivo, read, Conteudo),
+    numLinhasArquivoAux(Conteudo, NumLinhas),
+    !,
+    close(Conteudo).

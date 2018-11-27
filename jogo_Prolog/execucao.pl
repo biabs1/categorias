@@ -33,16 +33,17 @@ e_modo_treino(Modo, NumJogadores):-
     modo_treino(Modo),
     entrada_receberNomeSobrenomeJogadores(1, [], NomeSobrenomeJogadores),
 	definirNomeSobrenomeBots(0, NumJogadores, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal),
-    fluxo_comum_modo_treino(NomeSobrenomeJogadoresFinal,_).
+    fluxo_comum(Modo, NomeSobrenomeJogadoresFinal).
 
-e_modo_treino(_, NumJogadores):-
+e_modo_treino(Modo, NumJogadores):-
     entrada_receberNomeSobrenomeJogadores(NumJogadores, [], NomeSobrenomeJogadores),
-    fluxo_comum_modo_treino(NomeSobrenomeJogadores,_).
+    fluxo_comum(Modo, NomeSobrenomeJogadores).
 
-fluxo_comum_modo_treino(NomeSobrenomeJogadores,Retorno):-
+fluxo_comum(Modo, NomeSobrenomeJogadores):-
     mensagem_jogadoresCadastrados(NomeSobrenomeJogadores),
     sorteiaCategoria(Categoria),
-    mensagem_categoriaSorteada(Categoria).
+    mensagem_categoriaSorteada(Categoria),
+    loopRestaMaisDeUmJogador(Modo, Categoria, NomeSobrenomeJogadores).
 
 loopEscolhaNumJogadores(NumJogadores):-
     mensagem_numJogadores,
@@ -50,16 +51,17 @@ loopEscolhaNumJogadores(NumJogadores):-
     receberNumero(X),
     valida_num_jogadores(X, NumJogadores).
 
-restaMaisDeUmJogador(NomeSobrenomeJogadores,Retorno):-
+loopRestaMaisDeUmJogador(Modo, CategoriaSorteada, NomeSobrenomeJogadores):-
     length(NomeSobrenomeJogadores,Tamanho),
-    Tamanho =:= 1, Retorno = false,
+    Tamanho =:= 1,
     mensagem_vencedor(NomeSobrenomeJogadores),!.
-restaMaisDeUmJogador(NomeSobrenomeJogadores, Retorno):-
-    length(NomeSobrenomeJogadores,Tamanho),
-    Tamanho > 1,
-    Retorno = true.
 
-   
+loopRestaMaisDeUmJogador(Modo, CategoriaSorteada, NomeSobrenomeJogadores):-
+    length(NomeSobrenomeJogadores,Tamanho),
+    Tamanho > 1.
+
+%loopRestaItemASerDitoCategoriaSorteada(CategoriaSorteada, NomeSobrenomeJogadores, ItensInformados, NomeSobrenomeJogadoresRestantes):-
+
 valida_num_jogadores(X, NumJogadores):- X >= 2, X =< 8, NumJogadores is X.
 valida_num_jogadores(_, NumJogadores):-
     mensagem_opcaoInvalida,
