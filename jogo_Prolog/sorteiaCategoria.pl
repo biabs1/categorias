@@ -1,7 +1,3 @@
-sorteiaCategoria(Categoria):- 
-	CategoriaSorteada is random(8),
-	categoria(CategoriaSorteada, Categoria).
-	
 categoria(0,Categoria):-
 	Categoria = 'animais'.
 categoria(1,Categoria):-
@@ -18,3 +14,11 @@ categoria(6,Categoria):-
 	Categoria = 'paises'.
 categoria(7,Categoria):-
 	Categoria = 'verduras_legumes'.
+
+sorteiaCategoria(Categoria):-
+	CategoriaSorteada is random(8),
+	categoria(CategoriaSorteada, Categoria).
+
+sorteiarCategoria(Categoria):-
+	sorteiaCategoria(Categoria),
+	Categoria = Categoria + ".txt".

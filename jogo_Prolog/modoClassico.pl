@@ -19,9 +19,3 @@ nomeJogadorIndice([Jogador|Jogadores], IndiceAtual, IndiceJogador, Retorno):-
 removerJogador(NomeJogador, [NomeJogador|Jogadores], Jogadores).
 removerJogador(NomeJogador, [Jogador|Jogadores], [Jogador|Retorno]):-
     removerJogador(NomeJogador,Jogadores,Retorno).
-
-sorteiarCategoria(Categoria):-
-    sorteiaCategoria(Categoria),
-    Categoria = Categoria + ".txt".
-
-
