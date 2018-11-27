@@ -2,9 +2,9 @@
 
 numAleatorio(X, Y, Z):- random(X,Y,Z).
 
-botSabeResposta():-
+botSabeResposta(Resultado):-
 	numAleatorio(1,100, Num),
-	(Num > 50 -> true; false).
+	(Num > 50, Resultado = true; Resultado = false).
 
 definirNomeSobrenomeBots(BotAtual, NumParticipantes, NomeSobrenomeJogadores, Retorno):-
 	(BotAtual =:= NumParticipantes - 1 -> Retorno = NomeSobrenomeJogadores;

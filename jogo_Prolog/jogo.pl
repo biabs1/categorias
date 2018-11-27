@@ -5,4 +5,4 @@
 :- [execucao].
 :- initialization(main).
 
-main:- mensagem_apresentacao, entrada_pegarOpcaoMenu(Opcao), opcaoMenu(Opcao).
+main:- mensagem_apresentacao, entrada_pegarOpcaoMenu(Opcao), opcaoMenu(Opcao), halt(0).

@@ -65,7 +65,7 @@ mensagem_categoriaSorteada(CategoriaSorteada):-
 mensagem_informarPalavraCategoria(CategoriaSorteada, NomeJogador):-
     tty_clear, cabecalho,
     write("Categoria: "), writeln(CategoriaSorteada),nl, write("Vez do jogador: "), writeln(NomeJogador),nl,
-    writeln("Informe um ítem desta categoria (sem acentos): ").
+    writeln("Informe um ítem desta categoria (sem acentos): "), sleep(3).
 
 mensagem_palavraCategoriaJaDita:-
     write("Ops! Esse ítem já foi dito"),nl.
