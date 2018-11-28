@@ -14,9 +14,9 @@ leiaForn(AEnt,NomeFornecido,Retorno):-
 
 %% Coloca um nome fornecido no final do arquivo
 colocarPalavra(CategoriaArquivo,NomeFornecido):-
-    open(CategoriaArquivo,write ,ASaida),
-    write(ASaida,NomeFornecido),write(ASaida,'\n'),!,
-    close(ASaida).
+    open(CategoriaArquivo,append,Stream),
+    write(Stream,NomeFornecido), nl(Stream),
+    close(Stream). 
 
 numLinhasArquivoAux(Conteudo, NumLinhas) :-
     \+ at_end_of_stream(Conteudo),
