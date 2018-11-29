@@ -1,4 +1,3 @@
-:- initialization(main).
 %% Leio cada linha do arquivo, e chamo a função leiaForn
 verificaPalavra(CategoriaArquivo,NomeFornecido,Retorno):-
     open(CategoriaArquivo,read,AEnt),
@@ -29,5 +28,3 @@ numLinhasArquivo(EnderecoArquivo, NumLinhas) :-
     numLinhasArquivoAux(Conteudo, NumLinhas),
     !,
     close(Conteudo).
-
-main:- verificaPalavra('../palavras/animais.txt', 'azul', R).
