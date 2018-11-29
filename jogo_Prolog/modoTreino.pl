@@ -1,3 +1,4 @@
+
 :- use_module(library(clpfd)).
 
 numAleatorio(X, Y, Z):- random(X,Y,Z).
