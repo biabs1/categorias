@@ -11,6 +11,14 @@ numItensCadastradosCategoria(Categoria, NumLinhas):-
 	concatenaDiretorio(Categoria, Diretorio),
 	numLinhasArquivo(Diretorio,NumLinhas).
 
+itemCadastradoCategoria(Categoria, Palavra, Retorno):-
+	concatenaDiretorio(Categoria, Diretorio),
+	verificaPalavra(Diretorio, Palavra, Retorno).
+
+cadastrarItemCategoria(Categoria,Palavra):-
+	concatenaDiretorio(Categoria, Diretorio),
+	colocarPalavra(Diretorio, Palavra).
+
 concatenaDiretorio(Categoria, Diretorio):-
 	atom_concat(Categoria, '.txt', C),
 	atom_string(C,CategorioArquivo),

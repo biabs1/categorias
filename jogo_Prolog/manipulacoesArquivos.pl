@@ -14,6 +14,12 @@ comparaPalavra([],_, Retorno):- Retorno=false.
 comparaPalavra([X|Y], NomeFornecido, Retorno):-
 	(X \= NomeFornecido -> comparaPalavra(Y,NomeFornecido,Retorno); 
 	Retorno = true).
+
+%% Coloca um nome fornecido no final do arquivo
+colocarPalavra(CategoriaArquivo,NomeFornecido):-   
+    open(CategoriaArquivo,append,Stream),
+    write(Stream,NomeFornecido), nl(Stream),
+    close(Stream). 
 numLinhasArquivoAux(Conteudo, NumLinhas) :-
     \+ at_end_of_stream(Conteudo),
     !,
