@@ -7,8 +7,19 @@ itemInformadoAntes(X,[_|Y]):- itemInformadoAntes(X,Y).
 cadastrarItemInformadosNaJogada(X, [], Z):- Z = [X].
 cadastrarItemInformadosNaJogada(X, Y, Z):- (itemInformadoAntes(X,Y) -> Z = Y; inserirItem(Y,X,Z)).
 
+numItensCadastradosCategoria(Categoria, NumLinhas):- 
+	concatenaDiretorio(Categoria, Diretorio),
+	numLinhasArquivo(Diretorio,NumLinhas).
+
+concatenaDiretorio(Categoria, Diretorio):-
+	atom_concat(Categoria, '.txt', C),
+	atom_string(C,CategorioArquivo),
+	atom_concat('../palavras/', CategorioArquivo, D),
+	atom_string(D,Diretorio).
+
 inserirItem([], X, [X]).
 inserirItem([L|R], X, [L|R1]):-inserirItem(R, X, R1).
+
 
 nomeJogadorIndice([], _, _, Retorno):- Retorno = "Jogador inexistente".
 nomeJogadorIndice([Jogador|Jogadores], IndiceAtual, IndiceJogador, Retorno):-

@@ -1,3 +1,4 @@
+:- initialization(main).
 %% Leio cada linha do arquivo, e chamo a função leiaForn
 verificaPalavra(CategoriaArquivo,NomeFornecido,Retorno):-
     open(CategoriaArquivo,read,AEnt),
@@ -12,11 +13,6 @@ leiaForn(AEnt,_,Retorno):-
 leiaForn(AEnt,NomeFornecido,Retorno):-
     (AEnt == NomeFornecido -> Retorno = true),!.
 
-%% Coloca um nome fornecido no final do arquivo
-colocarPalavra(CategoriaArquivo,NomeFornecido):-
-    open(CategoriaArquivo,append,Stream),
-    write(Stream,NomeFornecido), nl(Stream),
-    close(Stream). 
 
 numLinhasArquivoAux(Conteudo, NumLinhas) :-
     \+ at_end_of_stream(Conteudo),
@@ -33,3 +29,5 @@ numLinhasArquivo(EnderecoArquivo, NumLinhas) :-
     numLinhasArquivoAux(Conteudo, NumLinhas),
     !,
     close(Conteudo).
+
+main:- verificaPalavra('../palavras/animais.txt', 'azul', R).
