@@ -26,11 +26,28 @@ pegaCalda([_|Y], R):- pegaCalda(Y,R).
 concatenaListas([],L,L).
 concatenaListas([X|L1],L2,[X|L3]):- concatenaListas(L1,L2,L3).
 
-%% Sorteia numero aleatorio para pegar a palavra e o Boot receber.
-soteiaNumAleatorio(0 ,Tamanho, LinhaSorteada):- random(0, Tamanho, LinhaSorteada).
-
+sorteiaItemCategoria(Categoria, Palavra):-
+	concatenaDiretorio(Categoria,Diretorio),
+	numItensCadastradosCategoria(Categoria, NumLinhas),
+	numAleatorio(0, NumLinhas,LinhaSorteada),
+	palavraSorteada(Diretorio, LinhaSorteada, Palavra).
+	
 %% Vare novamente o arquivo ate achar a linha sorteada e retornar a Palavra.
-palavraSorteada(CategoriaArquivo,LinhaSorteada,Palavra):-see(CategoriaArquivo),Numero is 0,ler(LinhaSorteada, Numero,Palavra),seen.
-ler(LinhaSorteada,Valor,Palavra):- LinhaSorteada == Valor -> read(Palavra).
-ler(_,Valor,Palavra):-read(Palavra),conta(Palavra,Valor).
+palavraSorteada(CategoriaArquivo,LinhaSorteada,Palavra):-
+	open(CategoriaArquivo, read,Stream), 
+    repeat,
+    read_stream_to_codes(Stream, Codes),
+    (   Codes \= end_of_file
+    -> atom_codes(Atom, Codes)
+    ;   close(Stream),!, fail
+    ), 
+    split_string(Atom, "\n", "", ListaPalavras),
+    definePalavra(ListaPalavras,LinhaSorteada,0,Palavra).
+
+definePalavra([],_,_,Palavra):- Palavra = "erro".
+definePalavra([X|Y],LinhaSorteada,NumAtual,Palavra):-
+	(NumAtual =:= LinhaSorteada -> Palavra = X;
+	N is NumAtual + 1,
+	definePalavra(Y,LinhaSorteada,N,Palavra)).
+
 
