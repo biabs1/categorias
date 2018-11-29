@@ -1,19 +1,19 @@
-:- initialization(main).
 %% Leio cada linha do arquivo, e chamo a função leiaForn
 verificaPalavra(CategoriaArquivo,NomeFornecido,Retorno):-
-    open(CategoriaArquivo,read,AEnt),
-    leiaForn(AEnt,NomeFornecido,Retorno),
-    close(AEnt).
+    open(CategoriaArquivo, read,Stream), 
+    repeat,
+    read_stream_to_codes(Stream, Codes),
+    (   Codes \= end_of_file
+    -> atom_codes(Atom, Codes)
+    ;   close(Stream),!, fail
+    ), 
+    split_string(Atom, "\n", "", ListaPalavras),
+    comparaPalavra(ListaPalavras,NomeFornecido,Retorno).
 
-%% Verifica se chegou ao final do arquivo, se sim, retorna false, pois nao achou o nome fornecido pelo usuario
-leiaForn(AEnt,_,Retorno):-
-    at_end_of_stream(AEnt),Retorno = false,!.
-
-%% Verifica se a linha do arquivo lida atualmente é igual ao nome fornecido, se sim, returna true, e termina a execução
-leiaForn(AEnt,NomeFornecido,Retorno):-
-    (AEnt == NomeFornecido -> Retorno = true),!.
-
-
+comparaPalavra([],_, Retorno):- Retorno=false.
+comparaPalavra([X|Y], NomeFornecido, Retorno):-
+	(X \= NomeFornecido -> comparaPalavra(Y,NomeFornecido,Retorno); 
+	Retorno = true).
 numLinhasArquivoAux(Conteudo, NumLinhas) :-
     \+ at_end_of_stream(Conteudo),
     !,
@@ -29,5 +29,3 @@ numLinhasArquivo(EnderecoArquivo, NumLinhas) :-
     numLinhasArquivoAux(Conteudo, NumLinhas),
     !,
     close(Conteudo).
-
-main:- verificaPalavra('../palavras/animais.txt', 'azul', R).
