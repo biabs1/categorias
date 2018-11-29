@@ -1,4 +1,5 @@
 :- use_module(library(clpfd)).
+
 numAleatorio(X, Y, Z):- random(X,Y,Z).
 
 botSabeResposta():-
@@ -12,18 +13,17 @@ definirNomeSobrenomeBots(BotAtual, NumParticipantes, NomeSobrenomeJogadores, Ret
 	concatenaListas(NomeSobrenomeJogadores, [NomeBot], NovoNomeSobrenomeJogadores),
 	definirNomeSobrenomeBots(Pos, NumParticipantes, NovoNomeSobrenomeJogadores, Retorno)).
 
-jogadorEBot(NomeJogador, Pos, R):-
-	concatenaNomeBot(Pos, NomeBot),
-	((NomeJogador \= NomeBot) -> R = false;
-	R = true).
+jogadorEBot(NomeJogador, R):-
+	split_string(NomeJogador, " ", "", L),
+	pegaCalda(L,N),
+	(N \= "Smith" -> R=false;
+	R=true).
+
+pegaCalda([X],X).
+pegaCalda([_|Y], R):- pegaCalda(Y,R).
 
 concatenaListas([],L,L).
 concatenaListas([X|L1],L2,[X|L3]):- concatenaListas(L1,L2,L3).
-
-concatenaNomeBot(Pos, NomeBot):-
-	atom_concat("Bot",Pos,Y),
-	atom_concat(Y, " Smith", A),
-	atom_string(A,NomeBot).
 
 %% Sorteia numero aleatorio para pegar a palavra e o Boot receber.
 soteiaNumAleatorio(0 ,Tamanho, LinhaSorteada):- random(0, Tamanho, LinhaSorteada).
