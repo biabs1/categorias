@@ -1,18 +1,16 @@
 categoria(0,Categoria):-
 	Categoria = 'animais'.
 categoria(1,Categoria):-
-	Categoria = 'categorias'.
-categoria(2,Categoria):-
 	Categoria = 'cores'.
-categoria(3,Categoria):-
+categoria(2,Categoria):-
 	Categoria = 'esportes'.
-categoria(4,Categoria):-
+categoria(3,Categoria):-
 	Categoria = 'frutas'.
-categoria(5,Categoria):-
+categoria(4,Categoria):-
 	Categoria = 'lps'.
-categoria(6,Categoria):-
+categoria(5,Categoria):-
 	Categoria = 'paises'.
-categoria(7,Categoria):-
+categoria(6,Categoria):-
 	Categoria = 'verduras_legumes'.
 
 sorteiaCategoria(Categoria):-

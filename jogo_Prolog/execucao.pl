@@ -34,13 +34,13 @@ e_modo_treino(Modo, NumJogadores):-
     entrada_receberNomeSobrenomeJogadores(1, [], NomeSobrenomeJogadores),
 	  definirNomeSobrenomeBots(0, NumJogadores, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal),
     mensagem_jogadoresCadastrados(NomeSobrenomeJogadores),
-    loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadores),
+    loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadores, []),
     entrada_pegarOpcaoMenu(Opcao).
 
 e_modo_treino(Modo, NumJogadores):-
     entrada_receberNomeSobrenomeJogadores(NumJogadores, [], NomeSobrenomeJogadores),
     mensagem_jogadoresCadastrados(NomeSobrenomeJogadores),
-    loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadores),
+    loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadores, []),
     entrada_pegarOpcaoMenu(Opcao).
 
 loopEscolhaNumJogadores(NumJogadores):-
@@ -50,32 +50,42 @@ loopEscolhaNumJogadores(NumJogadores):-
     valida_num_jogadores(X, NumJogadores).
 
 % Há vencedor
-loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadores):-
+loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadores, ItensInformados):-
     length(NomeSobrenomeJogadores, Tamanho),
     Tamanho =:= 1,
     mensagem_vencedor(NomeSobrenomeJogadores),!.
 
-loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadores):-
+loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadores, ItensInformados):-
     sorteiaCategoria(Categoria),
     mensagem_categoriaSorteada(Categoria),
-    loopRecebePalavraJogadores(Modo, Categoria, NomeSobrenomeJogadores, ItensInformados, [NomeSobrenomeJogadores, []]),
-    loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadores).
+    loopRecebePalavraJogadores(Modo, Categoria, NomeSobrenomeJogadores, ItensInformados, [NomeSobrenomeJogadores, ItensInformadosAtual]),
+    loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadores, ItensInformadosAtual).
 
 % Há vencedor
 loopRecebePalavraJogadores(Modo, Categoria, [JogadorAtual|DemaisJogadores], ItensInformados, [NomeJogadoresAtual|ItensInformadosAtual]):-
     length(NomeJogadoresAtual, Tamanho),
     Tamanho =:= 1,
-    mensagem_vencedor(NomeSobrenomeJogadores),!.
+    mensagem_vencedor(JogadorAtual),!.
 
-loopRecebePalavraJogadores(Modo, Categoria, [], _, _).
+loopRecebePalavraJogadores(_, _, [], _, _).
 
 loopRecebePalavraJogadores(Modo, Categoria, [JogadorAtual|DemaisJogadores], ItensInformados, [NomeJogadoresAtual|ItensInformadosAtual]):-
     mensagem_informarPalavraCategoria(Categoria, JogadorAtual),
-    recebePalavra(Modo, JogadorAtual, ItensInformados, ItensInformadosAtual),
-    loopRecebePalavraJogadores(Modo, Categoria, DemaisJogadores, ItensInformadosAtual, [NomeJogadoresAtual|ItensInformadosAtual]).
+    recebePalavra(Modo, Categoria, JogadorAtual, ItensInformados, ItensInformadosAtualAux),
+    jogadoresRestantes(ItensInformados, ItensInformadosAtualAux, JogadorAtual, DemaisJogadores, Resultado),
+    loopRecebePalavraJogadores(Modo, Categoria, Resultado, ItensInformadosAtualAux, [NomeJogadoresAtual,ItensInformadosAtual]).
+
+jogadoresRestantes(ItensInformadosAnteriormente, ItensInformadosAtualmente, JogadorAtual, DemaisJogadores, Resultado):-
+    length(ItensInformadosAnteriormente, TamanhoAnterior),
+    length(ItensInformadosAtualmente, TamanhoAtual),
+    TamanhoAnterior =:= TamanhoAtual,
+    concatenaListas([JogadorAtual], DemaisJogadores, Resultado).
+
+jogadoresRestantes(ItensInformadosAnteriormente, ItensInformadosAtualmente, JogadorAtual, DemaisJogadores, Resultado):-
+    Resultado = DemaisJogadores.
 
 % O jogador é um bot.
-%recebePalavra(Modo, NomeJogador, ItensInformados, ItensInformadosAtual):-
+%recebePalavra(Modo, Categoria, NomeJogador, ItensInformados, ItensInformadosAtual):-
 %    modo_treino(Modo),
 %    jogadorEBot(NomeJogador, Resultado),
 %    Resultado =:= true,
@@ -83,15 +93,31 @@ loopRecebePalavraJogadores(Modo, Categoria, [JogadorAtual|DemaisJogadores], Iten
 %    writeln(Resposta).
 
 % O jogador é um humano.
-recebePalavra(Modo, NomeJogador, ItensInformados, ItensInformadosAtual):-
+recebePalavra(Modo, Categoria, NomeJogador, ItensInformados, ItensInformadosAtual):-
     receberString(Resposta),
-    writeln(Resposta).
+    trataResposta(Resposta, ItensInformados, Categoria),
+    mensagem_itemAceito,
+    cadastrarItemInformadosNaJogada(Resposta, ItensInformados, ItensInformadosAtual),
+    writeln(ItensInformadosAtual), sleep(2).
 
 recebeRespostaBot(Resposta):-
     botSabeResposta, Resposta = "Sera sorteada".
 
 recebeRespostaBot(Resposta):-
     Resposta = "#".
+
+% O jogador disse um item ja informado
+trataResposta(Resposta, ItensInformados, Categoria):-
+    \+ itemInformadoAntes(Resposta, ItensInformados).
+
+% O jogador disse um item valido
+trataResposta(Resposta, ItensInformados, Categoria):-
+    itemCadastradoCategoria(Categoria, Resposta, Retorno),
+    Retorno.
+
+% O jogador não sabe responder
+trataResposta([PrimeiroCaractere|DemaisCaracteres], ItensInformados, Categoria):-
+    PrimeiroCaractere =\= "#".
 
 valida_num_jogadores(X, NumJogadores):- X >= 2, X =< 8, NumJogadores is X.
 valida_num_jogadores(_, NumJogadores):-
