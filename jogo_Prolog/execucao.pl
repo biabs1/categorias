@@ -97,41 +97,36 @@ recebePalavra(Modo, Categoria, NomeJogador, ItensInformados, ItensInformadosAtua
     receberString(Resposta),
     validaResposta(Resposta, Categoria, ItensInformados, ItensInformadosAtual).
 
+	
 validaResposta(Resposta, Categoria, ItensInformados, ItensInformadosAtual):-
-    trataResposta1(Resposta, ItensInformados, Categoria),
-    ItensInformadosAtual = ItensInformados.
+	tratarResposta1(Resposta,R),
+	(R -> ItensInformadosAtual = ItensInformados, writeln("nao sabe"), sleep(3);
+	tratarResposta2(Resposta, ItensInformados, R2),
+	(R2 -> mensagem_itemAceito,
+		cadastrarItemInformadosNaJogada(Resposta, ItensInformados, ItensInformadosAtual),
+		writeln(ItensInformadosAtual), 
+		sleep(2); 
+		tratarResposta3(Resposta, Categoria, R3),
+		(R3 -> writeln("Item cadastrado na categoria"), sleep(2); 
+			ItensInformadosAtual = ItensInformados, writeln("ultimo"),
+			sleep(3)))).
 
-validaResposta(Resposta, Categoria, ItensInformados, ItensInformadosAtual):-
-    trataResposta2(Resposta, ItensInformados, Categoria),
-    mensagem_itemAceito,
-    cadastrarItemInformadosNaJogada(Resposta, ItensInformados, ItensInformadosAtual),
-    writeln(ItensInformadosAtual), sleep(2).
+tratarResposta1(Resposta,R):-
+	(Resposta \= "#" -> R=false;R=true).
 
-validaResposta(Resposta, Categoria, ItensInformados, ItensInformadosAtual):-
-    trataResposta3(Resposta, ItensInformados, Categoria),
-    writeln("Item cadastrado na categoria").
+tratarResposta2(Resposta, ItensInformados, R):-
+	(itemInformadoAntes(Resposta, ItensInformados) -> 
+	R = false; R=true).
 
-validaResposta(Resposta, Categoria, ItensInformados, ItensInformadosAtual):-
-    ItensInformadosAtual = ItensInformados.
-
+tratarResposta3(Resposta, Categoria, R):-
+	itemCadastradoCategoria(Categoria, Resposta, R).
+	
 recebeRespostaBot(Resposta):-
     botSabeResposta, sorteiaItemCategoria(Categoria, Resposta).
 
 recebeRespostaBot(Resposta):-
     Resposta = "#".
 
-% O jogador não sabe responder
-trataResposta1([PrimeiroCaractere|DemaisCaracteres], ItensInformados, Categoria):-
-    PrimeiroCaractere =:= "#".
-
-% O jogador disse um item nao informado
-trataResposta2(Resposta, ItensInformados, Categoria):-
-    \+ itemInformadoAntes(Resposta, ItensInformados).
-
-% O jogador disse um item cadastrado
-trataResposta3(Resposta, ItensInformados, Categoria):-
-    itemCadastradoCategoria(Categoria, Resposta, Retorno),
-    Retorno.
 
 valida_num_jogadores(X, NumJogadores):- X >= 2, X =< 8, NumJogadores is X.
 valida_num_jogadores(_, NumJogadores):-
