@@ -79,45 +79,59 @@ jogadoresRestantes(ItensInformadosAnteriormente, ItensInformadosAtualmente, Joga
     length(ItensInformadosAnteriormente, TamanhoAnterior),
     length(ItensInformadosAtualmente, TamanhoAtual),
     TamanhoAnterior =:= TamanhoAtual,
-    concatenaListas([JogadorAtual], DemaisJogadores, Resultado).
+    Resultado = DemaisJogadores.
 
 jogadoresRestantes(ItensInformadosAnteriormente, ItensInformadosAtualmente, JogadorAtual, DemaisJogadores, Resultado):-
-    Resultado = DemaisJogadores.
+    concatenaListas(DemaisJogadores, [JogadorAtual], Resultado).
 
 % O jogador é um bot.
 %recebePalavra(Modo, Categoria, NomeJogador, ItensInformados, ItensInformadosAtual):-
 %    modo_treino(Modo),
 %    jogadorEBot(NomeJogador, Resultado),
 %    Resultado =:= true,
-%    recebeRespostaBot(Resposta).
+%    recebeRespostaBot(Categoria, Resposta).
 %    writeln(Resposta).
 
 % O jogador é um humano.
 recebePalavra(Modo, Categoria, NomeJogador, ItensInformados, ItensInformadosAtual):-
     receberString(Resposta),
-    trataResposta(Resposta, ItensInformados, Categoria),
+    validaResposta(Resposta, Categoria, ItensInformados, ItensInformadosAtual).
+
+validaResposta(Resposta, Categoria, ItensInformados, ItensInformadosAtual):-
+    trataResposta1(Resposta, ItensInformados, Categoria),
+    ItensInformadosAtual = ItensInformados.
+
+validaResposta(Resposta, Categoria, ItensInformados, ItensInformadosAtual):-
+    trataResposta2(Resposta, ItensInformados, Categoria),
     mensagem_itemAceito,
     cadastrarItemInformadosNaJogada(Resposta, ItensInformados, ItensInformadosAtual),
     writeln(ItensInformadosAtual), sleep(2).
 
+validaResposta(Resposta, Categoria, ItensInformados, ItensInformadosAtual):-
+    trataResposta3(Resposta, ItensInformados, Categoria),
+    writeln("Item cadastrado na categoria").
+
+validaResposta(Resposta, Categoria, ItensInformados, ItensInformadosAtual):-
+    ItensInformadosAtual = ItensInformados.
+
 recebeRespostaBot(Resposta):-
-    botSabeResposta, Resposta = "Sera sorteada".
+    botSabeResposta, sorteiaItemCategoria(Categoria, Resposta).
 
 recebeRespostaBot(Resposta):-
     Resposta = "#".
 
-% O jogador disse um item ja informado
-trataResposta(Resposta, ItensInformados, Categoria):-
+% O jogador não sabe responder
+trataResposta1([PrimeiroCaractere|DemaisCaracteres], ItensInformados, Categoria):-
+    PrimeiroCaractere =:= "#".
+
+% O jogador disse um item nao informado
+trataResposta2(Resposta, ItensInformados, Categoria):-
     \+ itemInformadoAntes(Resposta, ItensInformados).
 
-% O jogador disse um item valido
-trataResposta(Resposta, ItensInformados, Categoria):-
+% O jogador disse um item cadastrado
+trataResposta3(Resposta, ItensInformados, Categoria):-
     itemCadastradoCategoria(Categoria, Resposta, Retorno),
     Retorno.
-
-% O jogador não sabe responder
-trataResposta([PrimeiroCaractere|DemaisCaracteres], ItensInformados, Categoria):-
-    PrimeiroCaractere =\= "#".
 
 valida_num_jogadores(X, NumJogadores):- X >= 2, X =< 8, NumJogadores is X.
 valida_num_jogadores(_, NumJogadores):-
