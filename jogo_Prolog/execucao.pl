@@ -21,24 +21,6 @@ opcaoMenu(Opcao):- novo_jogo(Opcao), loopEscolhaModoJogo.
 opcaoMenu(Opcao):- saida(Opcao), halt(0).
 opcaoMenu(_):- mensagem_opcaoInvalida, entrada_pegarOpcaoMenu(NovaOpcao), opcaoMenu(NovaOpcao).
 
-%
-%
-%
-%
-%
-modo_generico(1):-
-    loopEscolhaNumJogadores(NumJogadores),
-    entrada_receberNomeSobrenomeJogadores(1, [], NomeSobrenomeJogadores),
-    definirNomeSobrenomeBots(0, NumJogadores, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal),
-    mensagem_jogadoresCadastrados(NomeSobrenomeJogadoresFinal),
-    loopRestaMaisDeUmJogador(1, NomeSobrenomeJogadoresFinal, []),
-    entrada_pegarOpcaoMenu(NovaOpcao), opcaoMenu(NovaOpcao).
-%
-%
-%
-%
-%
-
 modo_generico(Modo):-
     loopEscolhaNumJogadores(NumJogadores),
     e_modo_treino(Modo, NumJogadores).
@@ -89,16 +71,6 @@ loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadores, ItensInformados):-
 loopRecebePalavraJogadores(Modo, _, _, _, [NomeJogadoresAtual|ItensInformados]):-
     length(NomeJogadoresAtual, Tamanho),
     (Tamanho =:= 1 -> loopRestaMaisDeUmJogador(Modo, NomeJogadoresAtual,ItensInformados)),!.
-
-%loopRecebePalavraJogadores(Modo, Categoria, [JogadorAtual|DemaisJogadores], ItensInformados, [NomeJogadoresAtual|ItensInformadosAtual]):-
-%    mensagem_informarPalavraCategoria(Categoria, JogadorAtual),
-%    recebePalavra(Modo, Categoria, JogadorAtual, ItensInformados, ItensInformadosAtualAux),
-%    jogadoresRestantes(ItensInformados, ItensInformadosAtualAux, JogadorAtual, DemaisJogadores, Resultado),
-%    length(Resultado, TamanhoAtual), length(DemaisJogadores, TamanhoAnterior),
-%    TamanhoAtual =:= TamanhoAnterior - 1,
-%    sorteiaCategoria(NovaCategoria), 
-%    mensagem_categoriaSorteada(NovaCategoria),
-%    loopRecebePalavraJogadores(Modo, NovaCategoria, Resultado, ItensInformadosAtualAux, [Resultado,ItensInformadosAtualAux]).
 
 loopRecebePalavraJogadores(Modo, Categoria, [JogadorAtual|DemaisJogadores], ItensInformados, [NomeJogadoresAtual|ItensInformadosAtual]):-
     mensagem_informarPalavraCategoria(Categoria, JogadorAtual),
