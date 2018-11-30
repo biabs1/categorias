@@ -32,7 +32,7 @@ modo_generico(Modo):-
 e_modo_treino(Modo, NumJogadores):-
     modo_treino(Modo),
     entrada_receberNomeSobrenomeJogadores(1, [], NomeSobrenomeJogadores),
-	  definirNomeSobrenomeBots(0, NumJogadores, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal),
+	definirNomeSobrenomeBots(0, NumJogadores, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal),
     mensagem_jogadoresCadastrados(NomeSobrenomeJogadores),
     loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadores, []),
     entrada_pegarOpcaoMenu(Opcao).
@@ -50,22 +50,23 @@ loopEscolhaNumJogadores(NumJogadores):-
     valida_num_jogadores(X, NumJogadores).
 
 % Há vencedor
-loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadores, ItensInformados):-
-    length(NomeSobrenomeJogadores, Tamanho),
-    Tamanho =:= 1,
-    mensagem_vencedor(NomeSobrenomeJogadores),!.
+loopRedireciona([JogadorVencedor|_]):-
+    mensagem_vencedor(JogadorVencedor),
+    mensagem_menuPrincipal(),
+    entrada_pegarOpcaoMenu(Opcao), 
+    opcaoMenu(Opcao),!.
 
 loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadores, ItensInformados):-
+	length(NomeSobrenomeJogadores, Tamanho),
+	(Tamanho =:= 1 -> loopRedireciona(NomeSobrenomeJogadores);
     sorteiaCategoria(Categoria),
     mensagem_categoriaSorteada(Categoria),
-    loopRecebePalavraJogadores(Modo, Categoria, NomeSobrenomeJogadores, ItensInformados, [NomeSobrenomeJogadores, ItensInformadosAtual]),
-    loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadores, ItensInformadosAtual).
+    loopRecebePalavraJogadores(Modo, Categoria, NomeSobrenomeJogadores, ItensInformados, [NomeSobrenomeJogadores, ItensInformadosAtual])).
 
 % Há vencedor
-loopRecebePalavraJogadores(Modo, Categoria, [JogadorAtual|DemaisJogadores], ItensInformados, [NomeJogadoresAtual|ItensInformadosAtual]):-
+loopRecebePalavraJogadores(Modo, _, _, _, [NomeJogadoresAtual|ItensInformados]):-
     length(NomeJogadoresAtual, Tamanho),
-    Tamanho =:= 1,
-    mensagem_vencedor(JogadorAtual),!.
+    (Tamanho =:= 1 -> loopRestaMaisDeUmJogador(Modo,NomeJogadoresAtual,ItensInformados)),!.
 
 loopRecebePalavraJogadores(_, _, [], _, _).
 
@@ -73,16 +74,16 @@ loopRecebePalavraJogadores(Modo, Categoria, [JogadorAtual|DemaisJogadores], Iten
     mensagem_informarPalavraCategoria(Categoria, JogadorAtual),
     recebePalavra(Modo, Categoria, JogadorAtual, ItensInformados, ItensInformadosAtualAux),
     jogadoresRestantes(ItensInformados, ItensInformadosAtualAux, JogadorAtual, DemaisJogadores, Resultado),
-    loopRecebePalavraJogadores(Modo, Categoria, Resultado, ItensInformadosAtualAux, [NomeJogadoresAtual,ItensInformadosAtual]).
+    loopRecebePalavraJogadores(Modo, Categoria, Resultado, ItensInformadosAtualAux, [Resultado,ItensInformadosAtualAux]).
 
-jogadoresRestantes(ItensInformadosAnteriormente, ItensInformadosAtualmente, JogadorAtual, DemaisJogadores, Resultado):-
+jogadoresRestantes(ItensInformadosAnteriormente, ItensInformadosAtualmente, _, DemaisJogadores, Resultado):-
     length(ItensInformadosAnteriormente, TamanhoAnterior),
     length(ItensInformadosAtualmente, TamanhoAtual),
-    TamanhoAnterior =:= TamanhoAtual,
-    Resultado = DemaisJogadores.
+    (TamanhoAnterior =:= TamanhoAtual -> Resultado = DemaisJogadores),!.
 
-jogadoresRestantes(ItensInformadosAnteriormente, ItensInformadosAtualmente, JogadorAtual, DemaisJogadores, Resultado):-
-    concatenaListas(DemaisJogadores, [JogadorAtual], Resultado).
+jogadoresRestantes(_, _, JogadorAtual, DemaisJogadores, Resultado):-
+	length(DemaisJogadores, T),
+	concatenaListas(DemaisJogadores, [JogadorAtual], Resultado),!.
 
 % O jogador é um bot.
 %recebePalavra(Modo, Categoria, NomeJogador, ItensInformados, ItensInformadosAtual):-
@@ -100,16 +101,20 @@ recebePalavra(Modo, Categoria, NomeJogador, ItensInformados, ItensInformadosAtua
 	
 validaResposta(Resposta, Categoria, ItensInformados, ItensInformadosAtual):-
 	tratarResposta1(Resposta,R),
-	(R -> ItensInformadosAtual = ItensInformados, writeln("nao sabe"), sleep(3);
+	(R -> ItensInformadosAtual = ItensInformados, sleep(2);
 	tratarResposta2(Resposta, ItensInformados, R2),
-	(R2 -> mensagem_itemAceito,
-		cadastrarItemInformadosNaJogada(Resposta, ItensInformados, ItensInformadosAtual),
-		writeln(ItensInformadosAtual), 
-		sleep(2); 
+	(R2 == true->  
 		tratarResposta3(Resposta, Categoria, R3),
-		(R3 -> writeln("Item cadastrado na categoria"), sleep(2); 
-			ItensInformadosAtual = ItensInformados, writeln("ultimo"),
-			sleep(3)))).
+		(R3 ->
+			mensagem_itemAceito,
+			cadastrarItemInformadosNaJogada(Resposta, ItensInformados, ItensInformadosAtual),
+			writeln(ItensInformadosAtual), 
+			sleep(2);
+			ItensInformadosAtual = ItensInformados,
+			writeln("Item nao faz parte da categoria!!"),
+			sleep(2));
+		writeln("Item cadastrado na categoria"), 
+		ItensInformadosAtual = ItensInformados)),!.
 
 tratarResposta1(Resposta,R):-
 	(Resposta \= "#" -> R=false;R=true).
