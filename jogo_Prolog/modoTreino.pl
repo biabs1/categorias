@@ -1,4 +1,4 @@
-
+:- [aux].
 :- use_module(library(clpfd)).
 
 numAleatorio(X, Y, Z):- random(X,Y,Z).
@@ -17,14 +17,12 @@ definirNomeSobrenomeBots(BotAtual, NumParticipantes, NomeSobrenomeJogadores, Ret
 jogadorEBot(NomeJogador, R):-
 	split_string(NomeJogador, " ", "", L),
 	pegaCalda(L,N),
-	(N \= "Smith" -> R=false;
-	R=true).
+	(N \= "Smith" -> R=false; R=true).
 
-pegaCalda([X],X).
-pegaCalda([_|Y], R):- pegaCalda(Y,R).
-
-concatenaListas([],L,L).
-concatenaListas([X|L1],L2,[X|L3]):- concatenaListas(L1,L2,L3).
+concatenaNomeBot(Pos, NomeBot):-
+	atom_concat("Bot", Pos, Y),
+	atom_concat(Y, " Smith", A),
+	atom_string(A, NomeBot).
 
 sorteiaItemCategoria(Categoria, Palavra):-
 	concatenaDiretorio(Categoria,Diretorio),
@@ -32,15 +30,10 @@ sorteiaItemCategoria(Categoria, Palavra):-
 	numAleatorio(0, NumLinhas,LinhaSorteada),
 	palavraSorteada(Diretorio, LinhaSorteada, Palavra).
 	
-%% Vare novamente o arquivo ate achar a linha sorteada e retornar a Palavra.
 palavraSorteada(CategoriaArquivo,LinhaSorteada,Palavra):-
-	open(CategoriaArquivo, read,Stream), 
-    repeat,
+    open(CategoriaArquivo, read, Stream), repeat,
     read_stream_to_codes(Stream, Codes),
-    (   Codes \= end_of_file
-    -> atom_codes(Atom, Codes)
-    ;   close(Stream),!, fail
-    ), 
+    (Codes \= end_of_file -> atom_codes(Atom, Codes); close(Stream),!, fail), 
     split_string(Atom, "\n", "", ListaPalavras),
     definePalavra(ListaPalavras,LinhaSorteada,0,Palavra).
 
@@ -49,5 +42,3 @@ definePalavra([X|Y],LinhaSorteada,NumAtual,Palavra):-
 	(NumAtual =:= LinhaSorteada -> Palavra = X;
 	N is NumAtual + 1,
 	definePalavra(Y,LinhaSorteada,N,Palavra)).
-
-
