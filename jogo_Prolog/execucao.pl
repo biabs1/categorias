@@ -97,7 +97,6 @@ loopRecebePalavraJogadores(Categoria, [JogadorAtual|DemaisJogadores], ItensInfor
     recebePalavra(Categoria, JogadorAtual, ItensInformados, ItensInformadosAtualAux),
     jogadoresRestantes(ItensInformados, ItensInformadosAtualAux, JogadorAtual, DemaisJogadores, Resultado),
     loopRecebePalavraJogadores(Categoria, Resultado, ItensInformadosAtualAux, [Resultado,ItensInformadosAtualAux]).
-%
 
 jogadoresRestantes(ItensInformadosAnteriormente, ItensInformadosAtualmente, _, DemaisJogadores, Resultado):-
     length(ItensInformadosAnteriormente, TamanhoAnterior),
@@ -138,12 +137,13 @@ validaResposta(Resposta, Categoria, ItensInformados, ItensInformadosAtual, NomeJ
 		writeln("Item cadastrado na categoria"), 
 		ItensInformadosAtual = ItensInformados)),!.
 
+
 resposta_NaoSabe(Resposta,R):- (Resposta \= "#" -> R=false; R=true).
 
 resposta_ItemJaInformado(Resposta, ItensInformados, R):- (itemInformadoAntes(Resposta, ItensInformados) -> R=false; R=true).
 
 resposta_ItemAceito(Resposta, Categoria, R):- itemCadastradoCategoria(Categoria, Resposta, R).
-	
+
 recebeRespostaBot(Resposta):-
     botSabeResposta, sorteiaItemCategoria(Categoria, Resposta).
 
