@@ -1,9 +1,7 @@
 :- [mensagens].
 :- [manipulacoesArquivos].
+:- [modoTreino].
 :- [modoClassico].
-
-adicionarElemento([], X, [X]).
-adicionarElemento([L|R], X, [L|R1]):- adicionarElemento(R, X, R1).
 
 receberNumero(Number):-
     read_line_to_codes(user_input, Codes),
@@ -19,17 +17,19 @@ entrada_receberNomeSobrenomeJogadores(NumParticipantes, NomeSobrenomeJogadores, 
     NomeSobrenomeJogadoresFinal = NomeSobrenomeJogadores.
 
 entrada_receberNomeSobrenomeJogadores(NumParticipantes, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal):-
-    write("Digite seu nome e sobrenome: "),nl,
+    mensagem_nomeJogadores,
+    imprimePrompt,
     receberString(NomeSobrenome),
     concatenaListas(NomeSobrenomeJogadores, [NomeSobrenome], NovoNomeSobrenomeJogadores),
     entrada_receberNomeSobrenomeJogadores(NumParticipantes - 1,  NovoNomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal).
 
 entrada_receberItem(JogadorAtual,Categoria,Retorno):-
     receberString(Item),
-    Item =:= '#' -> removerJogador(JogadorAtual,_,_),mensagem_perdedor(JogadorAtual),
-   % verificaItensInformados(Item,ItensInformados,Retorno),
+    Item =:= '#' -> removerJogador(JogadorAtual,_,_), mensagem_perdedor(JogadorAtual),
+    %verificaItensInformados(Item,ItensInformados,Retorno),
     %Retorno =:= true -> mensagem_palavraCategoriaJaDita, removerJogador(JogadorAtual,_,_),mensagem_perdedor(JogadorAtual),
     verificaPalavra(Categoria,Item,Retorno),
-    Retorno =:= false -> mensagem_palavraNaoCadastrada, receberString(Resposta), Resposta =:= 's', colocarPalavra(Categoria,Item), 
-    Resposta =:= 'n', removerJogador(JogadorAtual,_,_),mensagem_perdedor(JogadorAtual).
-   % Retorno =:= true -> adicionarElemento(ItensInformados, Item,_), mensagem_itemAceito.
+    Retorno =:= false -> mensagem_palavraNaoCadastrada, receberString(Resposta), 
+	Resposta =:= 's', colocarPalavra(Categoria,Item), 
+    Resposta =:= 'n', removerJogador(JogadorAtual,_,_), mensagem_perdedor(JogadorAtual).
+    %Retorno =:= true -> adicionarElemento(ItensInformados, Item,_), mensagem_itemAceito.
