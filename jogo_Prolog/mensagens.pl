@@ -4,7 +4,7 @@ cabecalho:- writeln("========== JOGO CATEGORIAS =========="),nl.
 
 mensagem_apresentacao:-
     tty_clear, cabecalho,
-    writeln("Bem vind@ ao jogo Categorias!"),nl,nl,
+    writeln("Bem vind@ ao jogo Categorias!"), nl,
     sleep(2),
     writeln("Você testará o quanto de palavras você sabe ou consegue se lembrar de algumas categorias."),
     sleep(5).
@@ -48,34 +48,34 @@ mensagem_nomeJogadores:-
     writeln("Digite o nome e sobrenome do(s) jogador(es) humano(s)"), writeln("Um jogador por linha:").
 
 mensagem_jogadoresCadastrados(NomeJogadores):-
-    nl, write("Jogador(es) cadastrado(s):"),nl,
+    nl, writeln("Jogador(es) cadastrado(s):"),
     listaJogadores(NomeJogadores), sleep(5).
 
 listaJogadores([]).
-listaJogadores([X|L]):-
-    writeln(X), listaJogadores(L).
+listaJogadores([X|L]):- writeln(X), listaJogadores(L).
 
 mensagem_categoriaSorteada(CategoriaSorteada):-
     tty_clear, cabecalho,
     write("Categoria sorteada: "), writeln(CategoriaSorteada),nl,
-    writeln("Cada jogador deverá informar um ítem pertencente à categoria sorteada."),nl,
+    writeln("Cada jogador deverá informar um item pertencente à categoria sorteada."),
     writeln("Caso não se recorde de algum item, digite #"),
     sleep(5).
 
 mensagem_informarPalavraCategoria(CategoriaSorteada, NomeJogador):-
     tty_clear, cabecalho,
-    write("Categoria: "), writeln(CategoriaSorteada),nl, write("Vez do jogador: "), writeln(NomeJogador),nl,
+    write("Categoria: "), writeln(CategoriaSorteada), nl, 
+    write("Vez do jogador: "), writeln(NomeJogador), nl,
     writeln("Informe um ítem desta categoria (sem acentos): ").
 
 mensagem_palavraCategoriaJaDita:-
-    write("Ops! Esse ítem já foi dito"),nl.
+    writeln("Ops! Esse item já foi dito").
 
 mensagem_itemAceito:-
     nl, writeln("Item aceito!"),
-    sleep(1).
+    sleep(2).
 
 mensagem_palavraNaoCadastrada:-
-    nl, writeln("ATENÇÃO! Esta palavra não está cadastrada!"), nl,
+    nl, writeln("ATENÇÃO! Esta palavra não está cadastrada!"),
     writeln("Este ítem pertence mesmo a esta categoria? s/n").
 
 mensagem_vencedor(NomeJogador):-
