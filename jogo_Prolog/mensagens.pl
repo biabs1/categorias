@@ -68,7 +68,8 @@ mensagem_informarPalavraCategoria(CategoriaSorteada, NomeJogador):-
     writeln("Informe um ítem desta categoria (sem acentos): ").
 
 mensagem_palavraCategoriaJaDita:-
-    writeln("Ops! Esse item já foi dito").
+    writeln("Ops! Esse item já foi dito"),
+	sleep(2).
 
 mensagem_itemAceito:-
     nl, writeln("Item aceito!"),

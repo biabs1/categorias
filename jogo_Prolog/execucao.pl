@@ -90,6 +90,16 @@ loopRecebePalavraJogadores(Modo, _, _, _, [NomeJogadoresAtual|ItensInformados]):
     length(NomeJogadoresAtual, Tamanho),
     (Tamanho =:= 1 -> loopRestaMaisDeUmJogador(Modo, NomeJogadoresAtual,ItensInformados)),!.
 
+%loopRecebePalavraJogadores(Modo, Categoria, [JogadorAtual|DemaisJogadores], ItensInformados, [NomeJogadoresAtual|ItensInformadosAtual]):-
+%    mensagem_informarPalavraCategoria(Categoria, JogadorAtual),
+%    recebePalavra(Modo, Categoria, JogadorAtual, ItensInformados, ItensInformadosAtualAux),
+%    jogadoresRestantes(ItensInformados, ItensInformadosAtualAux, JogadorAtual, DemaisJogadores, Resultado),
+%    length(Resultado, TamanhoAtual), length(DemaisJogadores, TamanhoAnterior),
+%    TamanhoAtual =:= TamanhoAnterior - 1,
+%    sorteiaCategoria(NovaCategoria), 
+%    mensagem_categoriaSorteada(NovaCategoria),
+%    loopRecebePalavraJogadores(Modo, NovaCategoria, Resultado, ItensInformadosAtualAux, [Resultado,ItensInformadosAtualAux]).
+
 loopRecebePalavraJogadores(Modo, Categoria, [JogadorAtual|DemaisJogadores], ItensInformados, [NomeJogadoresAtual|ItensInformadosAtual]):-
     mensagem_informarPalavraCategoria(Categoria, JogadorAtual),
     recebePalavra(Modo, Categoria, JogadorAtual, ItensInformados, ItensInformadosAtualAux),
@@ -109,14 +119,15 @@ jogadoresRestantes(_, _, JogadorAtual, DemaisJogadores, Resultado):-
 recebePalavra(Modo, Categoria, NomeJogador, ItensInformados, ItensInformadosAtual):-
     modo_treino(Modo),
     jogadorEBot(NomeJogador, Resultado),
-    writeln(Resultado), sleep(2),
-    %Resultado =:= true,
+    Resultado == true,
+    imprimePrompt,
     recebeRespostaBot(Categoria, Resposta),
     writeln(Resposta),
     validaResposta(Resposta, Categoria, NomeJogador, ItensInformados, ItensInformadosAtual).
 
 % O jogador é um humano.
 recebePalavra(Modo, Categoria, NomeJogador, ItensInformados, ItensInformadosAtual):-
+    imprimePrompt,
     receberString(Resposta),
     validaResposta(Resposta, Categoria, NomeJogador, ItensInformados, ItensInformadosAtual).
 	
@@ -128,13 +139,15 @@ validaResposta(Resposta, Categoria, NomeJogador, ItensInformados, ItensInformado
 		resposta_ItemAceito(Resposta, Categoria, R3),
 		(R3 ->
 			mensagem_itemAceito,
-			cadastrarItemInformadoNaJogada(Resposta, ItensInformados, ItensInformadosAtual),
-			writeln(ItensInformadosAtual), 
-			sleep(2);
-			ItensInformadosAtual = ItensInformados,
-			writeln("Item nao faz parte da categoria!!"),
-			sleep(2));
-		writeln("Item cadastrado na categoria"), 
+            cadastrarItemInformadoNaJogada(Resposta, ItensInformados, ItensInformadosAtual);
+            mensagem_palavraNaoCadastrada,
+            receberString(Palavra),
+            (Palavra \= "s" -> ItensInformadosAtual = ItensInformados, mensagem_perdedor(NomeJogador);
+            mensagem_itemAceito,
+            cadastrarItemCategoria(Categoria, Resposta),
+            cadastrarItemInformadoNaJogada(Resposta, ItensInformados, ItensInformadosAtual)));
+		mensagem_palavraCategoriaJaDita,
+        mensagem_perdedor(NomeJogador), 
 		ItensInformadosAtual = ItensInformados)),!.
 
 
@@ -148,7 +161,9 @@ recebeRespostaBot(Categoria, Resposta):-
     botSabeResposta, sorteiaItemCategoria(Categoria, Resposta).
 
 recebeRespostaBot(Categoria, Resposta):-
-    Resposta = "#".
+    Resposta = "#",
+    writeln(Resposta),
+    sleep(2).
 
 modo_treino_selecionado:- mensagem_modoTreinoSelecionado, modo_generico(1).
 modo_alternado_selecionado:- mensagem_modoAlternadoSelecionado, modo_generico(2).

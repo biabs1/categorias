@@ -3,7 +3,7 @@
 
 numAleatorio(X, Y, Z):- random(X,Y,Z).
 
-botSabeResposta():-
+botSabeResposta:-
 	numAleatorio(1,100, Num),
 	(Num > 50 -> true; false).
 

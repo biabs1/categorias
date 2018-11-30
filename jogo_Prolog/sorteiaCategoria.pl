@@ -14,7 +14,7 @@ categoria(6,Categoria):-
 	Categoria = 'verduras_legumes'.
 
 sorteiaCategoria(Categoria):-
-	CategoriaSorteada is random(8),
+	random(0, 6, CategoriaSorteada),
 	categoria(CategoriaSorteada, Categoria).
 
 sorteiarCategoria(Categoria):-
