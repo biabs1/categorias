@@ -14,6 +14,11 @@ definirNomeSobrenomeBots(BotAtual, NumParticipantes, NomeSobrenomeJogadores, Ret
 	concatenaListas(NomeSobrenomeJogadores, [NomeBot], NovoNomeSobrenomeJogadores),
 	definirNomeSobrenomeBots(Pos, NumParticipantes, NovoNomeSobrenomeJogadores, Retorno)).
 
+concatenaNomeBot(Pos, NomeBot):-
+	atom_concat("Bot",Pos,Y),
+	atom_concat(Y, " Smith", A),
+	atom_string(A,NomeBot).
+
 jogadorEBot(NomeJogador, R):-
 	split_string(NomeJogador, " ", "", L),
 	pegaCalda(L,N),

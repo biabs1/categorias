@@ -32,9 +32,9 @@ modo_generico(Modo):-
 e_modo_treino(Modo, NumJogadores):-
     modo_treino(Modo),
     entrada_receberNomeSobrenomeJogadores(1, [], NomeSobrenomeJogadores),
-	definirNomeSobrenomeBots(0, NumJogadores, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal),
-    mensagem_jogadoresCadastrados(NomeSobrenomeJogadores),
-    loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadores, []),
+    definirNomeSobrenomeBots(0, NumJogadores, NomeSobrenomeJogadores, NomeSobrenomeJogadoresFinal),
+    mensagem_jogadoresCadastrados(NomeSobrenomeJogadoresFinal),
+    loopRestaMaisDeUmJogador(Modo, NomeSobrenomeJogadoresFinal, []),
     entrada_pegarOpcaoMenu(Opcao).
 
 e_modo_treino(Modo, NumJogadores):-
@@ -86,12 +86,12 @@ jogadoresRestantes(_, _, JogadorAtual, DemaisJogadores, Resultado):-
 	concatenaListas(DemaisJogadores, [JogadorAtual], Resultado),!.
 
 % O jogador é um bot.
-%recebePalavra(Modo, Categoria, NomeJogador, ItensInformados, ItensInformadosAtual):-
-%    modo_treino(Modo),
-%    jogadorEBot(NomeJogador, Resultado),
-%    Resultado =:= true,
-%    recebeRespostaBot(Categoria, Resposta).
-%    writeln(Resposta).
+recebePalavra(Modo, Categoria, NomeJogador, ItensInformados, ItensInformadosAtual):-
+    modo_treino(Modo),
+    jogadorEBot(NomeJogador, Resultado),
+    Resultado =:= true,
+    recebeRespostaBot(Categoria, Resposta),
+    writeln(Resposta).
 
 % O jogador é um humano.
 recebePalavra(Modo, Categoria, NomeJogador, ItensInformados, ItensInformadosAtual):-
